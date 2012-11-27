@@ -31,12 +31,13 @@ function clearCanvas() {
 }
 
 /************* SPRITE CLASS *************/
-function Sprite() {
-  function Sprite() {
-    
-  }
+function Sprite(image, x, y) {
+  this.image = new Image();
+  this.image.src = image;
+  this.x = x;
+  this.y = y;
   
   this.draw = function() {
-
+    ctx.drawImage(this.image, this.x, this.y);
   }
 }

@@ -1,6 +1,7 @@
 function Game() {
   this.setup = function() {
     this.i = 0;
+    this.ball = new Sprite("ball.png", 10, 10);
   }
   
   this.update = function() {
@@ -13,6 +14,7 @@ function Game() {
     clearCanvas();
 
     drawCircle(400, 320, this.i);
+    this.ball.draw();
   }
 }
 
