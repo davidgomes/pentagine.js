@@ -91,15 +91,17 @@ keyCodeToString[220] = "backslash";
 keyCodeToString[221] = "closebracket";
 keyCodeToString[222] = "singlequote";
 
-var numpadkeys = ["numpad1", "numpad2", "numpad3", "numpad4", "numpad5", "numpad6", "numpad7", "numpad8", "numpad9"];
-var fkeys = ["f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9"];
+var numpadKeys = ["numpad1", "numpad2", "numpad3", "numpad4", "numpad5",
+                  "numpad6", "numpad7", "numpad8", "numpad9"];
+
 var numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
+               "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
+               "u", "v", "w", "x", "y", "z"];
 
 for (var i = 0; numbers[i]; i++) { keyCodeToString[48 + i] = numbers[i]; }
 for (var i = 0; letters[i]; i++) { keyCodeToString[65 + i] = letters[i]; }
-for (var i = 0; numpadkeys[i]; i++) { keyCodeToString[96 + i] = numpadkeys[i]; }
-for (var i = 0; fkeys[i]; i++) { keyCodeToString[112 + i] = fkeys[i]; }
+for (var i = 0; numpadKeys[i]; i++) { keyCodeToString[96 + i] = numpadKeys[i]; }
 
 var pressedKeys = [];
 var preventedKeys = [];
