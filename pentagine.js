@@ -6,13 +6,47 @@ context.globalCompositeOperation = "destination-over";
 
 var currentState = switchState(playState);
 
+var pauseKey = "p";
+var canPauseOrResume = true;
+var gamePaused = false;
+
 function init() {
   setInterval(tick, 60);
 }
 
 function tick() {
-  currentState.update();
-  currentState.draw();
+  if (gamePaused) {
+    currentState.draw();
+
+    if (isDown(pauseKey) && canPauseOrResume) {
+      pauseOrResumeGame();
+
+      setTimeout(function() {
+        canPauseOrResume = true;
+      }, 1000);
+
+      canPauseOrResume = false;
+    }
+
+    // TODO Draw Pause/Play huge icon on top
+  } else {
+    if (isDown(pauseKey) && canPauseOrResume) {
+      pauseOrResumeGame();
+
+      setTimeout(function() {
+        canPauseOrResume = true;
+      }, 1000);
+
+      canPauseOrResume = false;
+    }
+
+    currentState.update();
+    currentState.draw();
+  }
+}
+
+function pauseOrResumeGame() {
+  gamePaused = !gamePaused;
 }
 
 function switchState(newState) {
@@ -24,6 +58,11 @@ function drawCircle(x, y, radius) {
   context.beginPath();
   context.arc(x, y, radius, 0, Math.PI * 2, false);
   context.stroke();
+}
+
+function drawRectangle(x, y, width, height, color) {
+  //TODO Implement color
+  context.fillRect(x, y, width, height);
 }
 
 function clearCanvas() {

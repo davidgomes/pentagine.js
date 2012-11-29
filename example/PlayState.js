@@ -1,37 +1,43 @@
 function PlayState() {
   this.setup = function() {
-    this.i = 0;
-    this.increasing = true;
-    this.ball = new Sprite("ball.png", 10, 10);
+    this.ball = new Sprite("ball.png", 100, context.height / 2 - 100);
+    this.ball.vy = 5;
 
+    this.walls = [];
+    this.walls[context.width - 1] = 20;
+    this.speed = 50;
+
+    this.difficulty = 50;
+    
     preventKeys("down", "right", "left", "right", "space");
   }
-  
-  this.update = function() {
-    if (this.i == 50)
-      this.increasing = false;
-    else if (this.i == 0)
-      this.increasing = true;
-    
-    if (this.increasing)
-      this.i++;
-    else
-      this.i--;
 
-    if (isDown("right") || isDown("d"))
-      this.ball.x += 5;
-    if (isDown("left") || isDown("a"))
-      this.ball.x -= 5;
-    if (isDown("down") || isDown("s"))
-      this.ball.y += 5;
+  this.update = function() {
     if (isDown("up") || isDown("w"))
-      this.ball.y -= 5;
+      this.ball.y -= 15;
+    
+    for (var i = 2; i < this.walls.length - this.speed; i++) {
+      for (var u = 0; u < this.speed; u++) {
+        this.walls[i + u] = this.walls[i + u + 1];
+      }
+    }
+
+    if (this.walls.length == context.width) {
+      this.walls[this.walls.length - 1] = Math.floor(Math.random() * this.difficulty) + 30;
+    }
+
+    this.ball.y += this.ball.vy;
+    this.difficulty++;
   }
 
   this.draw = function() {
     clearCanvas();
 
-    drawCircle(400, 320, this.i);
+    for (var i = 0; i < this.walls.length; i++) {
+      drawRectangle(i, 0, 1, this.walls[i]);
+      drawRectangle(i, context.height - this.walls[i], 1, this.walls[i]); 
+    }
+
     this.ball.draw();
   }
 }
