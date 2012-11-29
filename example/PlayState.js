@@ -8,14 +8,14 @@ function PlayState() {
     this.speed = 50;
 
     this.difficulty = 50;
-    
+
     preventKeys("down", "right", "left", "right", "space");
   }
 
   this.update = function() {
     if (isDown("up") || isDown("w"))
       this.ball.y -= 15;
-    
+
     for (var i = 2; i < this.walls.length - this.speed; i++) {
       for (var u = 0; u < this.speed; u++) {
         this.walls[i + u] = this.walls[i + u + 1];
@@ -35,7 +35,7 @@ function PlayState() {
 
     for (var i = 0; i < this.walls.length; i++) {
       drawRectangle(i, 0, 1, this.walls[i]);
-      drawRectangle(i, context.height - this.walls[i], 1, this.walls[i]); 
+      drawRectangle(i, context.height - this.walls[i], 1, this.walls[i]);
     }
 
     this.ball.draw();

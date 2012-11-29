@@ -18,27 +18,13 @@ function tick() {
   if (gamePaused) {
     currentState.draw();
 
-    if (isDown(pauseKey) && canPauseOrResume) {
+    if (isDown(pauseKey))
       pauseOrResumeGame();
-
-      setTimeout(function() {
-        canPauseOrResume = true;
-      }, 1000);
-
-      canPauseOrResume = false;
-    }
 
     // TODO Draw Pause/Play huge icon on top
   } else {
-    if (isDown(pauseKey) && canPauseOrResume) {
+    if (isDown(pauseKey))
       pauseOrResumeGame();
-
-      setTimeout(function() {
-        canPauseOrResume = true;
-      }, 1000);
-
-      canPauseOrResume = false;
-    }
 
     currentState.update();
     currentState.draw();
@@ -46,7 +32,15 @@ function tick() {
 }
 
 function pauseOrResumeGame() {
-  gamePaused = !gamePaused;
+  if (canPauseOrResume) {
+    gamePaused = !gamePaused;
+
+    setTimeout(function() {
+      canPauseOrResume = true;
+    }, 1000);
+
+    canPauseOrResume = false;
+  }
 }
 
 function switchState(newState) {
