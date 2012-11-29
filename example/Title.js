@@ -1,19 +1,11 @@
-function Title() {
-  this.setup = function() {
-    this.i = 50;
-  }
+function TitleState() {
+  this.setup = function() { }
   
-  this.update = function() {
-    this.i--;
-
-    if (this.i == 0) switchState(gameState);
-  }
+  this.update = function() { }
 
   this.draw = function() {
     clearCanvas();
-
-    drawCircle(400, 320, this.i);
   }
 }
 
-var titleState = new Title();
+var titleState = new TitleState();
