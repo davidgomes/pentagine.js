@@ -7,6 +7,40 @@ Pentagine is a lightweight Javascript library for HTML5 2D Game Development that
 
 Pentagine puts all its variables and functions on the **global namespace** and I do realize this is **not** recommended.
 
+Example
+-------
+Here's a small example of all the Javascript code needed to draw a ball and make it movable:
+
+```
+function PlayState() {
+  this.setup = function() {
+    this.ball = new Sprite("ball.png", 100, 50);
+    preventKeys("down", "right", "left", "right", "space");
+  }
+
+  this.update() = function() {
+    if (isDown("up"))
+      this.ball.y--;
+    else if (isDown("down"))
+      this.ball.y++;
+    else if (isDown("left"))
+      this.ball.x--;
+    else if (isDown("right"))
+      this.ball.x++;
+  }
+
+  this.draw() = function() {
+    clearCanvas();
+
+    this.ball.draw();
+  }
+}
+
+var playState = new PlayState();
+
+```
+
+
 License
 -------
 Pentagine is licensed under the [MIT License](https://github.com/davidgomes/pentagine/blob/master/LICENSE).
