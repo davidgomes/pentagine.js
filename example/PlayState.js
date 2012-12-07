@@ -1,11 +1,11 @@
 function PlayState() {
   this.setup = function() {
     this.ball = new Sprite("ball.png", 100, context.height / 2 - 100);
-    this.ball.vy = 5;
+    this.ball.vy = 3;
 
     this.walls = [];
     this.walls[context.width - 1] = 20;
-    this.speed = 50;
+    this.speed = 30;
 
     this.difficulty = 50;
 
@@ -23,11 +23,18 @@ function PlayState() {
     }
 
     if (this.walls.length == context.width) {
-      this.walls[this.walls.length - 1] = Math.floor(Math.random() * this.difficulty) + 30;
+      if (this.walls[this.walls.length - 2] < 250) {
+        if (Math.floor(Math.random() * 5) > 1)
+          this.walls[this.walls.length - 1] = this.walls[this.walls.length - 2] + Math.floor(Math.random() * 5) + 1;
+        else
+          this.walls[this.walls.length - 1] = this.walls[this.walls.length - 2] - Math.floor(Math.random() * 5) - 1;
+      } else {
+          this.walls[this.walls.length - 1] = this.walls[this.walls.length - 2];
+      }
     }
 
     this.ball.y += this.ball.vy;
-    this.difficulty++;
+    this.difficulty += 0.1;
   }
 
   this.draw = function() {
