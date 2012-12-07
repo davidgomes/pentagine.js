@@ -11,7 +11,7 @@ Example
 -------
 Here's a small example of all the Javascript code needed to draw a ball and make it movable:
 
-```
+```javascript
 function PlayState() {
   this.setup = function() {
     this.ball = new Sprite("ball.png", 100, 50);
