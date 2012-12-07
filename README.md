@@ -37,9 +37,7 @@ function PlayState() {
 }
 
 var playState = new PlayState();
-
 ```
-
 
 License
 -------
