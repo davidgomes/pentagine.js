@@ -4,7 +4,7 @@ context.width = canvas.width;
 context.height = canvas.height;
 context.globalCompositeOperation = "destination-over";
 
-var currentState = switchState(playState);
+var currentState = null;
 
 var pauseKey = "p";
 var canPauseOrResume = true;
@@ -64,16 +64,22 @@ function clearCanvas() {
 }
 
 /*************************************** SPRITE */
-function Sprite(image, x, y) {
-  this.image = new Image();
-  this.image.src = image;
-  this.x = x;
-  this.y = y;
+Sprite = (function() {
+    function constructor(image, x, y) {
+        this.image = new Image();
+        this.image.src = image;
+        this.x = x;
+        this.y = y;
+    }
 
-  this.draw = function() {
-    context.drawImage(this.image, this.x, this.y);
-  }
-}
+    constructor.prototype = {
+        draw: function() {
+            context.drawImage(this.image, this.x, this.y);
+        }
+    }
+
+    return constructor;
+})();
 
 /*function loadImage(imageName) {
   var image = new Image();
