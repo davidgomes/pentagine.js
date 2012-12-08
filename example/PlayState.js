@@ -68,3 +68,4 @@ function PlayState() {
 }
 
 var playState = new PlayState();
+switchState(playState);
