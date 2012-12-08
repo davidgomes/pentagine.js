@@ -47,4 +47,4 @@ Pentagine is licensed under the [MIT License](https://github.com/davidgomes/pent
 
 Thanks
 ------
-I'd like to thank to [ippa](https://github.com/ippa/) because Pentagine is inspired on his HTML5 Game Development library, [jaws](https://github.com/ippa/). I also used some of his code, but this is not a fork, the two libraries are quite different.
+I'd like to thank to [ippa](https://github.com/ippa/) because Pentagine is inspired on his HTML5 Game Development library - [jaws](https://github.com/ippa/). I also used some of his code, but this is not a fork, the two libraries are quite different.
