@@ -75,6 +75,11 @@ function Sprite(image, x, y) {
   }
 }
 
+/*function loadImage(imageName) {
+  var image = new Image();
+  image.src = imageName;
+}*/
+
 /*************************************** INPUT */
 window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
