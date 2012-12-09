@@ -59,8 +59,8 @@ function PlayState() {
     clearCanvas();
 
     for (var i = 0; i < this.walls.length; i++) {
-      drawRectangle(i, 0, 1, this.walls[i]);
-      drawRectangle(i, context.height - this.walls[i], 1, this.walls[i]);
+      drawRectangle(i, 0, 1, this.walls[i], "#123");
+      drawRectangle(i, context.height - this.walls[i], 1, this.walls[i], "#123");
     }
 
     this.helicopter.draw();

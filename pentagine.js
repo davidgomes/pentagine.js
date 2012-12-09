@@ -55,8 +55,13 @@ function drawCircle(x, y, radius) {
 }
 
 function drawRectangle(x, y, width, height, color) {
-  //TODO Implement color
-  context.fillRect(x, y, width, height);
+  if (color) {
+    context.fillStyle = color;
+    context.fillRect(x, y, width, height);
+    context.fillStyle = "#FFFFFF";
+  } else {
+    context.fillRect(x, y, width, height);
+  }
 }
 
 function clearCanvas() {
