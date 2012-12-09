@@ -37,9 +37,10 @@ function PlayState() {
 }
 
 var playState = new PlayState();
+switchState(playState);
 ```
 
-Inside the repository, check out `example/`. It's a simple game I made using Pentagine. The helicopter sprite is not mine, I found it on [The Spriters Resource](http://www.spriters-resource.com).
+Inside the repository, check out `example/`. I put there some simple games made using Pentagine. Regarding example number 1, the helicopter sprite is not mine, I found it on [The Spriters Resource](http://www.spriters-resource.com).
 
 License
 -------
