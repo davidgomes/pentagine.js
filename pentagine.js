@@ -65,20 +65,40 @@ function clearCanvas() {
 
 /*************************************** SPRITE */
 Sprite = (function() {
-    function constructor(image, x, y) {
-        this.image = new Image();
-        this.image.src = image;
-        this.x = x;
-        this.y = y;
-    }
+  function constructor(image, x, y) {
+    this.image = new Image();
+    this.image.src = image;
+    this.x = x;
+    this.y = y;
+  }
 
-    constructor.prototype = {
-        draw: function() {
-            context.drawImage(this.image, this.x, this.y);
-        }
+  constructor.prototype = {
+    draw: function() {
+      context.drawImage(this.image, this.x, this.y);
     }
+  }
 
-    return constructor;
+  return constructor;
+})();
+
+SpriteList = (function() {
+  function constructor() {
+    this.sprites = [];
+  }
+
+  constructor.prototype = {
+    draw: function() {
+      for (var i = 0; i < this.sprites.length; i++) {
+        this.sprites[i].draw();
+      }
+    },
+
+    push: function(newSprite) {
+      this.sprites.push(newSprite);
+    }
+  }
+
+  return constructor;
 })();
 
 /*function loadImage(imageName) {
