@@ -75,11 +75,23 @@ Sprite = (function() {
     this.image.src = image;
     this.x = x;
     this.y = y;
+    /* cache image modifications to an internal canvas for performance and flexibility */
+    this.internal = document.createElement("canvas");
+    this.image.owner = this;
+    /* asynchronous image loading and caching */
+    this.image.onload = function() {
+      this.owner.internal.width = this.width.toString();
+      this.owner.internal.height = this.height.toString();
+      this.owner.internalctx = this.owner.internal.getContext("2d");
+      this.owner.internalctx.drawImage(this, 0, 0);
+      /* dump image reference, we no longer need it */
+      delete this.owner.image;
+    }
   }
 
   constructor.prototype = {
     draw: function() {
-      context.drawImage(this.image, this.x, this.y);
+      context.drawImage(this.internal, this.x, this.y);
     }
   }
 
