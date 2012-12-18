@@ -11,7 +11,7 @@ var canPauseOrResume = true;
 var gamePaused = false;
 
 function init() {
-  setInterval(tick, 60);
+  setInterval(tick, 16.666666666);
 }
 
 function tick() {
