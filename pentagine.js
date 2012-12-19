@@ -134,15 +134,29 @@ Sprite = (function() {
         this.releaseShared();
       }
       var ws = width.toString();
-      var wh = height.toString();
-      if (ws != this.internal.width && wh != this.internal.height) {
-        this.internal.width = this.internal.width.toString();
-        this.internal.height = this.internal.height.toString();
+      var hs = height.toString();
+      console.log("mg (" + width + ", " + height + ") | (" + ws + ", " + hs + ")");
+      if (ws != this.internal.width && hs != this.internal.height) {
+        this.internal.width = ws;
+        this.internal.height = hs;
       }
       this.stampRect(0, 0, width, height, color);
     },
 
+    makeLabel: function(text, size, font, color) {
+      if (this.shared) {
+        this.releaseShared();
+      }
+      this.internalctx.font = size + "px " + font;
+      var metrics = this.internalctx.measureText(text);
+      console.log(metrics.width);
+      // TODO: figure out actual height instead of 2 * size (see stampText TODO)
+      this.makeGraphic(metrics.width, size * 2, "rgba(0, 0, 0, 0)");
+      this.stampText(0, 0, text, size, font, color);
+    },
+
     stampText: function(x, y, text, size, font, color) {
+      // TODO: write small function to extract and cache ACTUAL font
       if (!this.loaded) {
         console.log("queued text");
         this.pending.push([this.stampText, x, y, text, font, size, color]);
