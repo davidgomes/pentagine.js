@@ -75,6 +75,12 @@ Sprite = (function() {
     this.x = x;
     this.y = y;
     this.path = image;
+    if (!image) {
+      this.shared = true;
+      this.loaded = true;
+      console.log("null image");
+      return;
+    }
     this.shared = true;
     /* try to retrieve a shared canvas instead of generating a new one */
     if (this.path in sharedCanvases) {
@@ -123,6 +129,30 @@ Sprite = (function() {
       context.drawImage(this.internal, this.x, this.y);
     },
 
+    makeGraphic: function(width, height, color) {
+      if (this.shared) {
+        this.releaseShared();
+      }
+      var ws = width.toString();
+      var wh = height.toString();
+      if (ws != this.internal.width && wh != this.internal.height) {
+        this.internal.width = this.internal.width.toString();
+        this.internal.height = this.internal.height.toString();
+      }
+      this.stampRect(0, 0, width, height, color);
+    },
+
+    stampText: function(x, y, text) {
+      if (!this.loaded) {
+        console.log("queued");
+        this.pending.push([this.stampRect, x, y, width, height, color]);
+      } else {
+        if (this.shared) {
+          this.releaseShared();
+        }
+      }
+    },
+
     stampRect: function(x, y, width, height, color) {
       if (!this.loaded) {
         console.log("queued");
@@ -150,10 +180,12 @@ Sprite = (function() {
       /* stop using the shared version of the internal canvas, we probably
        * need a dinamically modified sprite */
       var newInternal = document.createElement("canvas");
-      newInternal.width = this.internal.width.toString();
-      newInternal.height = this.internal.height.toString();
       this.internalctx = newInternal.getContext("2d");
-      this.internalctx.drawImage(sharedCanvases[this.path][0], 0, 0);
+      if (this.path) {
+        newInternal.width = this.internal.width.toString();
+        newInternal.height = this.internal.height.toString();
+        this.internalctx.drawImage(sharedCanvases[this.path][0], 0, 0);
+      }
       this.internal = newInternal;
       this.shared = false;
       console.log("released shared canvas");
