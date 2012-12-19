@@ -75,16 +75,20 @@ Sprite = (function() {
     this.x = x;
     this.y = y;
     this.path = image;
+    this.shared = true;
     /* try to retrieve a shared canvas instead of generating a new one */
-    console.log(this.path);
-    console.log(sharedCanvases);
-    console.log(this.path in sharedCanvases);
     if (this.path in sharedCanvases) {
-        console.log("loaded cached image");
-        this.internal = sharedCanvases[this.path][0];
-        this.internalctx = sharedCanvases[this.path][1];
-        this.loaded = true;
+      console.log("loaded shared canvas");
+      var shared = sharedCanvases[this.path];
+      this.internal = shared[0];
+      this.internalctx = shared[1];
+      this.loaded = shared[2].loaded;
+      if (!this.loaded) {
+        this.pending = [];
+        shared[3].push(this);
+      }
     } else {
+      console.log("loaded fresh canvas");
       this.image = new Image();
       this.image.src = image;
       this.image.owner = this;
@@ -94,7 +98,7 @@ Sprite = (function() {
       this.internal = document.createElement("canvas");
       this.internalctx = this.internal.getContext("2d");
       /* save the canvas to the global shared canvas map */
-        sharedCanvases[this.path] = [this.internal, this.internalctx];
+      sharedCanvases[this.path] = [this.internal, this.internalctx, this, []];
       /* asynchronous image loading and caching */
       this.image.onload = function() {
         this.owner.internal.width = this.width.toString();
@@ -103,13 +107,13 @@ Sprite = (function() {
         /* dump image reference, we no longer need it */
         delete this.owner.image;
         this.owner.loaded = true;
-        /* dispatch all pending sprite modifications */
-        var pending = this.owner.pending;
-        for (var i = 0; i < pending.length; i++) {
-          console.log("dispatched pending");
-          pending[i][0].apply(this.owner, Array.prototype.slice.call(pending[i], 1));
+        this.owner.dispatchPending();
+        /* set all dependencies to loaded */
+        var deps = sharedCanvases[this.owner.path][3];
+        for (var i = 0; i < deps.length; i++) {
+          deps[i].loaded = true;
+          deps[i].dispatchPending();
         }
-        delete this.owner.pending;
       }
     }
   }
@@ -121,10 +125,38 @@ Sprite = (function() {
 
     stampRect: function(x, y, width, height, color) {
       if (!this.loaded) {
+        console.log("queued");
         this.pending.push([this.stampRect, x, y, width, height, color]);
+      } else {
+        if (this.shared) {
+          this.releaseShared();
+        }
+        this.internalctx.fillStyle = color;
+        this.internalctx.fillRect(x, y, width, height);
       }
-      this.internalctx.fillStyle = color;
-      this.internalctx.fillRect(x, y, width, height);
+    },
+
+    /* internal */
+    dispatchPending: function() {
+      /* dispatch all pending sprite modifications */
+      var pending = this.pending;
+      for (var i = 0; i < pending.length; i++) {
+        console.log("dispatched pending");
+        pending[i][0].apply(this, Array.prototype.slice.call(pending[i], 1));
+      }
+      delete this.pending;
+    },
+    releaseShared: function() {
+      /* stop using the shared version of the internal canvas, we probably
+       * need a dinamically modified sprite */
+      var newInternal = document.createElement("canvas");
+      newInternal.width = this.internal.width.toString();
+      newInternal.height = this.internal.height.toString();
+      this.internalctx = newInternal.getContext("2d");
+      this.internalctx.drawImage(sharedCanvases[this.path][0], 0, 0);
+      this.internal = newInternal;
+      this.shared = false;
+      console.log("released shared canvas");
     }
   }
 
