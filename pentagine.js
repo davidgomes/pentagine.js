@@ -142,20 +142,25 @@ Sprite = (function() {
       this.stampRect(0, 0, width, height, color);
     },
 
-    stampText: function(x, y, text) {
+    stampText: function(x, y, text, size, font, color) {
       if (!this.loaded) {
-        console.log("queued");
-        this.pending.push([this.stampRect, x, y, width, height, color]);
+        console.log("queued text");
+        this.pending.push([this.stampText, x, y, text, font, size, color]);
       } else {
         if (this.shared) {
           this.releaseShared();
         }
+        console.log("drawing text");
+        this.internalctx.font = size + "px " + font
+        this.internalctx.textAlign = "left";
+        this.internalctx.fillStyle = color;
+        this.internalctx.fillText(text, x, y + size);
       }
     },
 
     stampRect: function(x, y, width, height, color) {
       if (!this.loaded) {
-        console.log("queued");
+        console.log("queued rect");
         this.pending.push([this.stampRect, x, y, width, height, color]);
       } else {
         if (this.shared) {
