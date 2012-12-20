@@ -11,8 +11,8 @@ var pauseKey = "p";
 var canPauseOrResume = true;
 var gamePaused = false;
 
-var rad_to_deg = 57.295779513082323;
-var deg_to_rad = 0.0174532925199432957;
+var rad_to_deg = 180 / Math.pi
+var deg_to_rad = Math.pi / 180;
 
 function init() {
   setInterval(tick, 16.666666666);
