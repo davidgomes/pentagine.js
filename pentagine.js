@@ -11,6 +11,9 @@ var pauseKey = "p";
 var canPauseOrResume = true;
 var gamePaused = false;
 
+var rad_to_deg = 57.295779513082323;
+var deg_to_rad = 0.0174532925199432957;
+
 function init() {
   setInterval(tick, 16.666666666);
 }
@@ -74,6 +77,7 @@ Sprite = (function() {
   function constructor(image, x, y) {
     this.x = x;
     this.y = y;
+    this.angle = 0;
     this.path = image;
     if (!image) {
       this.shared = true;
@@ -126,7 +130,17 @@ Sprite = (function() {
 
   constructor.prototype = {
     draw: function() {
+      // TODO: how about caching rotated sprites on their internal canvas?
+      if (this.angle) {
+        context.save();
+        context.translate(this.x, this.y);
+        context.rotate(this.angle * deg_to_rad);
+        context.translate(-this.x, -this.y);
+      }
       context.drawImage(this.internal, this.x, this.y);
+      if (this.angle) {
+        context.restore();
+      }
     },
 
     makeGraphic: function(width, height, color) {
@@ -193,6 +207,7 @@ Sprite = (function() {
       }
       delete this.pending;
     },
+
     releaseShared: function() {
       /* stop using the shared version of the internal canvas, we probably
        * need a dinamically modified sprite */
@@ -206,7 +221,8 @@ Sprite = (function() {
       this.internal = newInternal;
       this.shared = false;
       console.log("released shared canvas");
-    }
+    },
+
   }
 
   return constructor;
