@@ -1,7 +1,6 @@
 function PlayState() {
   this.setup = function() {
     this.helicopter = new Sprite("helicopter1.png", 100, context.height / 2 - 100);
-    this.helicopter.animationTimer = 0;
     this.helicopter.vy = 5;
 
     this.walls = [];
@@ -14,15 +13,14 @@ function PlayState() {
   }
 
   this.update = function() {
+    console.log(mouseX, mouseY);
+
     if (isDown("up") || isDown("w"))
       this.helicopter.y -= 15;
 
     if (isDown("down") || isDown("s"))
       this.helicopter.y += 10;
-    
-    /* Check if player is losing */
-    
-    
+
     for (var i = 2; i < this.walls.length - this.speed; i++) {
       for (var u = 0; u < this.speed; u++) {
         this.walls[i + u] = this.walls[i + u + 1];
@@ -39,20 +37,11 @@ function PlayState() {
           this.walls[this.walls.length - 1] = this.walls[this.walls.length - 2];
       }
     }
-    
+
     /* Dirty fix */
     this.walls[1] = this.walls[2];
     this.walls[0] = this.walls[1];
 
-    /* Handle helicopter animation */
-    this.helicopter.animationTimer++;
-    /*
-    if (this.helicopter.animationTimer % 5 == 0)
-      this.helicopter.image.src = "helicopter1.png";
-    else
-      this.helicopter.image.src = "helicopter2.png";
-    */
-    
     this.helicopter.y += this.helicopter.vy;
     this.difficulty += 0.1;
   }

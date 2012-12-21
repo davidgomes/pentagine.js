@@ -373,7 +373,11 @@ function isDown(name) {
 
 window.addEventListener("mousedown", handleMouseDown, false);
 window.addEventListener("mouseup", handleMouseUp, false);
+window.addEventListener("mousemove", handleMouseMove);
+
 var pressedButtons = [];
+var mouseX = null;
+var mouseY = null;
 
 var convertMouseButtonToString = [];
 convertMouseButtonToString[0] = "left";
@@ -400,6 +404,16 @@ function handleMouseUp(e) {
   var humanName = convertMouseButtonToString[event.button];
 
   pressedButtons[humanName] = false;
+}
+
+function handleMouseMove(e) {
+  if (e.offsetX) {
+    mouseX = e.offsetX;
+    mouseY = e.offsetY;
+  } else if (e.layerX) {
+    mouseX = e.layerX;
+    mouseY = e.layerY;
+  }
 }
 
 function isMouseDown(name) {
