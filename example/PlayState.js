@@ -14,10 +14,6 @@ function PlayState() {
   }
 
   this.update = function() {
-    if (isMouseDown("left")) {
-      console.log("Hey Mouse");
-    }
-    
     if (isDown("up") || isDown("w"))
       this.helicopter.y -= 15;
 
