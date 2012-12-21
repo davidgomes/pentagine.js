@@ -11,8 +11,8 @@ var pauseKey = "p";
 var canPauseOrResume = true;
 var gamePaused = false;
 
-var rad_to_deg = 180 / Math.PI;
-var deg_to_rad = Math.PI / 180;
+var radToDeg = 180 / Math.PI;
+var degToRad = Math.PI / 180;
 
 function init() {
   setInterval(tick, 16.666666666);
@@ -142,7 +142,7 @@ Sprite = (function() {
       if (this.angle) {
         context.save();
         context.translate(this.x, this.y);
-        context.rotate(this.angle * deg_to_rad);
+        context.rotate(this.angle * degToRad);
         context.translate(-this.x, -this.y);
       }
 
