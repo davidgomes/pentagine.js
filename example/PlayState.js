@@ -46,10 +46,12 @@ function PlayState() {
 
     /* Handle helicopter animation */
     this.helicopter.animationTimer++;
+    /*
     if (this.helicopter.animationTimer % 5 == 0)
       this.helicopter.image.src = "helicopter1.png";
     else
       this.helicopter.image.src = "helicopter2.png";
+    */
     
     this.helicopter.y += this.helicopter.vy;
     this.difficulty += 0.1;

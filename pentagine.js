@@ -1,5 +1,6 @@
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
+var sharedCanvases = {};
 context.width = canvas.width;
 context.height = canvas.height;
 context.globalCompositeOperation = "destination-over";
@@ -10,8 +11,11 @@ var pauseKey = "p";
 var canPauseOrResume = true;
 var gamePaused = false;
 
+var rad_to_deg = 180 / Math.PI;
+var deg_to_rad = Math.PI / 180;
+
 function init() {
-  setInterval(tick, 60);
+  setInterval(tick, 16.666666666);
 }
 
 function tick() {
@@ -71,16 +75,171 @@ function clearCanvas() {
 /*************************************** SPRITE */
 Sprite = (function() {
   function constructor(image, x, y) {
-    this.image = new Image();
-    this.image.src = image;
     this.x = x;
     this.y = y;
+    this.angle = 0;
+    this.path = image;
+
+    if (!image) {
+      this.shared = true;
+      this.loaded = true;
+      console.log("Attempted to load null image.");
+      return;
+    }
+
+    /* Try to retrieve a shared canvas instead of generating a new one */
+    this.shared = true;
+    if (this.path in sharedCanvases) {
+      console.log("Loaded shared canvas.");
+      var shared = sharedCanvases[this.path];
+      this.internal = shared[0];
+      this.internalctx = shared[1];
+      this.loaded = shared[2].loaded;
+
+      if (!this.loaded) {
+        this.pending = [];
+        shared[3].push(this);
+      }
+    } else {
+      console.log("Loaded fresh canvas.");
+      this.image = new Image();
+      this.image.src = image;
+      this.image.owner = this;
+      this.loaded = false;
+      this.pending = [];
+
+      /* Cache image modifications to an internal canvas for performance and flexibility */
+      this.internal = document.createElement("canvas");
+      this.internalctx = this.internal.getContext("2d");
+
+      /* Save the canvas to the global shared canvas map */
+      sharedCanvases[this.path] = [this.internal, this.internalctx, this, []];
+
+      /* Asynchronous image loading and caching */
+      this.image.onload = function() {
+        this.owner.internal.width = this.width.toString();
+        this.owner.internal.height = this.height.toString();
+        this.owner.internalctx.drawImage(this, 0, 0);
+
+        /* Dump image reference, we no longer need it */
+        delete this.owner.image;
+        this.owner.loaded = true;
+        this.owner.dispatchPending();
+
+        /* Set all dependencies to loaded */
+        var deps = sharedCanvases[this.owner.path][3];
+        for (var i = 0; i < deps.length; i++) {
+          deps[i].loaded = true;
+          deps[i].dispatchPending();
+        }
+      }
+    }
   }
 
   constructor.prototype = {
     draw: function() {
-      context.drawImage(this.image, this.x, this.y);
-    }
+      // TODO: how about caching rotated sprites on their internal canvas?
+      if (this.angle) {
+        context.save();
+        context.translate(this.x, this.y);
+        context.rotate(this.angle * deg_to_rad);
+        context.translate(-this.x, -this.y);
+      }
+
+      context.drawImage(this.internal, this.x, this.y);
+
+      if (this.angle) {
+        context.restore();
+      }
+    },
+
+    makeGraphic: function(width, height, color) {
+      if (this.shared) {
+        this.releaseShared();
+      }
+
+      var ws = width.toString();
+      var hs = height.toString();
+
+      if (ws != this.internal.width && hs != this.internal.height) {
+        this.internal.width = ws;
+        this.internal.height = hs;
+      }
+
+      this.stampRect(0, 0, width, height, color);
+    },
+
+    makeLabel: function(text, size, font, color) {
+      if (this.shared) {
+        this.releaseShared();
+      }
+
+      this.internalctx.font = size + "px " + font;
+      var metrics = this.internalctx.measureText(text);
+      // TODO: figure out actual height instead of 2 * size (see stampText TODO)
+      this.makeGraphic(metrics.width, size * 2, "rgba(0, 0, 0, 0)");
+      this.stampText(0, 0, text, size, font, color);
+    },
+
+    stampText: function(x, y, text, size, font, color) {
+      // TODO: write small function to extract and cache ACTUAL font height
+      if (!this.loaded) {
+        console.log("Queued text.");
+        this.pending.push([this.stampText, x, y, text, font, size, color]);
+      } else {
+        if (this.shared) {
+          this.releaseShared();
+        }
+
+        console.log("Drawing text.");
+        this.internalctx.font = size + "px " + font
+        this.internalctx.textAlign = "left";
+        this.internalctx.fillStyle = color;
+        this.internalctx.fillText(text, x, y + size);
+      }
+    },
+
+    stampRect: function(x, y, width, height, color) {
+      if (!this.loaded) {
+        console.log("Queued rect.");
+        this.pending.push([this.stampRect, x, y, width, height, color]);
+      } else {
+        if (this.shared) {
+          this.releaseShared();
+        }
+
+        this.internalctx.fillStyle = color;
+        this.internalctx.fillRect(x, y, width, height);
+      }
+    },
+
+    dispatchPending: function() {
+      /* Dispatch all pending sprite modifications */
+      var pending = this.pending;
+      for (var i = 0; i < pending.length; i++) {
+        console.log("Dispatched pending.");
+        pending[i][0].apply(this, Array.prototype.slice.call(pending[i], 1));
+      }
+
+      delete this.pending;
+    },
+
+    releaseShared: function() {
+      /* Stop using the shared version of the internal canvas, we probably
+       * need a dinamically modified sprite */
+      var newInternal = document.createElement("canvas");
+      this.internalctx = newInternal.getContext("2d");
+
+      if (this.path) {
+        newInternal.width = this.internal.width.toString();
+        newInternal.height = this.internal.height.toString();
+        this.internalctx.drawImage(sharedCanvases[this.path][0], 0, 0);
+      }
+
+      this.internal = newInternal;
+      this.shared = false;
+      console.log("Released shared canvas.");
+    },
   }
 
   return constructor;
@@ -105,11 +264,6 @@ SpriteList = (function() {
 
   return constructor;
 })();
-
-/*function loadImage(imageName) {
-  var image = new Image();
-  image.src = imageName;
-}*/
 
 /*************************************** INPUT */
 window.addEventListener("keydown", handleKeyDown);
