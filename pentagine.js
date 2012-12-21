@@ -15,10 +15,23 @@ var radToDeg = 180 / Math.PI;
 var degToRad = Math.PI / 180;
 
 function init() {
-  setInterval(tick, 16.666666666);
+  setInterval(tick, 100);
+  // var date = new Date();
+  // var oldTime = date.getTime();
+  // var time = oldTime + 60;
+
+  // while (true) {
+    // currentTime = date.getTime();
+    // tick(currentTime - oldTime);
+    // tick(1);
+    // tick();
+    // oldTime = currentTime;
+  // }
+
+
 }
 
-function tick() {
+function tick(dt) {
   if (gamePaused) {
     currentState.draw();
 
@@ -30,7 +43,7 @@ function tick() {
     if (isDown(pauseKey))
       pauseOrResumeGame();
 
-    currentState.update();
+    currentState.update(dt);
     currentState.draw();
   }
 }
@@ -354,4 +367,44 @@ function handleKeyUp(e) {
 function isDown(name) {
   if (pressedKeys[name])
     return true;
+
+  return false;
+}
+
+window.addEventListener("mousedown", handleMouseDown, false);
+window.addEventListener("mouseup", handleMouseUp, false);
+var pressedButtons = [];
+
+var convertMouseButtonToString = [];
+convertMouseButtonToString[0] = "left";
+convertMouseButtonToString[1] = "center";
+convertMouseButtonToString[2] = "right";
+
+function handleMouseDown(e) {
+  var event = (e) ? e : window.event;
+  var humanName = convertMouseButtonToString[event.button];
+
+  /*if (navigator.appName == "Microsoft Internet Explorer") {
+    human_name = ie_mousebuttoncode_to_string[event.button];
+  }*/
+
+  pressedButtons[humanName] = true;
+  /*if (on_keydown_callbacks[human_name]) {
+    on_keydown_callbacks[human_name](human_name);
+    e.preventDefault();
+  }*/
+}
+
+function handleMouseUp(e) {
+  var event = (e) ? e : window.event;
+  var humanName = convertMouseButtonToString[event.button];
+
+  pressedButtons[humanName] = false;
+}
+
+function isMouseDown(name) {
+  if (pressedButtons[name])
+    return true;
+
+  return false;
 }
