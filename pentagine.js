@@ -15,7 +15,7 @@ var radToDeg = 180 / Math.PI;
 var degToRad = Math.PI / 180;
 
 function init() {
-  setInterval(tick, 100);
+  setInterval(tick, 16.6666666);
   // var date = new Date();
   // var oldTime = date.getTime();
   // var time = oldTime + 60;
