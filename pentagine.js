@@ -79,46 +79,54 @@ Sprite = (function() {
     this.y = y;
     this.angle = 0;
     this.path = image;
+
     if (!image) {
       this.shared = true;
       this.loaded = true;
-      console.log("null image");
+      console.log("Attempted to load null image.");
       return;
     }
+
+    /* Try to retrieve a shared canvas instead of generating a new one */
     this.shared = true;
-    /* try to retrieve a shared canvas instead of generating a new one */
     if (this.path in sharedCanvases) {
-      console.log("loaded shared canvas");
+      console.log("Loaded shared canvas.");
       var shared = sharedCanvases[this.path];
       this.internal = shared[0];
       this.internalctx = shared[1];
       this.loaded = shared[2].loaded;
+
       if (!this.loaded) {
         this.pending = [];
         shared[3].push(this);
       }
     } else {
-      console.log("loaded fresh canvas");
+      console.log("Loaded fresh canvas.");
       this.image = new Image();
       this.image.src = image;
       this.image.owner = this;
       this.loaded = false;
       this.pending = [];
-      /* cache image modifications to an internal canvas for performance and flexibility */
+
+      /* Cache image modifications to an internal canvas for performance and flexibility */
       this.internal = document.createElement("canvas");
       this.internalctx = this.internal.getContext("2d");
-      /* save the canvas to the global shared canvas map */
+
+      /* Save the canvas to the global shared canvas map */
       sharedCanvases[this.path] = [this.internal, this.internalctx, this, []];
-      /* asynchronous image loading and caching */
+
+      /* Asynchronous image loading and caching */
       this.image.onload = function() {
         this.owner.internal.width = this.width.toString();
         this.owner.internal.height = this.height.toString();
         this.owner.internalctx.drawImage(this, 0, 0);
-        /* dump image reference, we no longer need it */
+
+        /* Dump image reference, we no longer need it */
         delete this.owner.image;
         this.owner.loaded = true;
         this.owner.dispatchPending();
-        /* set all dependencies to loaded */
+
+        /* Set all dependencies to loaded */
         var deps = sharedCanvases[this.owner.path][3];
         for (var i = 0; i < deps.length; i++) {
           deps[i].loaded = true;
@@ -137,7 +145,9 @@ Sprite = (function() {
         context.rotate(this.angle * deg_to_rad);
         context.translate(-this.x, -this.y);
       }
+
       context.drawImage(this.internal, this.x, this.y);
+
       if (this.angle) {
         context.restore();
       }
@@ -147,12 +157,15 @@ Sprite = (function() {
       if (this.shared) {
         this.releaseShared();
       }
+
       var ws = width.toString();
       var hs = height.toString();
+
       if (ws != this.internal.width && hs != this.internal.height) {
         this.internal.width = ws;
         this.internal.height = hs;
       }
+
       this.stampRect(0, 0, width, height, color);
     },
 
@@ -160,6 +173,7 @@ Sprite = (function() {
       if (this.shared) {
         this.releaseShared();
       }
+
       this.internalctx.font = size + "px " + font;
       var metrics = this.internalctx.measureText(text);
       // TODO: figure out actual height instead of 2 * size (see stampText TODO)
@@ -170,13 +184,14 @@ Sprite = (function() {
     stampText: function(x, y, text, size, font, color) {
       // TODO: write small function to extract and cache ACTUAL font height
       if (!this.loaded) {
-        console.log("queued text");
+        console.log("Queued text.");
         this.pending.push([this.stampText, x, y, text, font, size, color]);
       } else {
         if (this.shared) {
           this.releaseShared();
         }
-        console.log("drawing text");
+
+        console.log("Drawing text.");
         this.internalctx.font = size + "px " + font
         this.internalctx.textAlign = "left";
         this.internalctx.fillStyle = color;
@@ -186,43 +201,45 @@ Sprite = (function() {
 
     stampRect: function(x, y, width, height, color) {
       if (!this.loaded) {
-        console.log("queued rect");
+        console.log("Queued rect.");
         this.pending.push([this.stampRect, x, y, width, height, color]);
       } else {
         if (this.shared) {
           this.releaseShared();
         }
+
         this.internalctx.fillStyle = color;
         this.internalctx.fillRect(x, y, width, height);
       }
     },
 
-    /* internal */
     dispatchPending: function() {
-      /* dispatch all pending sprite modifications */
+      /* Dispatch all pending sprite modifications */
       var pending = this.pending;
       for (var i = 0; i < pending.length; i++) {
-        console.log("dispatched pending");
+        console.log("Dispatched pending.");
         pending[i][0].apply(this, Array.prototype.slice.call(pending[i], 1));
       }
+
       delete this.pending;
     },
 
     releaseShared: function() {
-      /* stop using the shared version of the internal canvas, we probably
+      /* Stop using the shared version of the internal canvas, we probably
        * need a dinamically modified sprite */
       var newInternal = document.createElement("canvas");
       this.internalctx = newInternal.getContext("2d");
+
       if (this.path) {
         newInternal.width = this.internal.width.toString();
         newInternal.height = this.internal.height.toString();
         this.internalctx.drawImage(sharedCanvases[this.path][0], 0, 0);
       }
+
       this.internal = newInternal;
       this.shared = false;
-      console.log("released shared canvas");
+      console.log("Released shared canvas.");
     },
-
   }
 
   return constructor;
@@ -247,11 +264,6 @@ SpriteList = (function() {
 
   return constructor;
 })();
-
-/*function loadImage(imageName) {
-  var image = new Image();
-  image.src = imageName;
-}*/
 
 /*************************************** INPUT */
 window.addEventListener("keydown", handleKeyDown);
