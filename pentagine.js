@@ -252,7 +252,7 @@ Sprite = (function() {
       this.internal = newInternal;
       this.shared = false;
       console.log("Released shared canvas.");
-    },
+    }
   }
 
   return constructor;
