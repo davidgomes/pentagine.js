@@ -8,6 +8,7 @@ function PlayState() {
     this.speed = 30;
 
     this.difficulty = 50;
+    this.score = 0;
 
     preventKeys("down", "right", "left", "right", "space");
   }
@@ -43,11 +44,16 @@ function PlayState() {
     this.walls[0] = this.walls[1];
 
     this.helicopter.y += this.helicopter.vy;
+
     this.difficulty += 0.1;
+    this.score++;
   }
 
   this.draw = function() {
     clearCanvas();
+
+    currentFont = "10px arial";
+    drawString(this.score.toString(), 2, 10, "#FFF");
 
     for (var i = 0; i < this.walls.length; i++) {
       drawRectangle(i, 0, 1, this.walls[i], "#123");

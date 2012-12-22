@@ -6,6 +6,7 @@ context.height = canvas.height;
 context.globalCompositeOperation = "destination-over";
 
 var currentState = null;
+var currentFont = "10px serif";
 
 var pauseKey = "p";
 var canPauseOrResume = true;
@@ -79,6 +80,17 @@ function drawRectangle(x, y, width, height, color) {
   } else {
     context.fillRect(x, y, width, height);
   }
+}
+
+function drawString(text, x, y, color, alignment) {
+  if (!alignment)
+    context.textAlign = "left";
+  else
+    context.textAlign = alignment;
+
+  context.font = currentFont;
+  context.fillStyle = color;
+  context.fillText(text, x, y);
 }
 
 function clearCanvas() {
@@ -205,7 +217,7 @@ Sprite = (function() {
         }
 
         console.log("Drawing text.");
-        this.internalctx.font = size + "px " + font
+        this.internalctx.font = size + "px " + font;
         this.internalctx.textAlign = "left";
         this.internalctx.fillStyle = color;
         this.internalctx.fillText(text, x, y + size);
