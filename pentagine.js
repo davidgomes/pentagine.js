@@ -1,9 +1,10 @@
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
-var sharedCanvases = {};
 context.width = canvas.width;
 context.height = canvas.height;
 context.globalCompositeOperation = "destination-over";
+
+var sharedCanvases = {};
 
 var currentState = null;
 var lastUpdate = null;
