@@ -17,10 +17,10 @@ function PlayState() {
     console.log(mouseX, mouseY);
 
     if (isDown("up") || isDown("w"))
-      this.helicopter.y -= 15;
+      this.helicopter.y -= 400 * this.dt;
 
     if (isDown("down") || isDown("s"))
-      this.helicopter.y += 10;
+      this.helicopter.y += 200 * this.dt;
 
     for (var i = 2; i < this.walls.length - this.speed; i++) {
       for (var u = 0; u < this.speed; u++) {
@@ -43,18 +43,19 @@ function PlayState() {
     this.walls[1] = this.walls[2];
     this.walls[0] = this.walls[1];
 
-    this.helicopter.y += this.helicopter.vy;
+    this.helicopter.y += 100 * this.dt;
 
     this.difficulty += 0.1;
     this.score++;
   }
 
-  this.draw = function() {
+  this.render = function() {
     clearCanvas();
 
     currentFont = "10px arial";
-    drawString(this.score.toString(), 2, 10, "#FFF");
-
+    drawString("Score: " + this.score.toString(), 2, 10, "#FFF");
+    drawString("Delta Time: " + Math.floor(this.dt.toString() * 1000) + "ms", 2, 20, "#FFF");
+    
     for (var i = 0; i < this.walls.length; i++) {
       drawRectangle(i, 0, 1, this.walls[i], "#123");
       drawRectangle(i, context.height - this.walls[i], 1, this.walls[i], "#123");

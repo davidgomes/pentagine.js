@@ -6,6 +6,8 @@ context.height = canvas.height;
 context.globalCompositeOperation = "destination-over";
 
 var currentState = null;
+var lastUpdate = null;
+
 var currentFont = "10px serif";
 
 var pauseKey = "p";
@@ -16,25 +18,21 @@ var radToDeg = 180 / Math.PI;
 var degToRad = Math.PI / 180;
 
 function init() {
-  setInterval(tick, 16.6666666);
-  // var date = new Date();
-  // var oldTime = date.getTime();
-  // var time = oldTime + 60;
+  lastUpdate = Date.now();
 
-  // while (true) {
-    // currentTime = date.getTime();
-    // tick(currentTime - oldTime);
-    // tick(1);
-    // tick();
-    // oldTime = currentTime;
-  // }
+  // setInterval(tick, 16.6666666);
 
-
+  var myInterval = setInterval(tick, 0);
 }
 
-function tick(dt) {
+function tick() {
+  var currentTime = Date.now();
+  var dt = currentTime - lastUpdate;
+  lastUpdate = currentTime;
+  currentState.dt = dt * 0.001;
+
   if (gamePaused) {
-    currentState.draw();
+    currentState.render();
 
     if (isDown(pauseKey))
       pauseOrResumeGame();
@@ -44,8 +42,8 @@ function tick(dt) {
     if (isDown(pauseKey))
       pauseOrResumeGame();
 
-    currentState.update(dt);
-    currentState.draw();
+    currentState.update();
+    currentState.render();
   }
 }
 
