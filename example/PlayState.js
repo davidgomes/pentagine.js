@@ -49,7 +49,7 @@ function PlayState() {
     this.score++;
   }
 
-  this.render = function() {
+  this.draw = function() {
     clearCanvas();
 
     currentFont = "10px arial";

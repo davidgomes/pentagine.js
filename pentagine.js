@@ -19,6 +19,15 @@ var gamePaused = false;
 var radToDeg = 180 / Math.PI;
 var degToRad = Math.PI / 180;
 
+/* Use stats.js for awesome stats */
+var stats = new Stats();
+stats.setMode(1);
+stats.domElement.style.position = "absolute";
+stats.domElement.style.left = "800px";
+stats.domElement.style.top = "0px";
+
+document.body.appendChild(stats.domElement);
+
 function init() {
   lastUpdate = Date.now();
 
@@ -28,11 +37,13 @@ function init() {
 }
 
 function tick() {
+  stats.begin();
+
   var currentTime = Date.now();
   var dt = currentTime - lastUpdate;
   lastUpdate = currentTime;
   currentState.dt = dt * 0.001;
-
+  
   if (gamePaused) {
     currentState.draw();
 
@@ -47,6 +58,8 @@ function tick() {
     currentState.update();
     currentState.draw();
   }
+
+  stats.end();
 }
 
 function pauseOrResumeGame() {
