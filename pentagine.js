@@ -153,6 +153,7 @@ Sprite = (function() {
         context.rotate(this.angle * degToRad);
         context.translate(-this.x, -this.y);
       }
+
       if (this.alpha != 1) {
         context.globalAlpha = this.alpha;
       }
@@ -162,6 +163,7 @@ Sprite = (function() {
       if (this.alpha != 1) {
         context.globalAlpha = 1;
       }
+
       if (this.angle) {
         context.restore();
       }
