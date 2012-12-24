@@ -3,10 +3,8 @@ function init() {
 
   if (desiredFPS) {
     setInterval(tick, 16.6666666666);
-    console.log("heyy");
   } else {
     var myInterval = setInterval(tick, 0);
-    console.log("lol");
   }
 }
 
@@ -48,6 +46,10 @@ function pauseOrResumeGame() {
 }
 
 function switchState(newState) {
+  if (!currentState) {
+    init();
+  }
+  
   newState.setup();
   return currentState = newState;
 }
@@ -460,7 +462,7 @@ var degToRad = Math.PI / 180;
 
 /* Use stats.js for awesome stats */
 var stats = new Stats();
-stats.setMode(1);
+stats.setMode(2);
 stats.domElement.style.position = "absolute";
 stats.domElement.style.left = "800px";
 stats.domElement.style.top = "0px";

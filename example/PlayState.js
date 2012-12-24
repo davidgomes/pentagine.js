@@ -66,4 +66,5 @@ function PlayState() {
 }
 
 var playState = new PlayState();
+desiredFPS = 20;
 switchState(playState);
