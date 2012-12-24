@@ -1,7 +1,10 @@
 function init() {
   lastUpdate = Date.now();
 
-  // setInterval(tick, 16.6666666);
+  if (desiredFPS) {
+    setInterval(tick, desiredFPS * 0.001);
+    return;
+  }
 
   var myInterval = setInterval(tick, 0);
 }
