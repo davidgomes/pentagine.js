@@ -84,6 +84,7 @@ Sprite = (function() {
   function constructor(image, x, y) {
     this.x = x;
     this.y = y;
+    this.alpha = 1;
     this.angle = 0;
     this.path = image;
 
@@ -152,9 +153,15 @@ Sprite = (function() {
         context.rotate(this.angle * degToRad);
         context.translate(-this.x, -this.y);
       }
+      if (this.alpha != 1) {
+        context.globalAlpha = this.alpha;
+      }
 
       context.drawImage(this.internal, this.x, this.y);
 
+      if (this.alpha != 1) {
+        context.globalAlpha = 1;
+      }
       if (this.angle) {
         context.restore();
       }
