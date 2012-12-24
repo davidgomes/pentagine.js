@@ -8,6 +8,7 @@ var sharedCanvases = {};
 
 var currentState = null;
 var lastUpdate = null;
+var desiredFPS = null;
 
 var currentFont = "10px serif";
 
@@ -33,7 +34,7 @@ function tick() {
   currentState.dt = dt * 0.001;
 
   if (gamePaused) {
-    currentState.render();
+    currentState.draw();
 
     if (isDown(pauseKey))
       pauseOrResumeGame();
@@ -44,7 +45,7 @@ function tick() {
       pauseOrResumeGame();
 
     currentState.update();
-    currentState.render();
+    currentState.draw();
   }
 }
 
