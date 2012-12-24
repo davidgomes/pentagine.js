@@ -6,6 +6,7 @@ function init() {
     console.log("heyy");
   } else {
     var myInterval = setInterval(tick, 0);
+    console.log("lol");
   }
 }
 
