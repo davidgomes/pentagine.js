@@ -19,7 +19,7 @@ function PlayState() {
     preventKeys("down", "right", "left", "right", "space");
   }
 
-  this.update() = function() {
+  this.update = function() {
     if (isDown("up"))
       this.ball.y--;
     else if (isDown("down"))
