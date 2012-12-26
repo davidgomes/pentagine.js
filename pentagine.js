@@ -93,6 +93,7 @@ Sprite = (function() {
     this.alpha = 1;
     this.angle = 0;
     this.path = image;
+    this.offset = {x: 0, y: 0};
 
     if (!image) {
       this.shared = true;
@@ -155,9 +156,9 @@ Sprite = (function() {
       // TODO: how about caching rotated sprites on their internal canvas?
       if (this.angle) {
         context.save();
-        context.translate(this.x, this.y);
+        context.translate(this.x + this.offset.x, this.y + this.offset.y);
         context.rotate(this.angle * degToRad);
-        context.translate(-this.x, -this.y);
+        context.translate(-(this.x + this.offset.x), -(this.y + this.offset.y));
       }
 
       if (this.alpha != 1) {
