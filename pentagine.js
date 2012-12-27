@@ -261,6 +261,26 @@ Sprite = (function() {
       }
     },
 
+    stampImage: function(x, y, path) {
+      if (!this.loaded) {
+        console.log("Queued stamp image.");
+        this.pending.push([this.stampImage, x, y, path]);
+      } else {
+        if (this.shared) {
+          this.releaseShared();
+        }
+
+        var image = new Image();
+        image.src = path;
+        image.sprite = this;
+        image.target = {x: x, y: y};
+
+        image.onload = function() {
+          this.sprite.internalctx.drawImage(this, this.target.x, this.target.y);
+        };
+      }
+    },
+
     dispatchPending: function() {
       /* Dispatch all pending sprite modifications */
       var pending = this.pending;
