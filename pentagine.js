@@ -49,7 +49,7 @@ function switchState(newState) {
   if (!currentState) {
     init();
   }
-  
+
   if (!newState.camera) {
     newState.camera = new Camera(0, 0, context.width, context.height);
   }
@@ -191,7 +191,6 @@ Sprite = (function() {
       context.drawImage(this.internal, this.x - currentState.camera.x,
                                        this.y - currentState.camera.y);
 
-
       if (this.alpha != 1) {
         context.globalAlpha = 1;
       }
@@ -313,7 +312,7 @@ SpriteList = (function() {
       var index = this.sprites.indexOf(sprite);
       this.sprites.splice(index, 1);
     }
-              
+
   }
 
   return constructor;
@@ -455,6 +454,7 @@ function handleMouseMove(e) {
     mouseX = e.layerX;
     mouseY = e.layerY;
   }
+
   mouseX += currentState.camera.x;
   mouseY += currentState.camera.y;
 }
