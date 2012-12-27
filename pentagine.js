@@ -452,6 +452,8 @@ function handleMouseMove(e) {
     mouseX = e.layerX;
     mouseY = e.layerY;
   }
+  mouseX += currentState.camera.x;
+  mouseY += currentState.camera.y;
 }
 
 function isMouseDown(name) {
