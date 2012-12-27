@@ -177,9 +177,11 @@ Sprite = (function() {
       // TODO: how about caching rotated sprites on their internal canvas?
       if (this.angle) {
         context.save();
-        context.translate(this.x + this.offset.x, this.y + this.offset.y);
+        context.translate(this.x + this.offset.x - currentState.camera.x,
+                          this.y + this.offset.y - currentState.camera.y);
         context.rotate(this.angle * degToRad);
-        context.translate(-(this.x + this.offset.x), -(this.y + this.offset.y));
+        context.translate(-(this.x + this.offset.x - currentState.camera.x),
+                          -(this.y + this.offset.y - currentState.camera.y));
       }
 
       if (this.alpha != 1) {
@@ -188,6 +190,7 @@ Sprite = (function() {
 
       context.drawImage(this.internal, this.x - currentState.camera.x,
                                        this.y - currentState.camera.y);
+
 
       if (this.alpha != 1) {
         context.globalAlpha = 1;
