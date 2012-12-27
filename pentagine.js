@@ -208,7 +208,7 @@ Sprite = (function() {
       var ws = width.toString();
       var hs = height.toString();
 
-      if (ws != this.internal.width && hs != this.internal.height) {
+      if (ws != this.internal.width || hs != this.internal.height) {
         this.internal.width = ws;
         this.internal.height = hs;
       }
@@ -257,6 +257,26 @@ Sprite = (function() {
 
         this.internalctx.fillStyle = color;
         this.internalctx.fillRect(x, y, width, height);
+      }
+    },
+
+    stampImage: function(x, y, path) {
+      if (!this.loaded) {
+        console.log("Queued stamp image.");
+        this.pending.push([this.stampImage, x, y, path]);
+      } else {
+        if (this.shared) {
+          this.releaseShared();
+        }
+
+        var image = new Image();
+        image.src = path;
+        image.sprite = this;
+        image.target = {x: x, y: y};
+
+        image.onload = function() {
+          this.sprite.internalctx.drawImage(this, this.target.x, this.target.y);
+        };
       }
     },
 
