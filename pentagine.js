@@ -50,6 +50,10 @@ function switchState(newState) {
     init();
   }
   
+  if (!newState.camera) {
+    newState.camera = new Camera(0, 0, context.width, context.height);
+  }
+
   newState.setup();
   return currentState = newState;
 }
@@ -84,6 +88,23 @@ function drawString(text, x, y, color, alignment) {
 function clearCanvas() {
   context.clearRect(0, 0, context.width, context.height);
 }
+
+Camera = (function () {
+  function constructor(x, y, width, height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
+
+  constructor.prototype = {
+    follow: function() {
+    }
+  }
+
+  return constructor;
+})();
+
 
 /*************************************** SPRITE */
 Sprite = (function() {
@@ -165,7 +186,8 @@ Sprite = (function() {
         context.globalAlpha = this.alpha;
       }
 
-      context.drawImage(this.internal, this.x, this.y);
+      context.drawImage(this.internal, this.x - currentState.camera.x,
+                                       this.y - currentState.camera.y);
 
       if (this.alpha != 1) {
         context.globalAlpha = 1;
