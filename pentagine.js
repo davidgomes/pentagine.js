@@ -209,7 +209,7 @@ Sprite = (function() {
       var ws = width.toString();
       var hs = height.toString();
 
-      if (ws != this.internal.width && hs != this.internal.height) {
+      if (ws != this.internal.width || hs != this.internal.height) {
         this.internal.width = ws;
         this.internal.height = hs;
       }
