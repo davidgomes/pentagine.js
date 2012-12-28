@@ -492,6 +492,9 @@ window.addEventListener("touchend", handleTouchEnd, false);
 function handleTouchStart(e) {
   var event = (e) ? e : window.event;
   pressedButtons["left"] = true;
+
+  mouseX = e.touches[0].pageX - canvas.offsetLeft;
+  mouseY = e.touches[0].pageY - canvas.offsetTop;
 }
 
 function handleTouchEnd(e) {
