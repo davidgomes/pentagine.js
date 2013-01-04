@@ -30,7 +30,7 @@ function PlayState() {
       this.ball.x++;
   }
 
-  this.draw() = function() {
+  this.draw = function() {
     clearCanvas();
 
     this.ball.draw();

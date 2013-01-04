@@ -14,8 +14,6 @@ function PlayState() {
   }
 
   this.update = function() {
-    console.log(mouseX, mouseY);
-
     if (isDown("up") || isDown("w"))
       this.helicopter.y -= 400 * this.dt;
 
