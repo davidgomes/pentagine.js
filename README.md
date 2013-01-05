@@ -39,7 +39,14 @@ function PlayState() {
   }
 }
 
+/*      
+   If desiredFPS is not declared, the game will run as fast as
+   possible, and on any State, you can use 'this.dt' to get the
+   delta time between two ticks and use it to make movement
+   smooth.
+*/
 desiredFPS = 60;
+
 var playState = new PlayState();
 switchState(playState);
 ```
