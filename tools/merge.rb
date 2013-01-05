@@ -3,8 +3,8 @@
 puts "Merging all pentagine's source files into pentagine.js.\n\n"
 
 # Read all files
-files_names = ["src/Animation.js", "src/Drawing.js", "src/SpriteList.js", "src/Camera.js",
-               "src/Input.js", "src/Sprite.js", "src/main.js"]
+files_names = ["src/Animation.js", "src/Drawing.js", "src/SpriteList.js",
+               "src/Camera.js", "src/Input.js", "src/Sprite.js", "src/main.js"]
 
 files_contents = []
 
