@@ -1,3 +1,5 @@
+/* Simple example showing off SpriteList */
+
 function PlayState() {
   this.setup = function() {
     this.balls = new SpriteList();
@@ -18,5 +20,6 @@ function PlayState() {
   }
 }
 
+desiredFPS = 60;
 var playState = new PlayState();
 switchState(playState);
