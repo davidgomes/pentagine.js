@@ -52,7 +52,8 @@ function PlayState() {
 
     currentFont = "10px arial";
     drawString("Score: " + this.score.toString(), 2, 10, "#FFF");
-    drawString("Delta Time: " + Math.floor(this.dt.toString() * 1000) + "ms", 2, 20, "#FFF");
+    drawString("Delta Time: " + Math.floor((this.dt * 1000).toString()) + "ms", 2, 20, "#FFF");
+    drawString("FPS: " + Math.floor((1 / this.dt).toString()) + "", 2, 30, "#FFF");
     
     for (var i = 0; i < this.walls.length; i++) {
       drawRectangle(i, 0, 1, this.walls[i], "#123");
