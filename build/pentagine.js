@@ -9,6 +9,7 @@ Animation = (function() {
 
   return constructor;
 })();
+
 function drawCircle(x, y, radius) {
   context.beginPath();
   context.arc(x, y, radius, 0, Math.PI * 2, false);
@@ -39,6 +40,7 @@ function drawString(text, x, y, color, alignment) {
 function clearCanvas() {
   context.clearRect(0, 0, context.width, context.height);
 }
+
 SpriteList = (function() {
   function constructor() {
     this.sprites = [];
@@ -63,6 +65,7 @@ SpriteList = (function() {
 
   return constructor;
 })();
+
 Camera = (function () {
   function constructor(x, y, width, height) {
     this.x = x;
@@ -78,6 +81,7 @@ Camera = (function () {
 
   return constructor;
 })();
+
 /*************************************** INPUT */
 window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
@@ -245,6 +249,7 @@ function handleTouchEnd(e) {
   var event = (e) ? e : window.event;
   pressedButtons["left"] = false;
 }
+
 /*************************************** SPRITE */
 Sprite = (function() {
   function constructor(image, x, y) {
@@ -442,6 +447,7 @@ Sprite = (function() {
 
   return constructor;
 })();
+
 function init() {
   lastUpdate = Date.now();
 
@@ -538,3 +544,4 @@ stats.domElement.style.left = "800px";
 stats.domElement.style.top = "0px";
 
 document.body.appendChild(stats.domElement);
+
