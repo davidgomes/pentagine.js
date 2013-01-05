@@ -105,7 +105,6 @@ Camera = (function () {
   return constructor;
 })();
 
-
 /*************************************** SPRITE */
 Sprite = (function() {
   function constructor(image, x, y) {
@@ -445,6 +444,7 @@ function handleMouseDown(e) {
   }*/
 
   pressedButtons[humanName] = true;
+
   /*if (on_keydown_callbacks[human_name]) {
     on_keydown_callbacks[human_name](human_name);
     e.preventDefault();
