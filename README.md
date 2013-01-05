@@ -9,7 +9,13 @@ Pentagine puts all its variables and functions on the **global namespace** and I
 
 Example
 -------
-Here's a small example of all the Javascript code needed to draw a ball and make it movable:
+Clone pentagine with:
+
+```git clone git@github.com:davidgomes/pentagine.git```
+
+And then open `example/index.html` for a list of examples.
+
+Here's a small example of all the Javascript code necessary to draw a ball and make it movable:
 
 ```javascript
 function PlayState() {
