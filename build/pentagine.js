@@ -1,63 +1,14 @@
-function init() {
-  lastUpdate = Date.now();
+Animation = (function() {
+  function constructor() {
 
-  if (desiredFPS) {
-    var myInterval = setInterval(tick, 1 / desiredFPS * 1000);
-  } else {
-    setInterval(tick, 0);
-  }
-}
-
-function tick() {
-  var currentTime = Date.now();
-  var dt = currentTime - lastUpdate;
-  lastUpdate = currentTime;
-  currentState.dt = dt * 0.001;
-  stats.begin();
-
-  if (gamePaused) {
-    currentState.draw();
-
-    if (isDown(pauseKey))
-      pauseOrResumeGame();
-
-    // TODO Draw Pause/Play huge icon on top
-  } else {
-    if (isDown(pauseKey))
-      pauseOrResumeGame();
-
-    currentState.update();
-    currentState.draw();
   }
 
-  stats.end();
-}
-
-function pauseOrResumeGame() {
-  if (canPauseOrResume) {
-    gamePaused = !gamePaused;
-
-    setTimeout(function() {
-      canPauseOrResume = true;
-    }, 1000);
-
-    canPauseOrResume = false;
-  }
-}
-
-function switchState(newState) {
-  if (!currentState) {
-    init();
+  constructor.prototype = {
+    
   }
 
-  if (!newState.camera) {
-    newState.camera = new Camera(0, 0, context.width, context.height);
-  }
-
-  newState.setup();
-  return currentState = newState;
-}
-
+  return constructor;
+})();
 function drawCircle(x, y, radius) {
   context.beginPath();
   context.arc(x, y, radius, 0, Math.PI * 2, false);
@@ -88,7 +39,30 @@ function drawString(text, x, y, color, alignment) {
 function clearCanvas() {
   context.clearRect(0, 0, context.width, context.height);
 }
+SpriteList = (function() {
+  function constructor() {
+    this.sprites = [];
+  }
 
+  constructor.prototype = {
+    draw: function() {
+      for (var i = 0; i < this.sprites.length; i++) {
+        this.sprites[i].draw();
+      }
+    },
+
+    push: function(newSprite) {
+      this.sprites.push(newSprite);
+    },
+
+    remove: function(sprite) {
+      var index = this.sprites.indexOf(sprite);
+      this.sprites.splice(index, 1);
+    }
+  }
+
+  return constructor;
+})();
 Camera = (function () {
   function constructor(x, y, width, height) {
     this.x = x;
@@ -104,7 +78,173 @@ Camera = (function () {
 
   return constructor;
 })();
+/*************************************** INPUT */
+window.addEventListener("keydown", handleKeyDown);
+window.addEventListener("keyup", handleKeyUp);
 
+var keyCodeToString = [];
+keyCodeToString[8] = "backspace";
+keyCodeToString[9] = "tab";
+keyCodeToString[13] = "enter";
+keyCodeToString[16] = "shift";
+keyCodeToString[17] = "ctrl";
+keyCodeToString[18] = "alt";
+keyCodeToString[19] = "pause";
+keyCodeToString[20] = "capslock";
+keyCodeToString[27] = "esc";
+keyCodeToString[32] = "space";
+keyCodeToString[33] = "pageup";
+keyCodeToString[34] = "pagedown";
+keyCodeToString[35] = "end";
+keyCodeToString[36] = "home";
+keyCodeToString[37] = "left";
+keyCodeToString[38] = "up";
+keyCodeToString[39] = "right";
+keyCodeToString[40] = "down";
+keyCodeToString[45] = "insert";
+keyCodeToString[46] = "delete";
+
+keyCodeToString[91] = "leftwindowkey";
+keyCodeToString[92] = "rightwindowkey";
+keyCodeToString[93] = "selectkey";
+keyCodeToString[106] = "multiply";
+keyCodeToString[107] = "add";
+keyCodeToString[109] = "subtract";
+keyCodeToString[110] = "decimalpoint";
+keyCodeToString[111] = "divide";
+
+keyCodeToString[144] = "numlock";
+keyCodeToString[145] = "scrollock";
+keyCodeToString[186] = "semicolon";
+keyCodeToString[187] = "equalsign";
+keyCodeToString[188] = "comma";
+keyCodeToString[189] = "dash";
+keyCodeToString[190] = "period";
+keyCodeToString[191] = "forwardslash";
+keyCodeToString[192] = "graveaccent";
+keyCodeToString[219] = "openbracket";
+keyCodeToString[220] = "backslash";
+keyCodeToString[221] = "closebracket";
+keyCodeToString[222] = "singlequote";
+
+var numpadKeys = ["numpad1", "numpad2", "numpad3", "numpad4", "numpad5",
+                  "numpad6", "numpad7", "numpad8", "numpad9"];
+
+var numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
+               "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
+               "u", "v", "w", "x", "y", "z"];
+
+for (var i = 0; numbers[i]; i++) { keyCodeToString[48 + i] = numbers[i]; }
+for (var i = 0; letters[i]; i++) { keyCodeToString[65 + i] = letters[i]; }
+for (var i = 0; numpadKeys[i]; i++) { keyCodeToString[96 + i] = numpadKeys[i]; }
+
+var pressedKeys = [];
+var preventedKeys = [];
+
+function preventKeys(keys) {
+  preventedKeys = keys;
+}
+
+function handleKeyDown(e) {
+  var event = (e) ? e : window.event;
+  var name = keyCodeToString[event.keyCode];
+  pressedKeys[name] = true;
+
+  if (preventedKeys[name])
+    e.preventDefault();
+}
+
+function handleKeyUp(e) {
+  var event = (e) ? e : window.event;
+  var name = keyCodeToString[event.keyCode];
+  pressedKeys[name] = false;
+
+  if (preventedKeys[name])
+    e.preventDefault();
+}
+
+function isDown(name) {
+  if (pressedKeys[name])
+    return true;
+
+  return false;
+}
+
+window.addEventListener("mousedown", handleMouseDown, false);
+window.addEventListener("mouseup", handleMouseUp, false);
+window.addEventListener("mousemove", handleMouseMove);
+
+var pressedButtons = [];
+var mouseX = null;
+var mouseY = null;
+
+var convertMouseButtonToString = [];
+convertMouseButtonToString[0] = "left";
+convertMouseButtonToString[1] = "center";
+convertMouseButtonToString[2] = "right";
+
+function handleMouseDown(e) {
+  var event = (e) ? e : window.event;
+  var humanName = convertMouseButtonToString[event.button];
+
+  /*if (navigator.appName == "Microsoft Internet Explorer") {
+    human_name = ie_mousebuttoncode_to_string[event.button];
+  }*/
+
+  pressedButtons[humanName] = true;
+
+  /*if (on_keydown_callbacks[human_name]) {
+    on_keydown_callbacks[human_name](human_name);
+    e.preventDefault();
+  }*/
+}
+
+function handleMouseUp(e) {
+  var event = (e) ? e : window.event;
+  var humanName = convertMouseButtonToString[event.button];
+
+  pressedButtons[humanName] = false;
+}
+
+function handleMouseMove(e) {
+  if (e.offsetX) {
+    mouseX = e.offsetX;
+    mouseY = e.offsetY;
+  } else if (e.layerX) {
+    mouseX = e.layerX;
+    mouseY = e.layerY;
+  }
+
+  mouseX += currentState.camera.x;
+  mouseY += currentState.camera.y;
+}
+
+function isMouseDown(name) {
+  if (pressedButtons[name])
+    return true;
+
+  return false;
+}
+
+window.addEventListener("touchstart", handleTouchStart, false);
+window.addEventListener("touchend", handleTouchEnd, false);
+
+function handleTouchStart(e) {
+  var event = (e) ? e : window.event;
+  pressedButtons["left"] = true;
+
+  mouseX = e.touches[0].pageX - canvas.offsetLeft;
+  mouseY = e.touches[0].pageY - canvas.offsetTop;
+
+  mouseX += currentState.camera.x;
+  mouseY += currentState.camera.y;
+}
+
+function handleTouchEnd(e) {
+  var event = (e) ? e : window.event;
+  pressedButtons["left"] = false;
+}
 /*************************************** SPRITE */
 Sprite = (function() {
   function constructor(image, x, y) {
@@ -302,210 +442,64 @@ Sprite = (function() {
 
   return constructor;
 })();
+function init() {
+  lastUpdate = Date.now();
 
-Animation = (function() {
-  function constructor() {
+  if (desiredFPS) {
+    var myInterval = setInterval(tick, 1 / desiredFPS * 1000);
+  } else {
+    setInterval(tick, 0);
+  }
+}
 
+function tick() {
+  var currentTime = Date.now();
+  var dt = currentTime - lastUpdate;
+  lastUpdate = currentTime;
+  currentState.dt = dt * 0.001;
+  stats.begin();
+
+  if (gamePaused) {
+    currentState.draw();
+
+    if (isDown(pauseKey))
+      pauseOrResumeGame();
+
+    // TODO Draw Pause/Play huge icon on top
+  } else {
+    if (isDown(pauseKey))
+      pauseOrResumeGame();
+
+    currentState.update();
+    currentState.draw();
   }
 
-  constructor.prototype = {
-    
+  stats.end();
+}
+
+function pauseOrResumeGame() {
+  if (canPauseOrResume) {
+    gamePaused = !gamePaused;
+
+    setTimeout(function() {
+      canPauseOrResume = true;
+    }, 1000);
+
+    canPauseOrResume = false;
+  }
+}
+
+function switchState(newState) {
+  if (!currentState) {
+    init();
   }
 
-  return constructor;
-})();
-
-SpriteList = (function() {
-  function constructor() {
-    this.sprites = [];
+  if (!newState.camera) {
+    newState.camera = new Camera(0, 0, context.width, context.height);
   }
 
-  constructor.prototype = {
-    draw: function() {
-      for (var i = 0; i < this.sprites.length; i++) {
-        this.sprites[i].draw();
-      }
-    },
-
-    push: function(newSprite) {
-      this.sprites.push(newSprite);
-    },
-
-    remove: function(sprite) {
-      var index = this.sprites.indexOf(sprite);
-      this.sprites.splice(index, 1);
-    }
-  }
-
-  return constructor;
-})();
-
-/*************************************** INPUT */
-window.addEventListener("keydown", handleKeyDown);
-window.addEventListener("keyup", handleKeyUp);
-
-var keyCodeToString = [];
-keyCodeToString[8] = "backspace";
-keyCodeToString[9] = "tab";
-keyCodeToString[13] = "enter";
-keyCodeToString[16] = "shift";
-keyCodeToString[17] = "ctrl";
-keyCodeToString[18] = "alt";
-keyCodeToString[19] = "pause";
-keyCodeToString[20] = "capslock";
-keyCodeToString[27] = "esc";
-keyCodeToString[32] = "space";
-keyCodeToString[33] = "pageup";
-keyCodeToString[34] = "pagedown";
-keyCodeToString[35] = "end";
-keyCodeToString[36] = "home";
-keyCodeToString[37] = "left";
-keyCodeToString[38] = "up";
-keyCodeToString[39] = "right";
-keyCodeToString[40] = "down";
-keyCodeToString[45] = "insert";
-keyCodeToString[46] = "delete";
-
-keyCodeToString[91] = "leftwindowkey";
-keyCodeToString[92] = "rightwindowkey";
-keyCodeToString[93] = "selectkey";
-keyCodeToString[106] = "multiply";
-keyCodeToString[107] = "add";
-keyCodeToString[109] = "subtract";
-keyCodeToString[110] = "decimalpoint";
-keyCodeToString[111] = "divide";
-
-keyCodeToString[144] = "numlock";
-keyCodeToString[145] = "scrollock";
-keyCodeToString[186] = "semicolon";
-keyCodeToString[187] = "equalsign";
-keyCodeToString[188] = "comma";
-keyCodeToString[189] = "dash";
-keyCodeToString[190] = "period";
-keyCodeToString[191] = "forwardslash";
-keyCodeToString[192] = "graveaccent";
-keyCodeToString[219] = "openbracket";
-keyCodeToString[220] = "backslash";
-keyCodeToString[221] = "closebracket";
-keyCodeToString[222] = "singlequote";
-
-var numpadKeys = ["numpad1", "numpad2", "numpad3", "numpad4", "numpad5",
-                  "numpad6", "numpad7", "numpad8", "numpad9"];
-
-var numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
-               "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
-               "u", "v", "w", "x", "y", "z"];
-
-for (var i = 0; numbers[i]; i++) { keyCodeToString[48 + i] = numbers[i]; }
-for (var i = 0; letters[i]; i++) { keyCodeToString[65 + i] = letters[i]; }
-for (var i = 0; numpadKeys[i]; i++) { keyCodeToString[96 + i] = numpadKeys[i]; }
-
-var pressedKeys = [];
-var preventedKeys = [];
-
-function preventKeys(keys) {
-  preventedKeys = keys;
-}
-
-function handleKeyDown(e) {
-  var event = (e) ? e : window.event;
-  var name = keyCodeToString[event.keyCode];
-  pressedKeys[name] = true;
-
-  if (preventedKeys[name])
-    e.preventDefault();
-}
-
-function handleKeyUp(e) {
-  var event = (e) ? e : window.event;
-  var name = keyCodeToString[event.keyCode];
-  pressedKeys[name] = false;
-
-  if (preventedKeys[name])
-    e.preventDefault();
-}
-
-function isDown(name) {
-  if (pressedKeys[name])
-    return true;
-
-  return false;
-}
-
-window.addEventListener("mousedown", handleMouseDown, false);
-window.addEventListener("mouseup", handleMouseUp, false);
-window.addEventListener("mousemove", handleMouseMove);
-
-var pressedButtons = [];
-var mouseX = null;
-var mouseY = null;
-
-var convertMouseButtonToString = [];
-convertMouseButtonToString[0] = "left";
-convertMouseButtonToString[1] = "center";
-convertMouseButtonToString[2] = "right";
-
-function handleMouseDown(e) {
-  var event = (e) ? e : window.event;
-  var humanName = convertMouseButtonToString[event.button];
-
-  /*if (navigator.appName == "Microsoft Internet Explorer") {
-    human_name = ie_mousebuttoncode_to_string[event.button];
-  }*/
-
-  pressedButtons[humanName] = true;
-
-  /*if (on_keydown_callbacks[human_name]) {
-    on_keydown_callbacks[human_name](human_name);
-    e.preventDefault();
-  }*/
-}
-
-function handleMouseUp(e) {
-  var event = (e) ? e : window.event;
-  var humanName = convertMouseButtonToString[event.button];
-
-  pressedButtons[humanName] = false;
-}
-
-function handleMouseMove(e) {
-  if (e.offsetX) {
-    mouseX = e.offsetX;
-    mouseY = e.offsetY;
-  } else if (e.layerX) {
-    mouseX = e.layerX;
-    mouseY = e.layerY;
-  }
-
-  mouseX += currentState.camera.x;
-  mouseY += currentState.camera.y;
-}
-
-function isMouseDown(name) {
-  if (pressedButtons[name])
-    return true;
-
-  return false;
-}
-
-window.addEventListener("touchstart", handleTouchStart, false);
-window.addEventListener("touchend", handleTouchEnd, false);
-
-function handleTouchStart(e) {
-  var event = (e) ? e : window.event;
-  pressedButtons["left"] = true;
-
-  mouseX = e.touches[0].pageX - canvas.offsetLeft;
-  mouseY = e.touches[0].pageY - canvas.offsetTop;
-
-  mouseX += currentState.camera.x;
-  mouseY += currentState.camera.y;
-}
-
-function handleTouchEnd(e) {
-  var event = (e) ? e : window.event;
-  pressedButtons["left"] = false;
+  newState.setup();
+  return currentState = newState;
 }
 
 /* stats.js - http://github.com/mrdoob/stats.js */
