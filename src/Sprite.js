@@ -1,4 +1,3 @@
-/*************************************** SPRITE */
 Sprite = (function() {
   function constructor(image, x, y) {
     this.x = x;

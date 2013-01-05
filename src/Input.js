@@ -1,4 +1,3 @@
-/*************************************** INPUT */
 window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
 
