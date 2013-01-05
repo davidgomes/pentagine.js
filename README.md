@@ -5,6 +5,8 @@ About
 -----
 Pentagine is a lightweight Javascript library for HTML5 2D Game Development that renders to `<canvas>`. For now, it consists of a State Machine, a Sprite class to load and draw images and some keyboard input functions. Soon, I expect it to have much more.
 
+As an FPS indicator, Pentagine uses [stats.js](https://github.com/mrdoob/stats.js), created by [mrdoob](https://github.com/mrdoob), who is credited on the LICENSE.
+
 Pentagine puts all its variables and functions on the **global namespace** and I do realize this is **not** recommended.
 
 Example
