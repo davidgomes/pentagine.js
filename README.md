@@ -47,8 +47,7 @@ function PlayState() {
 */
 desiredFPS = 60;
 
-var playState = new PlayState();
-switchState(playState);
+switchState(new PlayState());
 ```
 
 License
