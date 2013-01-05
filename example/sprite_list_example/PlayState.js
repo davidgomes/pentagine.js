@@ -10,12 +10,22 @@ function PlayState() {
   }
 
   this.update = function() {
-
+    if (isDown("right")) {
+      this.balls.sprites.forEach(function(ball, index) {
+        ball.x += 5;
+      });
+    } else if (isDown("left")) {
+      this.balls.sprites.forEach(function(ball, index) {
+        ball.x -= 5;
+      });
+    }
   }
 
   this.draw = function() {
     clearCanvas();
 
+    drawString("Use RIGHT and LEFT arrow keys.", 2, 10);
+    
     this.balls.draw();
   }
 }

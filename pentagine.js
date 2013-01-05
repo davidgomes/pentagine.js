@@ -303,6 +303,18 @@ Sprite = (function() {
   return constructor;
 })();
 
+Animation = (function() {
+  function constructor() {
+
+  }
+
+  constructor.prototype = {
+    
+  }
+
+  return constructor;
+})();
+
 SpriteList = (function() {
   function constructor() {
     this.sprites = [];
@@ -323,7 +335,6 @@ SpriteList = (function() {
       var index = this.sprites.indexOf(sprite);
       this.sprites.splice(index, 1);
     }
-
   }
 
   return constructor;
