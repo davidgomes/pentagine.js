@@ -2,9 +2,9 @@ function init() {
   lastUpdate = Date.now();
 
   if (desiredFPS) {
-    setInterval(tick, 16.6666666666);
+    var myInterval = setInterval(tick, 1 / desiredFPS * 1000);
   } else {
-    var myInterval = setInterval(tick, 0);
+    setInterval(tick, 0);
   }
 }
 
@@ -126,7 +126,6 @@ Sprite = (function() {
     /* Try to retrieve a shared canvas instead of generating a new one */
     this.shared = true;
     if (this.path in sharedCanvases) {
-      console.log("Loaded shared canvas.");
       var shared = sharedCanvases[this.path];
       this.internal = shared[0];
       this.internalctx = shared[1];
@@ -137,7 +136,6 @@ Sprite = (function() {
         shared[3].push(this);
       }
     } else {
-      console.log("Loaded fresh canvas.");
       this.image = new Image();
       this.image.src = image;
       this.image.owner = this;
@@ -231,14 +229,12 @@ Sprite = (function() {
     stampText: function(x, y, text, size, font, color) {
       // TODO: write small function to extract and cache ACTUAL font height
       if (!this.loaded) {
-        console.log("Queued text.");
         this.pending.push([this.stampText, x, y, text, font, size, color]);
       } else {
         if (this.shared) {
           this.releaseShared();
         }
 
-        console.log("Drawing text.");
         this.internalctx.font = size + "px " + font;
         this.internalctx.textAlign = "left";
         this.internalctx.fillStyle = color;
@@ -248,7 +244,6 @@ Sprite = (function() {
 
     stampRect: function(x, y, width, height, color) {
       if (!this.loaded) {
-        console.log("Queued rect.");
         this.pending.push([this.stampRect, x, y, width, height, color]);
       } else {
         if (this.shared) {
@@ -262,7 +257,6 @@ Sprite = (function() {
 
     stampImage: function(x, y, path) {
       if (!this.loaded) {
-        console.log("Queued stamp image.");
         this.pending.push([this.stampImage, x, y, path]);
       } else {
         if (this.shared) {
@@ -284,7 +278,6 @@ Sprite = (function() {
       /* Dispatch all pending sprite modifications */
       var pending = this.pending;
       for (var i = 0; i < pending.length; i++) {
-        console.log("Dispatched pending.");
         pending[i][0].apply(this, Array.prototype.slice.call(pending[i], 1));
       }
 
@@ -305,7 +298,6 @@ Sprite = (function() {
 
       this.internal = newInternal;
       this.shared = false;
-      console.log("Released shared canvas.");
     }
   }
 
