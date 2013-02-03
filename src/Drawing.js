@@ -28,7 +28,6 @@ function drawString(text, x, y, color, alignment) {
 
 function clearCanvas(color) {
   if (!color) {
-    context.fillStyle = "#FFF";
     context.clearRect(0, 0, context.width, context.height);
   } else {
     context.fillStyle = color;
