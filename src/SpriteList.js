@@ -18,7 +18,7 @@ SpriteList = (function() {
       var index = this.sprites.indexOf(sprite);
       this.sprites.splice(index, 1);
     }
-  }
+  };
 
   return constructor;
 })();

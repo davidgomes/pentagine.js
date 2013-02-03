@@ -4,13 +4,14 @@ Animation = (function() {
   }
 
   constructor.prototype = {
-    
-  }
+
+  };
 
   return constructor;
 })();
 
-function drawCircle(x, y, radius) {
+function drawCircle(x, y, radius, color) {
+  context.fillStyle = color;
   context.beginPath();
   context.arc(x, y, radius, 0, Math.PI * 2, false);
   context.stroke();
@@ -37,8 +38,15 @@ function drawString(text, x, y, color, alignment) {
   context.fillText(text, x, y);
 }
 
-function clearCanvas() {
-  context.clearRect(0, 0, context.width, context.height);
+function clearCanvas(color) {
+  if (!color) {
+    context.fillStyle = "#FFF";
+    context.clearRect(0, 0, context.width, context.height);
+  } else {
+    context.fillStyle = color;
+    context.clearRect(0, 0, context.width, context.height);
+    drawRectangle(0, 0, context.width, context.height, color);
+  }
 }
 
 SpriteList = (function() {
@@ -61,7 +69,7 @@ SpriteList = (function() {
       var index = this.sprites.indexOf(sprite);
       this.sprites.splice(index, 1);
     }
-  }
+  };
 
   return constructor;
 })();
@@ -77,7 +85,7 @@ Camera = (function () {
   constructor.prototype = {
     follow: function() {
     }
-  }
+  };
 
   return constructor;
 })();
@@ -441,7 +449,7 @@ Sprite = (function() {
       this.internal = newInternal;
       this.shared = false;
     }
-  }
+  };
 
   return constructor;
 })();

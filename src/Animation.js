@@ -4,8 +4,8 @@ Animation = (function() {
   }
 
   constructor.prototype = {
-    
-  }
+
+  };
 
   return constructor;
 })();

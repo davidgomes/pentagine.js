@@ -190,7 +190,7 @@ Sprite = (function() {
       this.internal = newInternal;
       this.shared = false;
     }
-  }
+  };
 
   return constructor;
 })();

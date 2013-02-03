@@ -1,4 +1,5 @@
-function drawCircle(x, y, radius) {
+function drawCircle(x, y, radius, color) {
+  context.fillStyle = color;
   context.beginPath();
   context.arc(x, y, radius, 0, Math.PI * 2, false);
   context.stroke();
@@ -25,6 +26,13 @@ function drawString(text, x, y, color, alignment) {
   context.fillText(text, x, y);
 }
 
-function clearCanvas() {
-  context.clearRect(0, 0, context.width, context.height);
+function clearCanvas(color) {
+  if (!color) {
+    context.fillStyle = "#FFF";
+    context.clearRect(0, 0, context.width, context.height);
+  } else {
+    context.fillStyle = color;
+    context.clearRect(0, 0, context.width, context.height);
+    drawRectangle(0, 0, context.width, context.height, color);
+  }
 }

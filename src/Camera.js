@@ -9,7 +9,7 @@ Camera = (function () {
   constructor.prototype = {
     follow: function() {
     }
-  }
+  };
 
   return constructor;
 })();
