@@ -35,3 +35,7 @@ function clearCanvas(color) {
     drawRectangle(0, 0, context.width, context.height, color);
   }
 }
+
+function isOutsideOfScreen(x, y) {
+  return (x < 0 || x > context.width || y < 0 || y > context.height);
+}

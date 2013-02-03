@@ -40,13 +40,16 @@ function drawString(text, x, y, color, alignment) {
 
 function clearCanvas(color) {
   if (!color) {
-    context.fillStyle = "#FFF";
     context.clearRect(0, 0, context.width, context.height);
   } else {
     context.fillStyle = color;
     context.clearRect(0, 0, context.width, context.height);
     drawRectangle(0, 0, context.width, context.height, color);
   }
+}
+
+function isOutsideOfScreen(x, y) {
+  return (x < 0 || x > context.width || y < 0 || y > context.height);
 }
 
 SpriteList = (function() {
