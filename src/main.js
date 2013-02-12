@@ -59,10 +59,13 @@ function switchState(newState) {
 }
 
 var canvas = document.getElementById("canvas");
-var context = canvas.getContext("2d");
-context.width = canvas.width;
-context.height = canvas.height;
-context.globalCompositeOperation = "destination-over";
+var context = null;
+if (canvas != undefined) {
+  context = canvas.getContext("2d");
+  context.width = canvas.width;
+  context.height = canvas.height;
+  context.globalCompositeOperation = "destination-over";
+}
 
 var sharedCanvases = {};
 
