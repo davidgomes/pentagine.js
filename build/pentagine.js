@@ -224,8 +224,10 @@ function handleMouseMove(e) {
     mouseY = e.layerY;
   }
 
-  mouseX += currentState.camera.x;
-  mouseY += currentState.camera.y;
+  if (typeof currentState != "undefined") {
+    mouseX += currentState.camera.x;
+    mouseY += currentState.camera.y;
+  }
 }
 
 function isMouseDown(name) {
@@ -245,8 +247,10 @@ function handleTouchStart(e) {
   mouseX = e.touches[0].pageX - canvas.offsetLeft;
   mouseY = e.touches[0].pageY - canvas.offsetTop;
 
-  mouseX += currentState.camera.x;
-  mouseY += currentState.camera.y;
+  if (typeof currentState != "undefined") {
+    mouseX += currentState.camera.x;
+    mouseY += currentState.camera.y;
+  }
 }
 
 function handleTouchEnd(e) {
