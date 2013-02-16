@@ -60,7 +60,7 @@ function switchState(newState) {
 
 var canvas = document.getElementById("canvas");
 var context = null;
-if (canvas != undefined) {
+if (typeof canvas != "undefined") {
   context = canvas.getContext("2d");
   context.width = canvas.width;
   context.height = canvas.height;
