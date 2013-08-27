@@ -4,7 +4,7 @@ window.addEventListener("keyup", handleKeyUp);
 var keyCodeToString = [];
 keyCodeToString[8] = "backspace";
 keyCodeToString[9] = "tab";
-keyCodeToString[13] = "enter";
+keyCodeToString[13] = "return";
 keyCodeToString[16] = "shift";
 keyCodeToString[17] = "ctrl";
 keyCodeToString[18] = "alt";

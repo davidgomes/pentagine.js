@@ -1,3 +1,10 @@
+/**
+* This is the description for the Sprite class.
+*
+* @class Sprite
+* @constructor
+*/
+
 Sprite = (function() {
   function constructor(image, x, y) {
     this.x = x;

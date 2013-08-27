@@ -54,7 +54,9 @@ SpriteList = (function() {
   constructor.prototype = {
     draw: function() {
       for (var i = 0; i < this.sprites.length; i++) {
-        this.sprites[i].draw();
+        if (this.sprites[i]) {
+          this.sprites[i].draw();
+        }
       }
     },
 
@@ -71,7 +73,7 @@ SpriteList = (function() {
   return constructor;
 })();
 
-Camera = (function () {
+Camera = (function() {
   function constructor(x, y, width, height) {
     this.x = x;
     this.y = y;
@@ -93,7 +95,7 @@ window.addEventListener("keyup", handleKeyUp);
 var keyCodeToString = [];
 keyCodeToString[8] = "backspace";
 keyCodeToString[9] = "tab";
-keyCodeToString[13] = "enter";
+keyCodeToString[13] = "return";
 keyCodeToString[16] = "shift";
 keyCodeToString[17] = "ctrl";
 keyCodeToString[18] = "alt";
@@ -524,7 +526,7 @@ function switchState(newState) {
 
 var canvas = document.getElementById("canvas");
 var context = null;
-if (canvas != undefined) {
+if (typeof canvas != "undefined") {
   context = canvas.getContext("2d");
   context.width = canvas.width;
   context.height = canvas.height;

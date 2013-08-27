@@ -6,7 +6,9 @@ SpriteList = (function() {
   constructor.prototype = {
     draw: function() {
       for (var i = 0; i < this.sprites.length; i++) {
-        this.sprites[i].draw();
+        if (this.sprites[i]) {
+          this.sprites[i].draw();
+        }
       }
     },
 
