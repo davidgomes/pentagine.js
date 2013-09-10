@@ -19,6 +19,10 @@ SpriteList = (function() {
     remove: function(sprite) {
       var index = this.sprites.indexOf(sprite);
       this.sprites.splice(index, 1);
+    },
+
+    getLength: function() {
+      return this.sprites.length;
     }
   };
 
