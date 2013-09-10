@@ -9,8 +9,6 @@ function PlayState() {
 
     this.difficulty = 50;
     this.score = 0;
-
-    preventKeys("down", "right", "left", "right", "space");
   }
 
   this.update = function() {
@@ -65,4 +63,5 @@ function PlayState() {
 }
 
 desiredFPS = 30;
+preventKeys("down", "right", "left", "right", "space");
 switchState(new PlayState());
