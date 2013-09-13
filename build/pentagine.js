@@ -217,14 +217,14 @@ function handleMouseDown(e) {
 
   /*if (navigator.appName == "Microsoft Internet Explorer") {
     human_name = ie_mousebuttoncode_to_string[event.button];
-  }*/
+    }*/
 
   pressedButtons[humanName] = true;
 
   /*if (on_keydown_callbacks[human_name]) {
     on_keydown_callbacks[human_name](human_name);
     e.preventDefault();
-  }*/
+    }*/
 }
 
 function handleMouseUp(e) {
@@ -276,7 +276,21 @@ function handleTouchEnd(e) {
   var event = (e) ? e : window.event;
   pressedButtons["left"] = false;
 }
+function handleTouchMove(e) {
+  var event = (e) ? e window.event;
+  e.stopPropagation();
+  e.preventDefault();
 
+  // translate to mouse event
+  var clkEvt = document.createEvent('MouseEvent');
+  clkEvt.initMouseEvent('mousemove', true, true, window, e.detail,
+                        e.touches[0].screenX, e.touches[0].screenY,
+                        e.touches[0].clientX, e.touches[0].clientY,
+                        false, false, false, false,
+                        0, null);
+  window.dispatchEvent(clkEvt);
+
+}
 Sprite = (function() {
   function constructor(image, x, y) {
     this.x = x;
