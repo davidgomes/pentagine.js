@@ -217,14 +217,14 @@ function handleMouseDown(e) {
 
   /*if (navigator.appName == "Microsoft Internet Explorer") {
     human_name = ie_mousebuttoncode_to_string[event.button];
-    }*/
+  }*/
 
   pressedButtons[humanName] = true;
 
   /*if (on_keydown_callbacks[human_name]) {
     on_keydown_callbacks[human_name](human_name);
     e.preventDefault();
-    }*/
+  }*/
 }
 
 function handleMouseUp(e) {
@@ -276,6 +276,7 @@ function handleTouchEnd(e) {
   var event = (e) ? e : window.event;
   pressedButtons["left"] = false;
 }
+
 function handleTouchMove(e) {
   var event = (e) ? e window.event;
   e.stopPropagation();
@@ -288,7 +289,6 @@ function handleTouchMove(e) {
                             e.touches[0].clientX, e.touches[0].clientY,
                             false, false, false, false,
                             0, null);
-
   window.dispatchEvent(clickEvent);
 
 }
