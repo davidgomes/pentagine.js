@@ -8,11 +8,20 @@ function drawCircle(x, y, radius, color) {
 function drawRectangle(x, y, width, height, color) {
   if (color) {
     context.fillStyle = color;
-    context.fillRect(x, y, width, height);
-    context.fillStyle = "#FFFFFF";
-  } else {
-    context.fillRect(x, y, width, height);
   }
+
+  context.fillRect(x, y, width, height);
+}
+
+function drawLine(x1, y1, x2, y2, color) {
+  if (color) {
+    context.fillStyle = color;
+  }
+
+  context.beginPath();
+  context.moveTo(x1, y1);
+  context.lineTo(x2, y2);
+  context.stroke();
 }
 
 function drawString(text, x, y, color, alignment) {

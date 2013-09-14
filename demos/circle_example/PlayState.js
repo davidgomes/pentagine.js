@@ -11,6 +11,8 @@ function PlayState() {
     clearCanvas();
 
     drawCircle(40, 40, 100, "#F00");
+
+    drawLine(10, 10, 100, 100, "#F12");
   }
 }
 
