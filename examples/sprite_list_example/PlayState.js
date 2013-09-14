@@ -22,7 +22,7 @@ function PlayState() {
   }
 
   this.draw = function() {
-    clearCanvas();
+    clearCanvas("#00F");
 
     drawString("Use RIGHT and LEFT arrow keys.", 2, 10);
     

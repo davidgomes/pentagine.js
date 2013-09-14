@@ -38,8 +38,12 @@ function drawString(text, x, y, color, alignment) {
   context.fillText(text, x, y);
 }
 
-function clearCanvas() {
+function clearCanvas(backgroundColor) {
   context.clearRect(0, 0, context.width, context.height);
+
+  if (backgroundColor != null) {
+    drawRectangle(0, 0, context.width, context.height, backgroundColor);
+  }
 }
 
 function isOutsideOfScreen(x, y) {
@@ -67,6 +71,10 @@ SpriteList = (function() {
     remove: function(sprite) {
       var index = this.sprites.indexOf(sprite);
       this.sprites.splice(index, 1);
+    },
+
+    getLength: function() {
+      return this.sprites.length;
     }
   };
 
@@ -484,13 +492,15 @@ function tick() {
   if (gamePaused) {
     currentState.draw();
 
-    if (isDown(pauseKey))
+    if (isDown(pauseKey)) {
       pauseOrResumeGame();
+    }
 
     // TODO Draw Pause/Play huge icon on top
   } else {
-    if (isDown(pauseKey))
+    if (isDown(pauseKey)) {
       pauseOrResumeGame();
+    }
 
     currentState.update();
     currentState.draw();
@@ -530,7 +540,6 @@ if (typeof canvas != "undefined") {
   context = canvas.getContext("2d");
   context.width = canvas.width;
   context.height = canvas.height;
-  context.globalCompositeOperation = "destination-over";
 }
 
 var sharedCanvases = {};

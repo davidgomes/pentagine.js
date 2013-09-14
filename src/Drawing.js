@@ -26,8 +26,12 @@ function drawString(text, x, y, color, alignment) {
   context.fillText(text, x, y);
 }
 
-function clearCanvas() {
+function clearCanvas(backgroundColor) {
   context.clearRect(0, 0, context.width, context.height);
+
+  if (backgroundColor != null) {
+    drawRectangle(0, 0, context.width, context.height, backgroundColor);
+  }
 }
 
 function isOutsideOfScreen(x, y) {

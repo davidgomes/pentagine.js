@@ -18,13 +18,15 @@ function tick() {
   if (gamePaused) {
     currentState.draw();
 
-    if (isDown(pauseKey))
+    if (isDown(pauseKey)) {
       pauseOrResumeGame();
+    }
 
     // TODO Draw Pause/Play huge icon on top
   } else {
-    if (isDown(pauseKey))
+    if (isDown(pauseKey)) {
       pauseOrResumeGame();
+    }
 
     currentState.update();
     currentState.draw();
@@ -64,7 +66,6 @@ if (typeof canvas != "undefined") {
   context = canvas.getContext("2d");
   context.width = canvas.width;
   context.height = canvas.height;
-  context.globalCompositeOperation = "destination-over";
 }
 
 var sharedCanvases = {};
