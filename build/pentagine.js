@@ -281,9 +281,9 @@ function handleTouchMove(e) {
   e.stopPropagation();
   e.preventDefault();
 
-  // translate to mouse event
-  var clkEvt = document.createEvent('MouseEvent');
-  clkEvt.initMouseEvent('mousemove', true, true, window, e.detail,
+  /* Tanslate to mouse event */
+  var clkEvt = document.createEvent("MouseEvent");
+  clkEvt.initMouseEvent("mousemove", true, true, window, e.detail,
                         e.touches[0].screenX, e.touches[0].screenY,
                         e.touches[0].clientX, e.touches[0].clientY,
                         false, false, false, false,
@@ -588,4 +588,3 @@ stats.domElement.style.left = "800px";
 stats.domElement.style.top = "0px";
 
 document.body.appendChild(stats.domElement);
-
