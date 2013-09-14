@@ -282,13 +282,14 @@ function handleTouchMove(e) {
   e.preventDefault();
 
   /* Tanslate to mouse event */
-  var clkEvt = document.createEvent("MouseEvent");
-  clkEvt.initMouseEvent("mousemove", true, true, window, e.detail,
-                        e.touches[0].screenX, e.touches[0].screenY,
-                        e.touches[0].clientX, e.touches[0].clientY,
-                        false, false, false, false,
-                        0, null);
-  window.dispatchEvent(clkEvt);
+  var clickEvent = document.createEvent("MouseEvent");
+  clickEvent.initMouseEvent("mousemove", true, true, window, e.detail,
+                            e.touches[0].screenX, e.touches[0].screenY,
+                            e.touches[0].clientX, e.touches[0].clientY,
+                            false, false, false, false,
+                            0, null);
+
+  window.dispatchEvent(clickEvent);
 
 }
 Sprite = (function() {
@@ -588,3 +589,4 @@ stats.domElement.style.left = "800px";
 stats.domElement.style.top = "0px";
 
 document.body.appendChild(stats.domElement);
+
