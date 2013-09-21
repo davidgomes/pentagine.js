@@ -25,10 +25,11 @@ function drawLine(x1, y1, x2, y2, color) {
 }
 
 function drawString(text, x, y, color, alignment) {
-  if (!alignment)
+  if (!alignment) {
     context.textAlign = "left";
-  else
+  } else {
     context.textAlign = alignment;
+  }
 
   context.font = currentFont;
   context.fillStyle = color;
