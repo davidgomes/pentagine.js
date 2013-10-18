@@ -182,5 +182,4 @@ function handleTouchMove(e) {
                             false, false, false, false,
                             0, null);
   window.dispatchEvent(clickEvent);
-
 }
