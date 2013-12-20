@@ -244,7 +244,7 @@ function handleMouseMove(e) {
     mouseY = e.layerY;
   }
 
-  if (typeof currentState != "undefined") {
+  if (currentState != null) {
     mouseX += currentState.camera.x;
     mouseY += currentState.camera.y;
   }
@@ -267,7 +267,7 @@ function handleTouchStart(e) {
   mouseX = e.touches[0].pageX - canvas.offsetLeft;
   mouseY = e.touches[0].pageY - canvas.offsetTop;
 
-  if (typeof currentState != "undefined") {
+  if (currentState != null) {
     mouseX += currentState.camera.x;
     mouseY += currentState.camera.y;
   }
