@@ -201,7 +201,11 @@ isDown = function(name) {
 
 window.addEventListener("mousedown", handleMouseDown, false);
 window.addEventListener("mouseup", handleMouseUp, false);
-window.addEventListener("mousemove", handleMouseMove);
+window.addEventListener("mousemove", handleMouseMove, false);
+
+window.addEventListener("touchstart", handleMouseDown, false);
+window.addEventListener("touchmove", handleMouseUp, false);
+window.addEventListener("touchend", handleMouseMove, false);
 
 var pressedButtons = [];
 var mouseX = null;
@@ -256,27 +260,6 @@ isMouseDown = function(name) {
 
   return false;
 };
-
-window.addEventListener("touchstart", handleTouchStart, false);
-window.addEventListener("touchend", handleTouchEnd, false);
-
-function handleTouchStart(e) {
-  var event = (e) ? e : window.event;
-  pressedButtons["left"] = true;
-
-  mouseX = e.touches[0].pageX - canvas.offsetLeft;
-  mouseY = e.touches[0].pageY - canvas.offsetTop;
-
-  if (currentState != null) {
-    mouseX += currentState.camera.x;
-    mouseY += currentState.camera.y;
-  }
-}
-
-function handleTouchEnd(e) {
-  var event = (e) ? e : window.event;
-  pressedButtons["left"] = false;
-}
 
 Sprite = (function() {
   function constructor(image, x, y) {
