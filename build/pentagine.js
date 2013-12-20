@@ -37,10 +37,11 @@ function drawLine(x1, y1, x2, y2, color) {
 }
 
 function drawString(text, x, y, color, alignment) {
-  if (!alignment)
+  if (!alignment) {
     context.textAlign = "left";
-  else
+  } else {
     context.textAlign = alignment;
+  }
 
   context.font = currentFont;
   context.fillStyle = color;
@@ -169,9 +170,9 @@ for (var i = 0; numpadKeys[i]; i++) { keyCodeToString[96 + i] = numpadKeys[i]; }
 var pressedKeys = [];
 var preventedKeys = [];
 
-function preventKeys(keys) {
+preventKeys = function(keys) {
   preventedKeys = keys;
-}
+};
 
 function handleKeyDown(e) {
   var event = (e) ? e : window.event;
@@ -191,12 +192,12 @@ function handleKeyUp(e) {
     e.preventDefault();
 }
 
-function isDown(name) {
+isDown = function(name) {
   if (pressedKeys[name])
     return true;
 
   return false;
-}
+};
 
 window.addEventListener("mousedown", handleMouseDown, false);
 window.addEventListener("mouseup", handleMouseUp, false);
@@ -249,12 +250,12 @@ function handleMouseMove(e) {
   }
 }
 
-function isMouseDown(name) {
+isMouseDown = function(name) {
   if (pressedButtons[name])
     return true;
 
   return false;
-}
+};
 
 window.addEventListener("touchstart", handleTouchStart, false);
 window.addEventListener("touchend", handleTouchEnd, false);
@@ -336,7 +337,7 @@ Sprite = (function() {
           deps[i].loaded = true;
           deps[i].dispatchPending();
         }
-      }
+      };
     }
   }
 
@@ -345,11 +346,11 @@ Sprite = (function() {
       // TODO: how about caching rotated sprites on their internal canvas?
       if (this.angle) {
         context.save();
-        context.translate(this.x + this.offset.x - currentState.camera.x,
-                          this.y + this.offset.y - currentState.camera.y);
+        // context.translate(this.x + this.offset.x - currentState.camera.x,
+                          // this.y + this.offset.y - currentState.camera.y);
         context.rotate(this.angle * degToRad);
-        context.translate(-(this.x + this.offset.x - currentState.camera.x),
-                          -(this.y + this.offset.y - currentState.camera.y));
+        // context.translate(-(this.x + this.offset.x - currentState.camera.x),
+                          // -(this.y + this.offset.y - currentState.camera.y));
       }
 
       if (this.alpha != 1) {
@@ -505,7 +506,7 @@ function tick() {
       pauseOrResumeGame();
     }
 
-    // TODO Draw Pause/Play huge icon on top
+    // TODO Draw Pause/Play huge icon over the game
   } else {
     if (isDown(pauseKey)) {
       pauseOrResumeGame();
@@ -518,7 +519,7 @@ function tick() {
   stats.end();
 }
 
-function pauseOrResumeGame() {
+pauseOrResumeGame = function() {
   if (canPauseOrResume) {
     gamePaused = !gamePaused;
 
@@ -530,7 +531,7 @@ function pauseOrResumeGame() {
   }
 }
 
-function switchState(newState) {
+switchState = function(newState) {
   if (!currentState) {
     init();
   }
@@ -541,15 +542,7 @@ function switchState(newState) {
 
   newState.setup();
   return currentState = newState;
-}
-
-var canvas = document.getElementById("canvas");
-var context = null;
-if (typeof canvas != "undefined") {
-  context = canvas.getContext("2d");
-  context.width = canvas.width;
-  context.height = canvas.height;
-}
+};
 
 var sharedCanvases = {};
 
@@ -563,15 +556,26 @@ var pauseKey = "p";
 var canPauseOrResume = true;
 var gamePaused = false;
 
-var radToDeg = 180 / Math.PI;
-var degToRad = Math.PI / 180;
+var stats;
+var canvas, context;
 
-/* Use stats.js for awesome stats */
-var stats = new Stats();
-stats.setMode(2);
-stats.domElement.style.position = "absolute";
-stats.domElement.style.left = "800px";
-stats.domElement.style.top = "0px";
+window.onload = function() {
+  /* Load the canvas */
+  canvas = document.getElementById("canvas");
+  context = null;
+  if (typeof canvas != "undefined") {
+    context = canvas.getContext("2d");
+    context.width = canvas.width;
+    context.height = canvas.height;
+  }
 
-document.body.appendChild(stats.domElement);
+  /* Use stats.js for awesome stats */
+  stats = new Stats();
+  stats.setMode(2);
+  stats.domElement.style.position = "absolute";
+  stats.domElement.style.left = "800px";
+  stats.domElement.style.top = "0px";
+
+  document.body.appendChild(stats.domElement);
+};
 

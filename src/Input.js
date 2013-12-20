@@ -61,9 +61,9 @@ for (var i = 0; numpadKeys[i]; i++) { keyCodeToString[96 + i] = numpadKeys[i]; }
 var pressedKeys = [];
 var preventedKeys = [];
 
-function preventKeys(keys) {
+preventKeys = function(keys) {
   preventedKeys = keys;
-}
+};
 
 function handleKeyDown(e) {
   var event = (e) ? e : window.event;
@@ -83,12 +83,12 @@ function handleKeyUp(e) {
     e.preventDefault();
 }
 
-function isDown(name) {
+isDown = function(name) {
   if (pressedKeys[name])
     return true;
 
   return false;
-}
+};
 
 window.addEventListener("mousedown", handleMouseDown, false);
 window.addEventListener("mouseup", handleMouseUp, false);
@@ -141,12 +141,12 @@ function handleMouseMove(e) {
   }
 }
 
-function isMouseDown(name) {
+isMouseDown = function(name) {
   if (pressedButtons[name])
     return true;
 
   return false;
-}
+};
 
 window.addEventListener("touchstart", handleTouchStart, false);
 window.addEventListener("touchend", handleTouchEnd, false);

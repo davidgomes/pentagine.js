@@ -22,7 +22,7 @@ function tick() {
       pauseOrResumeGame();
     }
 
-    // TODO Draw Pause/Play huge icon on top
+    // TODO Draw Pause/Play huge icon over the game
   } else {
     if (isDown(pauseKey)) {
       pauseOrResumeGame();
@@ -35,7 +35,7 @@ function tick() {
   stats.end();
 }
 
-function pauseOrResumeGame() {
+pauseOrResumeGame = function() {
   if (canPauseOrResume) {
     gamePaused = !gamePaused;
 
@@ -47,7 +47,7 @@ function pauseOrResumeGame() {
   }
 }
 
-function switchState(newState) {
+switchState = function(newState) {
   if (!currentState) {
     init();
   }
@@ -58,15 +58,7 @@ function switchState(newState) {
 
   newState.setup();
   return currentState = newState;
-}
-
-var canvas = document.getElementById("canvas");
-var context = null;
-if (typeof canvas != "undefined") {
-  context = canvas.getContext("2d");
-  context.width = canvas.width;
-  context.height = canvas.height;
-}
+};
 
 var sharedCanvases = {};
 
@@ -80,14 +72,25 @@ var pauseKey = "p";
 var canPauseOrResume = true;
 var gamePaused = false;
 
-var radToDeg = 180 / Math.PI;
-var degToRad = Math.PI / 180;
+var stats;
+var canvas, context;
 
-/* Use stats.js for awesome stats */
-var stats = new Stats();
-stats.setMode(2);
-stats.domElement.style.position = "absolute";
-stats.domElement.style.left = "800px";
-stats.domElement.style.top = "0px";
+window.onload = function() {
+  /* Load the canvas */
+  canvas = document.getElementById("canvas");
+  context = null;
+  if (typeof canvas != "undefined") {
+    context = canvas.getContext("2d");
+    context.width = canvas.width;
+    context.height = canvas.height;
+  }
 
-document.body.appendChild(stats.domElement);
+  /* Use stats.js for awesome stats */
+  stats = new Stats();
+  stats.setMode(2);
+  stats.domElement.style.position = "absolute";
+  stats.domElement.style.left = "800px";
+  stats.domElement.style.top = "0px";
+
+  document.body.appendChild(stats.domElement);
+};
