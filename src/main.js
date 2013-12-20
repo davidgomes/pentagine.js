@@ -45,7 +45,7 @@ pauseOrResumeGame = function() {
 
     canPauseOrResume = false;
   }
-}
+};
 
 switchState = function(newState) {
   if (!currentState) {
