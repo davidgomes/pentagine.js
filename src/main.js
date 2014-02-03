@@ -121,16 +121,7 @@ var penta = (function() {
     var event = (e) ? e : window.event;
     var humanName = convertMouseButtonToString[event.button];
 
-    /*if (navigator.appName == "Microsoft Internet Explorer") {
-     human_name = ie_mousebuttoncode_to_string[event.button];
-     }*/
-
     pressedButtons[humanName] = true;
-
-    /*if (on_keydown_callbacks[human_name]) {
-     on_keydown_callbacks[human_name](human_name);
-     e.preventDefault();
-     }*/
   }
 
   function handleMouseUp(e) {
@@ -191,7 +182,7 @@ var penta = (function() {
   /* Load the canvas */
   canvas = document.getElementById("canvas");
   context = null;
-  
+
   if (typeof canvas != "undefined") {
     context = canvas.getContext("2d");
     context.width = canvas.width;
@@ -200,7 +191,7 @@ var penta = (function() {
 
   return {
     context: context,
-    
+
     drawCircle: function(x, y, radius, color) {
       context.fillStyle = color;
       context.beginPath();
@@ -476,7 +467,7 @@ var penta = (function() {
             var image = new Image();
             image.src = path;
             image.sprite = this;
-            image.target = {x: x, y: y};
+            image.target = { x: x, y: y };
 
             image.onload = function() {
               this.sprite.internalctx.drawImage(this, this.target.x, this.target.y);
