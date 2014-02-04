@@ -167,3 +167,18 @@ function handleTouchMove(e) {
 
   window.dispatchEvent(clickEvent);
 }
+
+function handleTouchMove(e) {
+  var event = (e) ? e window.event;
+  e.stopPropagation();
+  e.preventDefault();
+
+  /* Tanslate to mouse event */
+  var clickEvent = document.createEvent("MouseEvent");
+  clickEvent.initMouseEvent("mousemove", true, true, window, e.detail,
+                            e.touches[0].screenX, e.touches[0].screenY,
+                            e.touches[0].clientX, e.touches[0].clientY,
+                            false, false, false, false,
+                            0, null);
+  window.dispatchEvent(clickEvent);
+}
