@@ -2,33 +2,33 @@
 
 function PlayState() {
   this.setup = function() {
-    this.balls = new SpriteList();
+    this.balls = new penta.SpriteList();
 
     for (var i = 0; i < 10; i++) {
-      this.balls.push(new Sprite("ball.png", 5, i * 40 + 5));
+      this.balls.push(new penta.Sprite("ball.png", 5, i * 40 + 5));
     }
-  }
+  };
 
   this.update = function() {
-    if (isDown("right")) {
+    if (penta.isDown("right")) {
       this.balls.sprites.forEach(function(ball, index) {
         ball.x += 5;
       });
-    } else if (isDown("left")) {
+    } else if (penta.isDown("left")) {
       this.balls.sprites.forEach(function(ball, index) {
         ball.x -= 5;
       });
     }
-  }
+  };
 
   this.draw = function() {
-    clearCanvas("#00F");
+    penta.clearCanvas("#00F");
 
-    drawString("Use RIGHT and LEFT arrow keys.", 2, 10);
+    penta.drawString("Use RIGHT and LEFT arrow keys.", 2, 10);
     
     this.balls.draw();
-  }
+  };
 }
 
-desiredFPS = 60;
-switchState(new PlayState());
+penta.desiredFPS = 60;
+penta.switchState(new PlayState());
