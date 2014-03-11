@@ -1,18 +1,18 @@
 function TitleScreenState() {
   this.setup = function() {
     
-  }
+  };
 
   this.update = function() {
-    if (isDown("space"))
-      switchState(new GameState());
-  }
+    if (penta.isDown("space"))
+      penta.switchState(new GameState());
+  };
 
   this.draw = function() {
-    clearCanvas();
+    penta.clearCanvas();
 
-    drawString("Press [SPACE] to start playing.", 200, 200);
-  }
+    penta.drawString("Press [SPACE] to start playing.", 200, 200);
+  };
 }
 
 function GameState() {
@@ -21,29 +21,29 @@ function GameState() {
 
   this.setup = function() {
     setTimeout(function() {
-      switchState(new TitleScreenState());
+      penta.switchState(new TitleScreenState());
     }, 10000);
-  }
+  };
 
   this.update = function() {
-    if (isDown("right")) {
-      this.playerX += 20;
-    } else if (isDown("left")) {
-      this.playerX -= 20;
-    } else if (isDown("down")) {
-      this.playerY += 20;
-    } else if (isDown("up")) {
-      this.playerY -= 20;
+    if (penta.isDown("right")) {
+      this.playerX += 5;
+    } else if (penta.isDown("left")) {
+      this.playerX -= 5;
+    } else if (penta.isDown("down")) {
+      this.playerY += 5;
+    } else if (penta.isDown("up")) {
+      this.playerY -= 5;
     }
-  }
+  };
 
   this.draw = function() {
-    clearCanvas();
+    penta.clearCanvas();
 
-    drawRectangle(this.playerX, this.playerY, 40, 40);
-  }
+    penta.drawRectangle(this.playerX, this.playerY, 40, 40);
+  };
 }
 
-desiredFPS = 30;
-preventKeys("down", "right", "left", "right", "space");
-switchState(new TitleScreenState());
+penta.desiredFPS = 30;
+penta.preventKeys(["down", "right", "left", "right", "space"]);
+penta.switchState(new TitleScreenState());
