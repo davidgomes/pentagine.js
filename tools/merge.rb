@@ -2,7 +2,7 @@
 
 puts "Merging all pentagine's source files into pentagine.js.\n\n"
 
-files_names = ["src/main.js"]
+files_names = ["src/pentagine.js"]
 
 merged_file = File.new("build/pentagine.js", "w")
 

@@ -1,6 +1,8 @@
 function PlayState() {
   this.setup = function() {
-    this.helicopter = new penta.Sprite("helicopter1.png", 100, penta.context.height / 2 - 100);
+    this.helicopter = new penta.Sprite(penta.context, "helicopter1.png",
+                                       100, penta.context.height / 2 - 100);
+
     this.helicopter.vy = 5;
 
     this.walls = [];
@@ -52,16 +54,17 @@ function PlayState() {
     penta.drawString("Score: " + this.score.toString(), 2, 10, "#FFF");
     penta.drawString("Delta Time: " + Math.floor((this.dt * 1000).toString()) + "ms", 2, 20, "#FFF");
     penta.drawString("FPS: " + Math.floor((1 / this.dt).toString()) + "", 2, 30, "#FFF");
-    
+
     for (var i = 0; i < this.walls.length; i++) {
       penta.drawRectangle(i, 0, 1, this.walls[i], "#123");
       penta.drawRectangle(i, penta.context.height - this.walls[i], 1, this.walls[i], "#123");
     }
 
-    this.helicopter.draw();
+    this.helicopter.draw(penta.context);
   };
 }
 
+penta.setup();
 desiredFPS = 30;
 penta.preventKeys("down", "right", "left", "right", "space");
 penta.switchState(new PlayState());

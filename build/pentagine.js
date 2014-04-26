@@ -121,16 +121,7 @@ var penta = (function() {
     var event = (e) ? e : window.event;
     var humanName = convertMouseButtonToString[event.button];
 
-    /*if (navigator.appName == "Microsoft Internet Explorer") {
-     human_name = ie_mousebuttoncode_to_string[event.button];
-     }*/
-
     pressedButtons[humanName] = true;
-
-    /*if (on_keydown_callbacks[human_name]) {
-     on_keydown_callbacks[human_name](human_name);
-     e.preventDefault();
-     }*/
   }
 
   function handleMouseUp(e) {
@@ -186,69 +177,73 @@ var penta = (function() {
   var canPauseOrResume = true;
   var gamePaused = false;
 
-  var canvas, context;
-
-  /* Load the canvas */
-  canvas = document.getElementById("canvas");
-  context = null;
-  
-  if (typeof canvas != "undefined") {
-    context = canvas.getContext("2d");
-    context.width = canvas.width;
-    context.height = canvas.height;
-  }
+  var context;
 
   return {
     context: context,
-    
+
+    setup: function() {
+      /* Load the canvas */
+      this.canvas = document.getElementById("canvas");
+      this.context = null;
+
+      if (typeof this.canvas !== "undefined") {
+        this.context = this.canvas.getContext("2d");
+        this.context.width = this.canvas.width;
+        this.context.height = this.canvas.height;
+      }
+
+      return this;
+    },
+
     drawCircle: function(x, y, radius, color) {
-      context.fillStyle = color;
-      context.beginPath();
-      context.arc(x, y, radius, 0, Math.PI * 2, false);
-      context.fill();
+      this.context.fillStyle = color;
+      this.context.beginPath();
+      this.context.arc(x, y, radius, 0, Math.PI * 2, false);
+      this.context.fill();
     },
 
     drawRectangle: function(x, y, width, height, color) {
       if (color) {
-        context.fillStyle = color;
+        this.context.fillStyle = color;
       }
 
-      context.fillRect(x, y, width, height);
+      this.context.fillRect(x, y, width, height);
     },
 
     drawLine: function(x1, y1, x2, y2, color) {
       if (color) {
-        context.fillStyle = color;
+        this.context.fillStyle = color;
       }
 
-      context.beginPath();
-      context.moveTo(x1, y1);
-      context.lineTo(x2, y2);
-      context.stroke();
+      this.context.beginPath();
+      this.context.moveTo(x1, y1);
+      this.context.lineTo(x2, y2);
+      this.context.stroke();
     },
 
     drawString: function(text, x, y, color, alignment) {
       if (!alignment) {
-        context.textAlign = "left";
+        this.context.textAlign = "left";
       } else {
-        context.textAlign = alignment;
+        this.context.textAlign = alignment;
       }
 
-      context.font = currentFont;
-      context.fillStyle = color;
-      context.fillText(text, x, y);
+      this.context.font = currentFont;
+      this.context.fillStyle = color;
+      this.context.fillText(text, x, y);
     },
 
     clearCanvas: function(backgroundColor) {
-      context.clearRect(0, 0, context.width, context.height);
+      this.context.clearRect(0, 0, this.context.width, this.context.height);
 
       if (backgroundColor != null) {
-        drawRectangle(0, 0, context.width, context.height, backgroundColor);
+        drawRectangle(0, 0, this.context.width, this.context.height, backgroundColor);
       }
     },
 
     isOutsideOfScreen: function(x, y) {
-      return (x < 0 || x > context.width || y < 0 || y > context.height);
+      return (x < 0 || x > this.context.width || y < 0 || y > this.context.height);
     },
 
     SpriteList: (function() {
@@ -384,27 +379,27 @@ var penta = (function() {
         draw: function() {
           // TODO: how about caching rotated sprites on their internal canvas?
           if (this.angle) {
-            context.save();
-            // context.translate(this.x + this.offset.x - currentState.camera.x,
+            this.context.save();
+            // this.context.translate(this.x + this.offset.x - currentState.camera.x,
             // this.y + this.offset.y - currentState.camera.y);
-            context.rotate(this.angle * degToRad);
-            // context.translate(-(this.x + this.offset.x - currentState.camera.x),
+            this.context.rotate(this.angle * degToRad);
+            // this.context.translate(-(this.x + this.offset.x - currentState.camera.x),
             // -(this.y + this.offset.y - currentState.camera.y));
           }
 
           if (this.alpha != 1) {
-            context.globalAlpha = this.alpha;
+            this.context.globalAlpha = this.alpha;
           }
 
-          context.drawImage(this.internal, this.x - currentState.camera.x,
-                            this.y - currentState.camera.y);
+          this.context.drawImage(this.internal, this.x - currentState.camera.x,
+                                 this.y - currentState.camera.y);
 
           if (this.alpha != 1) {
-            context.globalAlpha = 1;
+            this.context.globalAlpha = 1;
           }
 
           if (this.angle) {
-            context.restore();
+            this.context.restore();
           }
         },
 
@@ -476,7 +471,7 @@ var penta = (function() {
             var image = new Image();
             image.src = path;
             image.sprite = this;
-            image.target = {x: x, y: y};
+            image.target = { x: x, y: y };
 
             image.onload = function() {
               this.sprite.internalctx.drawImage(this, this.target.x, this.target.y);
@@ -498,7 +493,7 @@ var penta = (function() {
           /* Stop using the shared version of the internal canvas, we probably
            * need a dinamically modified sprite */
           var newInternal = document.createElement("canvas");
-          this.internalctx = newInternal.getContext("2d");
+          this.internalctx = newInternal.getThis.Context("2d");
 
           if (this.path) {
             newInternal.width = this.internal.width.toString();
@@ -512,15 +507,16 @@ var penta = (function() {
       };
 
       return constructor;
-    }()),
+    })(),
 
     switchState: function(newState) {
       if (!currentState) {
+        currentState = newState;
         init();
       }
 
       if (!newState.camera) {
-        newState.camera = new this.Camera(0, 0, context.width, context.height);
+        newState.camera = new this.Camera(0, 0, this.context.width, this.context.height);
       }
 
       newState.setup();
