@@ -96,8 +96,9 @@ var penta = (function() {
     var name = keyCodeToString[event.keyCode];
     pressedKeys[name] = false;
 
-    if (preventedKeys[name])
+    if (preventedKeys[name]) {
       e.preventDefault();
+    }
   }
 
 
@@ -146,7 +147,6 @@ var penta = (function() {
     }
   }
 
-
   window.addEventListener("touchend", handleMouseMove, false);
 
   function handleTouchMove(e) {
@@ -164,7 +164,6 @@ var penta = (function() {
     window.dispatchEvent(clickEvent);
   }
 
-
   var sharedCanvases = {};
 
   var currentState = null;
@@ -179,8 +178,11 @@ var penta = (function() {
 
   var context;
 
-  return {
-    context: context,
+  function constructor() {
+
+  }
+
+  context: context,
 
     setup: function() {
       /* Load the canvas */
@@ -313,14 +315,15 @@ var penta = (function() {
     },
 
     Sprite: (function() {
-      function constructor(image, x, y) {
+      function constructor(context, image, x, y) {
         this.x = x;
         this.y = y;
         this.alpha = 1;
         this.angle = 0;
         this.path = image;
-        this.offset = {x: 0, y: 0};
-
+        this.offset = { x: 0, y: 0 };
+        this.context = context;
+        
         if (!image) {
           this.shared = true;
           this.loaded = true;
