@@ -1,15 +1,12 @@
 Pentagine
 =========
-
-About
------
-Pentagine is a lightweight Javascript library for HTML5 2D Game Development that renders to `<canvas>`. For now, it consists of a State Machine, a Sprite class to load and draw images and some keyboard input functions. Soon, I expect it to have much more.
+Pentagine is a lightweight JavaScript library for HTML5 2D Game Development that renders to `<canvas>`. For now, it consists of a State Machine, a Sprite class to load and draw images and some keyboard input functions. Soon, I expect it to have much more.
 
 Example
 -------
 Clone pentagine with `git clone git@github.com:davidgomes/pentagine.git` and then open `examples/index.html` for a list of examples.
 
-Here's a small example of all the Javascript code necessary to draw a ball and make it movable:
+Here's a small example of all the JavaScript code necessary to draw a ball and make it movable:
 
 ```javascript
 function PlayState() {
@@ -18,14 +15,15 @@ function PlayState() {
   }
 
   this.update = function() {
-    if (penta.isDown("up"))
+    if (penta.isDown("up")) {
       this.ball.y--;
-    else if (penta.isDown("down"))
+    } else if (penta.isDown("down")) {
       this.ball.y++;
-    else if (penta.isDown("left"))
+    } else if (penta.isDown("left")) {
       this.ball.x--;
-    else if (penta.isDown("right"))
+    } else if (penta.isDown("right")) {
       this.ball.x++;
+    }
   }
 
   this.draw = function() {
