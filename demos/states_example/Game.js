@@ -35,6 +35,10 @@ function GameState() {
     } else if (penta.isDown("up")) {
       this.playerY -= 5;
     }
+
+    if (penta.isDown("escape")) {
+      penta.switchState(new TitleScreenState());
+    }
   };
 
   this.draw = function() {
@@ -44,6 +48,7 @@ function GameState() {
   };
 }
 
-penta.desiredFPS = 30;
+var penta = new Pentagine().setup();
+desiredFPS = 30;
 penta.preventKeys(["down", "right", "left", "right", "space"]);
 penta.switchState(new TitleScreenState());

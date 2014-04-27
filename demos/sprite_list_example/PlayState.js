@@ -30,5 +30,7 @@ function PlayState() {
   };
 }
 
-penta.desiredFPS = 60;
+var penta = new Pentagine().setup();
+desiredFPS = 30;
+penta.preventKeys("down", "right", "left", "up", "space");
 penta.switchState(new PlayState());

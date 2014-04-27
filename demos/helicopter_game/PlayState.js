@@ -1,6 +1,6 @@
 function PlayState() {
   this.setup = function() {
-    this.helicopter = new penta.Sprite(penta.context, "helicopter1.png",
+    this.helicopter = new penta.Sprite("helicopter1.png",
                                        100, penta.context.height / 2 - 100);
 
     this.helicopter.vy = 5;
@@ -64,7 +64,7 @@ function PlayState() {
   };
 }
 
-penta.setup();
+var penta = new Pentagine().setup();
 desiredFPS = 30;
 penta.preventKeys("down", "right", "left", "right", "space");
 penta.switchState(new PlayState());

@@ -16,5 +16,6 @@ function PlayState() {
   };
 }
 
-penta.desiredFPS = 60;
+var penta = new Pentagine().setup();
+desiredFPS = 60;
 penta.switchState(new PlayState());
