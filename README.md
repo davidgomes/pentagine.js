@@ -6,7 +6,7 @@ Example
 -------
 Clone pentagine with `git clone git@github.com:davidgomes/pentagine.git` and then open `examples/index.html` for a list of examples.
 
-Here's a small example of all the JavaScriptg code necessary to draw a ball and make it movable:
+Here's a small example of all the JavaScript code necessary to draw a ball and make it movable:
 
 ```javascript
 function PlayState() {

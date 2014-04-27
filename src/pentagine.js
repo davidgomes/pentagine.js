@@ -1,5 +1,3 @@
-var PentagineGlobals = { };
-
 var Pentagine = (function() {
   function init() {
     lastUpdate = Date.now();
@@ -196,8 +194,6 @@ var Pentagine = (function() {
         this.context.height = this.canvas.height;
       }
 
-      PentagineGlobals.context = this.context;
-      
       return this;
     },
 
@@ -325,7 +321,10 @@ var Pentagine = (function() {
         this.angle = 0;
         this.path = image;
         this.offset = { x: 0, y: 0 };
-        this.context = PentagineGlobals.context;
+
+        console.log(penta);
+        
+        this.context = penta.context;
         
         if (!image) {
           this.shared = true;
@@ -532,3 +531,5 @@ var Pentagine = (function() {
 
   return constructor;
 }());
+
+var penta = new Pentagine().setup();
