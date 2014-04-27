@@ -1,6 +1,6 @@
 function TitleScreenState() {
   this.setup = function() {
-    
+
   };
 
   this.update = function() {
@@ -18,22 +18,25 @@ function TitleScreenState() {
 function GameState() {
   this.playerX = 20;
   this.playerY = 20;
+  this.playerV = 4;
 
-  this.setup = function() {
-    setTimeout(function() {
-      penta.switchState(new TitleScreenState());
-    }, 10000);
-  };
+  this.setup = function() { };
 
   this.update = function() {
     if (penta.isDown("right")) {
-      this.playerX += 5;
-    } else if (penta.isDown("left")) {
-      this.playerX -= 5;
-    } else if (penta.isDown("down")) {
-      this.playerY += 5;
-    } else if (penta.isDown("up")) {
-      this.playerY -= 5;
+      this.playerX += this.playerV;
+    }
+
+    if (penta.isDown("left")) {
+      this.playerX -= this.playerV;
+    }
+
+    if (penta.isDown("down")) {
+      this.playerY += this.playerV;
+    }
+
+    if (penta.isDown("up")) {
+      this.playerY -= this.playerV;
     }
 
     if (penta.isDown("escape")) {
@@ -49,6 +52,6 @@ function GameState() {
 }
 
 var penta = new Pentagine().setup();
-desiredFPS = 30;
+desiredFPS = 60;
 penta.preventKeys(["down", "right", "left", "right", "space"]);
 penta.switchState(new TitleScreenState());
