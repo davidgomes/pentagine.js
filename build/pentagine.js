@@ -1,4 +1,4 @@
-var penta = (function() {
+var Pentagine = (function() {
   function init() {
     lastUpdate = Date.now();
 
@@ -31,7 +31,7 @@ var penta = (function() {
   keyCodeToString[18] = "alt";
   keyCodeToString[19] = "pause";
   keyCodeToString[20] = "capslock";
-  keyCodeToString[27] = "esc";
+  keyCodeToString[27] = "escape";
   keyCodeToString[32] = "space";
   keyCodeToString[33] = "pageup";
   keyCodeToString[34] = "pagedown";
@@ -182,8 +182,7 @@ var penta = (function() {
 
   }
 
-  context: context,
-
+  constructor.prototype = {
     setup: function() {
       /* Load the canvas */
       this.canvas = document.getElementById("canvas");
@@ -240,7 +239,7 @@ var penta = (function() {
       this.context.clearRect(0, 0, this.context.width, this.context.height);
 
       if (backgroundColor != null) {
-        drawRectangle(0, 0, this.context.width, this.context.height, backgroundColor);
+        this.drawRectangle(0, 0, this.context.width, this.context.height, backgroundColor);
       }
     },
 
@@ -315,14 +314,14 @@ var penta = (function() {
     },
 
     Sprite: (function() {
-      function constructor(context, image, x, y) {
+      function constructor(image, x, y) {
         this.x = x;
         this.y = y;
         this.alpha = 1;
         this.angle = 0;
         this.path = image;
         this.offset = { x: 0, y: 0 };
-        this.context = context;
+        this.context = penta.context;
         
         if (!image) {
           this.shared = true;
@@ -526,5 +525,9 @@ var penta = (function() {
       return currentState = newState;
     }
   };
+
+  return constructor;
 }());
+
+var penta = new Pentagine().setup();
 
