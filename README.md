@@ -6,7 +6,7 @@ Example
 -------
 Clone pentagine with `git clone git@github.com:davidgomes/pentagine.git` and then open `examples/index.html` for a list of examples.
 
-Here's a small example of all the JavaScript code necessary to draw a ball and make it movable:
+Here's a small example of all the JavaScriptg code necessary to draw a ball and make it movable:
 
 ```javascript
 function PlayState() {
@@ -55,6 +55,6 @@ Pentagine is licensed under the [MIT License](https://github.com/davidgomes/pent
 
 Thanks
 ------
-I'd like to thank to [ippa](https://github.com/ippa/) because Pentagine is inspired on his HTML5 Game Development library - [jaws](https://github.com/ippa/). I also used some of his code, but this is not a fork, the two libraries are quite different.
+I'd like to thank to [ippa](https://github.com/ippa/) because Pentagine is loosely inspired on his HTML5 Game Development library - [jaws](https://github.com/ippa/). I also used some of his code, but this is not a fork, the two libraries are quite different.
 
 Pentagine also uses [stats.js](https://github.com/mrdoob/stats.js), a great monitor for HTML5 performance. It was made by [mrdoob](https://github.com/mrdoob), who is credited on the LICENSE.
