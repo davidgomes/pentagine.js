@@ -42,7 +42,7 @@ function PlayState() {
 desiredFPS = 60;
 
 /* Prevents the following keys to be sent to the web page. */
-penta.preventKeys("down", "right", "left", "right", "space");
+penta.preventKeys("down", "right", "left", "up", "space");
 
 penta.switchState(new PlayState());
 ```
