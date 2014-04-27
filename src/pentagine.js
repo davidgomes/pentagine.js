@@ -321,9 +321,6 @@ var Pentagine = (function() {
         this.angle = 0;
         this.path = image;
         this.offset = { x: 0, y: 0 };
-
-        console.log(penta);
-        
         this.context = penta.context;
         
         if (!image) {
