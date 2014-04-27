@@ -14,22 +14,22 @@ Here's a small example of all the Javascript code necessary to draw a ball and m
 ```javascript
 function PlayState() {
   this.setup = function() {
-    this.ball = new Sprite("ball.png", 100, 50);
+    this.ball = new penta.Sprite("ball.png", 100, 50);
   }
 
   this.update = function() {
-    if (isDown("up"))
+    if (penta.isDown("up"))
       this.ball.y--;
-    else if (isDown("down"))
+    else if (penta.isDown("down"))
       this.ball.y++;
-    else if (isDown("left"))
+    else if (penta.isDown("left"))
       this.ball.x--;
-    else if (isDown("right"))
+    else if (penta.isDown("right"))
       this.ball.x++;
   }
 
   this.draw = function() {
-    clearCanvas();
+    penta.clearCanvas();
 
     this.ball.draw();
   }
@@ -44,9 +44,9 @@ function PlayState() {
 desiredFPS = 60;
 
 /* Prevents the following keys to be sent to the web page. */
-preventKeys("down", "right", "left", "right", "space");
+penta.preventKeys("down", "right", "left", "right", "space");
 
-switchState(new PlayState());
+penta.switchState(new PlayState());
 ```
 
 A "real-life" example of a game that uses Pentagine is [Multitaskor](https://github.com/davidgomes/multitaskor), a game I created for [Ludum Dare](https://ludumdare.com) 27.
