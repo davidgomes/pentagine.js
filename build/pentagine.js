@@ -1,4 +1,4 @@
-var Pentagine = (function() {
+var penta = (function() {
   function init() {
     lastUpdate = Date.now();
 
@@ -182,7 +182,7 @@ var Pentagine = (function() {
 
   }
 
-  constructor.prototype = {
+  return {
     setup: function() {
       /* Load the canvas */
       this.canvas = document.getElementById("canvas");
@@ -525,9 +525,5 @@ var Pentagine = (function() {
       return currentState = newState;
     }
   };
-
-  return constructor;
-}());
-
-var penta = new Pentagine().setup();
+}()).setup();
 
