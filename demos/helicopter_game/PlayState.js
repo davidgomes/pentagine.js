@@ -40,7 +40,7 @@ function PlayState() {
     var newWallHeight = -1;
     
     do {
-      newWallHeight = this.walls[this.walls.length - 2] + Math.floor(Math.random() * 10) - 5;
+      newWallHeight = this.walls[this.walls.length - 1] + Math.floor(Math.random() * 10) - 5;
     } while (newWallHeight < this.minWallHeight);
     
     this.walls[this.walls.length - 1] = newWallHeight;
@@ -65,6 +65,5 @@ function PlayState() {
   };
 }
 
-penta.setup({ desiredFPS: 30 });
-penta.preventKeys(["down", "right", "left", "right", "space"]);
+penta.setup({ desiredFPS: 60, preventedKeys: ["down", "right", "left", "up", "space"] });
 penta.switchState(new PlayState());
