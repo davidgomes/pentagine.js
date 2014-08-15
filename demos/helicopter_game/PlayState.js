@@ -65,5 +65,5 @@ function PlayState() {
   };
 }
 
-penta.setup({ desiredFPS: 60, preventedKeys: ["down", "right", "left", "up", "space"] });
-penta.switchState(new PlayState());
+penta.setup({ desiredFPS: 60, preventedKeys: ["down", "right", "left", "up", "space"],
+              firstState: new PlayState() });
