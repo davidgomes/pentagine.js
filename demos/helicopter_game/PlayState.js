@@ -1,6 +1,6 @@
 function PlayState() {
   this.setup = function() {
-    this.helicopter = new penta.Sprite("helicopter1.png",
+    this.helicopter = new penta.Sprite("helicopter.png",
                                        100, penta.context.height / 2 - 100);
 
     this.helicopter.vx = 400;
