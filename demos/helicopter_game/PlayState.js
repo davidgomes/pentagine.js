@@ -10,7 +10,8 @@ function PlayState() {
     this.speed = 20;
     this.minWallHeight = 50;
     this.walls[penta.context.width - 1] = this.minWallHeight;
-
+    console.log("height = " + penta.context.height);
+    
     this.score = 0;
   };
 
@@ -67,4 +68,6 @@ function PlayState() {
 
 /* Start up the game */
 penta.setup({ desiredFPS: 60, preventedKeys: ["down", "right", "left", "up", "space"],
-              firstState: new PlayState() });
+              firstState: new PlayState(),
+              width: document.documentElement.clientWidth,
+              height: document.documentElement.clientHeight });
