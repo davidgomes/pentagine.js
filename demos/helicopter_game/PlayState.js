@@ -3,47 +3,48 @@ function PlayState() {
     this.helicopter = new penta.Sprite("helicopter1.png",
                                        100, penta.context.height / 2 - 100);
 
-    this.helicopter.vy = 5;
+    this.helicopter.vx = 400;
+    this.helicopter.vy = 400;
 
     this.walls = [];
-    this.walls[penta.context.width - 1] = 20;
-    this.speed = 30;
+    this.speed = 20;
+    this.minWallHeight = 50;
+    this.walls[penta.context.width - 1] = this.minWallHeight;
 
-    this.difficulty = 50;
     this.score = 0;
   };
 
   this.update = function() {
-    if (penta.isDown("up") || penta.isDown("w"))
-      this.helicopter.y -= 400 * this.dt;
+    if (penta.isDown("up") || penta.isDown("w")) {
+      this.helicopter.y -= this.helicopter.vy * this.dt;
+    }
 
-    if (penta.isDown("down") || penta.isDown("s"))
-      this.helicopter.y += 200 * this.dt;
+    if (penta.isDown("down") || penta.isDown("s")) {
+      this.helicopter.y += this.helicopter.vy * this.dt;
+    }
 
-    for (var i = 2; i < this.walls.length - this.speed; i++) {
+    if (penta.isDown("left") || penta.isDown("a")) {
+      this.helicopter.x -= this.helicopter.vx * this.dt;
+    }
+
+    if (penta.isDown("right") || penta.isDown("d")) {
+      this.helicopter.x += this.helicopter.vx * this.dt;
+    }
+
+    for (var i = 0; i < this.walls.length - this.speed; i++) {
       for (var u = 0; u < this.speed; u++) {
         this.walls[i + u] = this.walls[i + u + 1];
       }
     }
 
-    if (this.walls.length == penta.context.width) {
-      if (this.walls[this.walls.length - 2] < 250) {
-        if (Math.floor(Math.random() * 5) > 1)
-          this.walls[this.walls.length - 1] = this.walls[this.walls.length - 2] + Math.floor(Math.random() * 5) + 1;
-        else
-          this.walls[this.walls.length - 1] = this.walls[this.walls.length - 2] - Math.floor(Math.random() * 5) - 1;
-      } else {
-          this.walls[this.walls.length - 1] = this.walls[this.walls.length - 2];
-      }
-    }
+    var newWallHeight = -1;
+    
+    do {
+      newWallHeight = this.walls[this.walls.length - 2] + Math.floor(Math.random() * 10) - 5;
+    } while (newWallHeight < this.minWallHeight);
+    
+    this.walls[this.walls.length - 1] = newWallHeight;
 
-    /* Dirty fix */
-    this.walls[1] = this.walls[2];
-    this.walls[0] = this.walls[1];
-
-    this.helicopter.y += 100 * this.dt;
-
-    this.difficulty += 0.1;
     this.score++;
   };
 
@@ -60,10 +61,10 @@ function PlayState() {
       penta.drawRectangle(i, penta.context.height - this.walls[i], 1, this.walls[i], "#123");
     }
 
-    this.helicopter.draw(penta.context);
+    this.helicopter.draw();
   };
 }
 
-desiredFPS = 30;
-penta.preventKeys("down", "right", "left", "right", "space");
+penta.setup({ desiredFPS: 30 });
+penta.preventKeys(["down", "right", "left", "right", "space"]);
 penta.switchState(new PlayState());
