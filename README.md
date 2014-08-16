@@ -11,17 +11,23 @@ Here's a small example of all the JavaScript code necessary to draw a ball and m
 ```javascript
 function PlayState() {
   this.setup = function() {
-    this.ball = new penta.Sprite("ball.png", 100, 50);
+    this.ball = new penta.Sprite('ball.png', 100, 50);
   }
 
   this.update = function() {
     if (penta.isDown("up")) {
       this.ball.y--;
-    } else if (penta.isDown("down")) {
+    }
+
+    if (penta.isDown("down")) {
       this.ball.y++;
-    } else if (penta.isDown("left")) {
+    }
+
+    if (penta.isDown("left")) {
       this.ball.x--;
-    } else if (penta.isDown("right")) {
+    }
+
+    if (penta.isDown("right")) {
       this.ball.x++;
     }
   }
@@ -34,17 +40,16 @@ function PlayState() {
 }
 
 /*
-   If desiredFPS is not declared, the game will run as fast as
+   If penta.desiredFPS is not declared, the game will run as fast as
    possible, and on any State, you can use 'this.dt' to get the
    delta time between two ticks and use it to make movement
-   smooth. If desiredFPS is declared, this.dt also works.
+   smooth. However, if desiredFPS is declared, this.dt also works.
 */
-desiredFPS = 60;
-
-/* Prevents the following keys to be sent to the web page. */
-penta.preventKeys("down", "right", "left", "up", "space");
-
-penta.switchState(new PlayState());
+penta.setup({ desiredFPS: 60,
+              preventedKeys: ['down', 'right', 'left', 'up', 'space'],
+              firstState: new PlayState(),
+              width: 400,
+              height: 400 });
 ```
 
 A "real-life" example of a game that uses Pentagine is [Multitaskor](https://github.com/davidgomes/multitaskor), a game I created for [Ludum Dare](https://ludumdare.com) 27.
