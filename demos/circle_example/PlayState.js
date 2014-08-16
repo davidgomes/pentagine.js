@@ -5,19 +5,19 @@ function PlayState() {
   };
 
   this.update = function() {
-    if (penta.isDown("up")) {
+    if (penta.isDown('up')) {
       this.ball.y -= this.ball.speed * this.dt;
     }
 
-    if (penta.isDown("down")) {
+    if (penta.isDown('down')) {
       this.ball.y += this.ball.speed * this.dt;
     }
 
-    if (penta.isDown("left")) {
+    if (penta.isDown('left')) {
       this.ball.x -= this.ball.speed * this.dt;
     }
 
-    if (penta.isDown("right")) {
+    if (penta.isDown('right')) {
       this.ball.x += this.ball.speed * this.dt;
     }
   };
