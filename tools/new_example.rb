@@ -10,7 +10,7 @@ add_to_list = gets.chomp
 
 # Create a folder
 folder_name = name.gsub(" ", "_").downcase
-Dir::mkdir("examples/" + folder_name)
+Dir::mkdir("demos/" + folder_name)
 
 # Generate index.html
 if generate_html.downcase != "n" then
@@ -37,15 +37,15 @@ if generate_html.downcase != "n" then
   <!-- <script src=\"PlayState.js\" type=\"text/javascript\"></script> -->
 </html>" % [name]
 
-  index_html_file = File.new("examples/" + folder_name + "/index.html", "w")
+  index_html_file = File.new("demos/" + folder_name + "/index.html", "w")
   index_html_file.write(index_html + "\n")
   index_html_file.close
 end
 
 # Add new example to examples list on examples/index.html
 if add_to_list.downcase != "n" then
-  old_html_list = File.open("examples/index.html").read().split("\n")
-  new_html_file = File.new("examples/index.html", "w")
+  old_html_list = File.open("demos/index.html").read().split("\n")
+  new_html_file = File.new("demos/index.html", "w")
 
   new_line = "\n      <li><a href=\"%s\">%s</a></li>\n" % [folder_name + "/index.html", name]
 
