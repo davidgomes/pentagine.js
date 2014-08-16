@@ -5,18 +5,22 @@ function PlayState() {
     this.balls = new penta.SpriteList();
 
     for (var i = 0; i < 10; i++) {
-      this.balls.push(new penta.Sprite("ball.png", 5, i * 40 + 5));
+      var newBall = new penta.Sprite("ball.png", 5, i * 40 + 100);
+      newBall.speed = 5;
+      this.balls.push(newBall);
     }
   };
 
   this.update = function() {
     if (penta.isDown("right")) {
       this.balls.sprites.forEach(function(ball, index) {
-        ball.x += 5;
+        ball.x += ball.speed;
       });
-    } else if (penta.isDown("left")) {
+    }
+
+    if (penta.isDown("left")) {
       this.balls.sprites.forEach(function(ball, index) {
-        ball.x -= 5;
+        ball.x -= ball.speed;
       });
     }
   };
@@ -25,11 +29,13 @@ function PlayState() {
     penta.clearCanvas("#00F");
 
     penta.drawString("Use RIGHT and LEFT arrow keys.", 2, 10);
-    
+
     this.balls.draw();
   };
 }
 
-desiredFPS = 30;
-penta.preventKeys("down", "right", "left", "up", "space");
-penta.switchState(new PlayState());
+penta.setup({ desiredFPS: 60,
+              preventedKeys: ['down', 'right', 'left', 'up', 'space'],
+              firstState: new PlayState(),
+              width: 800,
+              height: 640 });
