@@ -12,31 +12,32 @@ Here's a small example of all the JavaScript code necessary to draw a ball and m
 function PlayState() {
   this.setup = function() {
     this.ball = new penta.Sprite('ball.png', 100, 50);
-  }
+    this.ball.speed = 400;
+  };
 
   this.update = function() {
     if (penta.isDown("up")) {
-      this.ball.y--;
+      this.ball.y -= this.ball.speed * this.dt;
     }
 
     if (penta.isDown("down")) {
-      this.ball.y++;
+      this.ball.y += this.ball.speed * this.dt;
     }
 
     if (penta.isDown("left")) {
-      this.ball.x--;
+      this.ball.x -= this.ball.speed * this.dt;
     }
 
     if (penta.isDown("right")) {
-      this.ball.x++;
+      this.ball.x += this.ball.speed * this.dt;
     }
-  }
+  };
 
   this.draw = function() {
     penta.clearCanvas();
 
     this.ball.draw();
-  }
+  };
 }
 
 /*
