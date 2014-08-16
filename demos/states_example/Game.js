@@ -9,34 +9,36 @@ function TitleScreenState() {
   };
 
   this.draw = function() {
-    penta.clearCanvas('#00FF00');
+    penta.clearCanvas();
+    // penta.clearCanvas('#00FF00');
 
-    penta.drawString('Press [SPACE] to start playing.', 200, 200);
+    penta.currentFont = '40px Arial';
+    penta.drawString('Press [SPACE] to start playing.', 20, 20);
   };
 }
 
 function GameState() {
   this.playerX = 20;
   this.playerY = 20;
-  this.playerV = 4;
+  this.playerSpeed = 8;
 
   this.setup = function() { };
 
   this.update = function() {
     if (penta.isDown('right')) {
-      this.playerX += this.playerV;
+      this.playerX += this.playerSpeed;
     }
 
     if (penta.isDown('left')) {
-      this.playerX -= this.playerV;
+      this.playerX -= this.playerSpeed;
     }
 
     if (penta.isDown('down')) {
-      this.playerY += this.playerV;
+      this.playerY += this.playerSpeed;
     }
 
     if (penta.isDown('up')) {
-      this.playerY -= this.playerV;
+      this.playerY -= this.playerSpeed;
     }
 
     if (penta.isDown('escape')) {
@@ -47,6 +49,8 @@ function GameState() {
   this.draw = function() {
     penta.clearCanvas();
 
+    penta.currentFont = '40px Arial';
+    penta.drawString('Press [ESC] to stop playing.', 20, 20);
     penta.drawRectangle(this.playerX, this.playerY, 40, 40);
   };
 }
