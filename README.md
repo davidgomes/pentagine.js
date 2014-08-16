@@ -34,7 +34,7 @@ function PlayState() {
   };
 
   this.draw = function() {
-    penta.clearCanvas();
+    penta.clearCanvas('#333'); // Colored background
 
     this.ball.draw();
   };

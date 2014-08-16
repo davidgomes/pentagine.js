@@ -23,7 +23,7 @@ function PlayState() {
   };
 
   this.draw = function() {
-    penta.clearCanvas();
+    penta.clearCanvas('#333');
 
     this.ball.draw();
   };
