@@ -4,14 +4,14 @@ function TitleScreenState() {
   };
 
   this.update = function() {
-    if (penta.isDown("space"))
+    if (penta.isDown('space'))
       penta.switchState(new GameState());
   };
 
   this.draw = function() {
-    penta.clearCanvas();
+    penta.clearCanvas('#00FF00');
 
-    penta.drawString("Press [SPACE] to start playing.", 200, 200);
+    penta.drawString('Press [SPACE] to start playing.', 200, 200);
   };
 }
 
@@ -23,23 +23,23 @@ function GameState() {
   this.setup = function() { };
 
   this.update = function() {
-    if (penta.isDown("right")) {
+    if (penta.isDown('right')) {
       this.playerX += this.playerV;
     }
 
-    if (penta.isDown("left")) {
+    if (penta.isDown('left')) {
       this.playerX -= this.playerV;
     }
 
-    if (penta.isDown("down")) {
+    if (penta.isDown('down')) {
       this.playerY += this.playerV;
     }
 
-    if (penta.isDown("up")) {
+    if (penta.isDown('up')) {
       this.playerY -= this.playerV;
     }
 
-    if (penta.isDown("escape")) {
+    if (penta.isDown('escape')) {
       penta.switchState(new TitleScreenState());
     }
   };
@@ -51,6 +51,8 @@ function GameState() {
   };
 }
 
-desiredFPS = 60;
-penta.preventKeys(["down", "right", "left", "right", "space"]);
-penta.switchState(new TitleScreenState());
+penta.setup({ desiredFPS: 60,
+              preventedKeys: ['down', 'right', 'left', 'up', 'space'],
+              firstState: new TitleScreenState(),
+              width: 800,
+              height: 640 });
