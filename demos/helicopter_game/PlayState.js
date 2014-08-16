@@ -7,7 +7,7 @@ function Player() {
 
   this.update = function(dt) {
     if (penta.isMouseDown('left')) {
-      if (penta.getMouse().y < penta.context.height / 2) {
+      if (penta.mouse.y < penta.context.height / 2) {
         this.sprite.y -= this.sprite.vy * dt;
       } else {
         this.sprite.y += this.sprite.vy * dt;
