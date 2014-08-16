@@ -79,7 +79,7 @@ function PlayState() {
   };
 
   this.draw = function() {
-    penta.clearCanvas();
+    penta.clearCanvas('#49637e');
 
     for (var i = 0; i < this.walls.length; i++) {
       penta.drawRectangle(i, 0, 1, this.walls[i], '#123');
