@@ -44,6 +44,7 @@ function PlayState() {
 
     this.score = 0;
 
+    /* Generate new obstacles along the way */
     setInterval((function() {
       this.obstacles.push({ x: penta.context.width + 100,
                             y: Math.floor(Math.random() * 0.5 * penta.context.height) + 0.2 * penta.context.height,
