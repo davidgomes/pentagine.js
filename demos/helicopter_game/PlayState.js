@@ -81,11 +81,6 @@ function PlayState() {
   this.draw = function() {
     penta.clearCanvas();
 
-    currentFont = '10px arial';
-    penta.drawString('Score: ' + this.score.toString(), 2, 10, '#FFF');
-    penta.drawString('Delta Time: ' + Math.floor((this.dt * 1000).toString()) + 'ms', 2, 20, '#FFF');
-    penta.drawString('FPS: ' + Math.floor((1 / this.dt).toString()) + '', 2, 30, '#FFF');
-
     for (var i = 0; i < this.walls.length; i++) {
       penta.drawRectangle(i, 0, 1, this.walls[i], '#123');
       penta.drawRectangle(i, penta.context.height - this.walls[i], 1, this.walls[i], '#123');
@@ -98,12 +93,18 @@ function PlayState() {
                           this.obstacles[i].height);
     }
 
+    penta.currentFont = '20px arial';
+    penta.drawString('Score: ' + this.score.toString(), 5, 65, '#000');
+    penta.drawString('Delta Time: ' + Math.floor((this.dt * 1000).toString()) + 'ms', 5, 105, '#000');
+    penta.drawString('FPS: ' + Math.floor((1 / this.dt).toString()) + '', 5, 145, '#000');
+    
     this.helicopter.sprite.draw();
   };
 }
 
 /* Start up the game */
-penta.setup({ desiredFPS: 60, preventedKeys: ['down', 'right', 'left', 'up', 'space'],
+penta.setup({ desiredFPS: 60,
+              preventedKeys: ['down', 'right', 'left', 'up', 'space'],
               firstState: new PlayState(),
               width: document.documentElement.clientWidth,
               height: document.documentElement.clientHeight });
