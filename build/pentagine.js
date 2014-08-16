@@ -1,13 +1,9 @@
-var penta = (function() {
-  function init() {
-    lastUpdate = Date.now();
+var penta = (function () {
+  'use strict';
 
-    if (desiredFPS) {
-      var myInterval = setInterval(tick, 1 / desiredFPS * 1000);
-    } else {
-      setInterval(tick, 0);
-    }
-  }
+  var desiredFPS;
+  var lastUpdate;
+  var currentState;
 
   function tick() {
     var currentTime = Date.now();
@@ -19,61 +15,68 @@ var penta = (function() {
     currentState.draw();
   }
 
-  window.addEventListener("keydown", handleKeyDown);
-  window.addEventListener("keyup", handleKeyUp);
+  function init() {
+    lastUpdate = Date.now();
+
+    if (desiredFPS) {
+      var myInterval = setInterval(tick, 1 / desiredFPS * 1000);
+    } else {
+      setInterval(tick, 0);
+    }
+  }
 
   var keyCodeToString = [];
-  keyCodeToString[8] = "backspace";
-  keyCodeToString[9] = "tab";
-  keyCodeToString[13] = "return";
-  keyCodeToString[16] = "shift";
-  keyCodeToString[17] = "ctrl";
-  keyCodeToString[18] = "alt";
-  keyCodeToString[19] = "pause";
-  keyCodeToString[20] = "capslock";
-  keyCodeToString[27] = "escape";
-  keyCodeToString[32] = "space";
-  keyCodeToString[33] = "pageup";
-  keyCodeToString[34] = "pagedown";
-  keyCodeToString[35] = "end";
-  keyCodeToString[36] = "home";
-  keyCodeToString[37] = "left";
-  keyCodeToString[38] = "up";
-  keyCodeToString[39] = "right";
-  keyCodeToString[40] = "down";
-  keyCodeToString[45] = "insert";
-  keyCodeToString[46] = "delete";
+  keyCodeToString[8] = 'backspace';
+  keyCodeToString[9] = 'tab';
+  keyCodeToString[13] = 'return';
+  keyCodeToString[16] = 'shift';
+  keyCodeToString[17] = 'ctrl';
+  keyCodeToString[18] = 'alt';
+  keyCodeToString[19] = 'pause';
+  keyCodeToString[20] = 'capslock';
+  keyCodeToString[27] = 'escape';
+  keyCodeToString[32] = 'space';
+  keyCodeToString[33] = 'pageup';
+  keyCodeToString[34] = 'pagedown';
+  keyCodeToString[35] = 'end';
+  keyCodeToString[36] = 'home';
+  keyCodeToString[37] = 'left';
+  keyCodeToString[38] = 'up';
+  keyCodeToString[39] = 'right';
+  keyCodeToString[40] = 'down';
+  keyCodeToString[45] = 'insert';
+  keyCodeToString[46] = 'delete';
 
-  keyCodeToString[91] = "leftwindowkey";
-  keyCodeToString[92] = "rightwindowkey";
-  keyCodeToString[93] = "selectkey";
-  keyCodeToString[106] = "multiply";
-  keyCodeToString[107] = "add";
-  keyCodeToString[109] = "subtract";
-  keyCodeToString[110] = "decimalpoint";
-  keyCodeToString[111] = "divide";
+  keyCodeToString[91] = 'leftwindowkey';
+  keyCodeToString[92] = 'rightwindowkey';
+  keyCodeToString[93] = 'selectkey';
+  keyCodeToString[106] = 'multiply';
+  keyCodeToString[107] = 'add';
+  keyCodeToString[109] = 'subtract';
+  keyCodeToString[110] = 'decimalpoint';
+  keyCodeToString[111] = 'divide';
 
-  keyCodeToString[144] = "numlock";
-  keyCodeToString[145] = "scrollock";
-  keyCodeToString[186] = "semicolon";
-  keyCodeToString[187] = "equalsign";
-  keyCodeToString[188] = "comma";
-  keyCodeToString[189] = "dash";
-  keyCodeToString[190] = "period";
-  keyCodeToString[191] = "forwardslash";
-  keyCodeToString[192] = "graveaccent";
-  keyCodeToString[219] = "openbracket";
-  keyCodeToString[220] = "backslash";
-  keyCodeToString[221] = "closebracket";
-  keyCodeToString[222] = "singlequote";
+  keyCodeToString[144] = 'numlock';
+  keyCodeToString[145] = 'scrollock';
+  keyCodeToString[186] = 'semicolon';
+  keyCodeToString[187] = 'equalsign';
+  keyCodeToString[188] = 'comma';
+  keyCodeToString[189] = 'dash';
+  keyCodeToString[190] = 'period';
+  keyCodeToString[191] = 'forwardslash';
+  keyCodeToString[192] = 'graveaccent';
+  keyCodeToString[219] = 'openbracket';
+  keyCodeToString[220] = 'backslash';
+  keyCodeToString[221] = 'closebracket';
+  keyCodeToString[222] = 'singlequote';
 
-  var numpadKeys = ["numpad1", "numpad2", "numpad3", "numpad4", "numpad5",
-                    "numpad6", "numpad7", "numpad8", "numpad9"];
+  var numpadKeys = ['numpad1', 'numpad2', 'numpad3', 'numpad4', 'numpad5',
+                    'numpad6', 'numpad7', 'numpad8', 'numpad9'];
 
-  var numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
-                 "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
-                 "u", "v", "w", "x", "y", "z"];
+  var numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+                 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+                 'u', 'v', 'w', 'x', 'y', 'z'];
 
   for (var i = 0; numbers[i]; i++) { keyCodeToString[48 + i] = numbers[i]; }
   for (var i = 0; letters[i]; i++) { keyCodeToString[65 + i] = letters[i]; }
@@ -87,8 +90,9 @@ var penta = (function() {
     var name = keyCodeToString[event.keyCode];
     pressedKeys[name] = true;
 
-    if (preventedKeys[name])
+    if (preventedKeys.indexOf(name) > -1) {
       e.preventDefault();
+    }
   }
 
   function handleKeyUp(e) {
@@ -96,27 +100,45 @@ var penta = (function() {
     var name = keyCodeToString[event.keyCode];
     pressedKeys[name] = false;
 
-    if (preventedKeys[name]) {
+    if (preventedKeys.indexOf(name) > -1) {
       e.preventDefault();
     }
   }
 
 
-  window.addEventListener("mousedown", handleMouseDown, false);
-  window.addEventListener("mouseup", handleMouseUp, false);
-  window.addEventListener("mousemove", handleMouseMove, false);
+  window.addEventListener('keydown', handleKeyDown);
+  window.addEventListener('keyup', handleKeyUp);
+  
+  window.addEventListener('mousedown', handleMouseDown, false);
+  window.addEventListener('mouseup', handleMouseUp, false);
+  window.addEventListener('mousemove', handleMouseMove, false);
 
-  window.addEventListener("touchstart", handleMouseDown, false);
-  window.addEventListener("touchmove", handleMouseUp, false);
+  window.addEventListener('touchstart', handleTouchStart, false);
+  window.addEventListener('touchmove', handleTouchMove, false);
+  window.addEventListener('touchend', handleTouchEnd, false);
 
   var pressedButtons = [];
-  var mouseX = null;
-  var mouseY = null;
+  var mouse = { };
 
   var convertMouseButtonToString = [];
-  convertMouseButtonToString[0] = "left";
-  convertMouseButtonToString[1] = "center";
-  convertMouseButtonToString[2] = "right";
+  convertMouseButtonToString[0] = 'left';
+  convertMouseButtonToString[1] = 'center';
+  convertMouseButtonToString[2] = 'right';
+
+  function handleTouchStart(e) {
+    var event = (e) ? e : window.event;
+
+    mouse.x = event.targetTouches[0].pageX;
+    mouse.y = event.targetTouches[0].pageY;
+
+    pressedButtons['left'] = true;
+  }
+
+  function handleTouchEnd(e) {
+    var event = (e) ? e : window.event;
+
+    pressedButtons['left'] = false;
+  }
 
   function handleMouseDown(e) {
     var event = (e) ? e : window.event;
@@ -134,20 +156,18 @@ var penta = (function() {
 
   function handleMouseMove(e) {
     if (e.offsetX) {
-      mouseX = e.offsetX;
-      mouseY = e.offsetY;
+      mouse.x = e.offsetX;
+      mouse.y = e.offsetY;
     } else if (e.layerX) {
-      mouseX = e.layerX;
-      mouseY = e.layerY;
+      mouse.x = e.layerX;
+      mouse.y = e.layerY;
     }
 
     if (currentState != null) {
-      mouseX += currentState.camera.x;
-      mouseY += currentState.camera.y;
+      mouse.x += currentState.camera.x;
+      mouse.y += currentState.camera.y;
     }
   }
-
-  window.addEventListener("touchend", handleMouseMove, false);
 
   function handleTouchMove(e) {
     var event = (e) ? e : window.event;
@@ -155,8 +175,8 @@ var penta = (function() {
     e.preventDefault();
 
     /* Tanslate to mouse event */
-    var clickEvent = document.createEvent("MouseEvent");
-    clickEvent.initMouseEvent("mousemove", true, true, window, e.detail,
+    var clickEvent = document.createEvent('MouseEvent');
+    clickEvent.initMouseEvent('mousemove', true, true, window, e.detail,
                               e.touches[0].screenX, e.touches[0].screenY,
                               e.touches[0].clientX, e.touches[0].clientY,
                               false, false, false, false, 0, null);
@@ -164,35 +184,44 @@ var penta = (function() {
     window.dispatchEvent(clickEvent);
   }
 
-  var sharedCanvases = {};
+  var sharedCanvases = { };
 
-  var currentState = null;
-  var lastUpdate = null;
-  var desiredFPS = null;
-
-  var currentFont = "10px serif";
-
-  var pauseKey = "p";
+  var pauseKey = 'p';
   var canPauseOrResume = true;
   var gamePaused = false;
 
   var context;
 
-  function constructor() {
-
-  }
-
   return {
-    setup: function() {
+    currentFont: '10px serif',
+
+    mouse: mouse,
+
+    setup: function(options) {
       /* Load the canvas */
-      this.canvas = document.getElementById("canvas");
+      this.canvas = document.getElementById('canvas');
+
       this.context = null;
 
-      if (typeof this.canvas !== "undefined") {
-        this.context = this.canvas.getContext("2d");
-        this.context.width = this.canvas.width;
-        this.context.height = this.canvas.height;
+      if (options.desiredFPS) {
+        desiredFPS = options.desiredFPS;
       }
+
+      if (options.preventedKeys) {
+        preventedKeys = options.preventedKeys;
+      }
+
+      if (typeof this.canvas !== 'undefined') {
+        this.canvas.width = options.width;
+        this.canvas.height = options.height;
+
+        this.context = this.canvas.getContext('2d');
+
+        this.context.width = options.width;
+        this.context.height = options.height;
+      }
+
+      this.switchState(options.firstState);
 
       return this;
     },
@@ -225,12 +254,13 @@ var penta = (function() {
 
     drawString: function(text, x, y, color, alignment) {
       if (!alignment) {
-        this.context.textAlign = "left";
+        this.context.textAlign = 'left';
       } else {
         this.context.textAlign = alignment;
       }
 
-      this.context.font = currentFont;
+      this.context.textBaseline = 'top';
+      this.context.font = this.currentFont;
       this.context.fillStyle = color;
       this.context.fillText(text, x, y);
     },
@@ -238,22 +268,22 @@ var penta = (function() {
     clearCanvas: function(backgroundColor) {
       this.context.clearRect(0, 0, this.context.width, this.context.height);
 
-      if (backgroundColor != null) {
+      if (backgroundColor) {
         this.drawRectangle(0, 0, this.context.width, this.context.height, backgroundColor);
       }
     },
 
     isOutsideOfScreen: function(x, y) {
-      return (x < 0 || x > this.context.width || y < 0 || y > this.context.height);
+      return x < 0 || x > this.context.width || y < 0 || y > this.context.height;
     },
 
-    SpriteList: (function() {
+    SpriteList: (function () {
       function constructor() {
         this.sprites = [];
       }
 
       constructor.prototype = {
-        draw: function() {
+        draw: function () {
           for (var i = 0; i < this.sprites.length; i++) {
             if (this.sprites[i]) {
               this.sprites[i].draw();
@@ -270,7 +300,7 @@ var penta = (function() {
           this.sprites.splice(index, 1);
         },
 
-        getLength: function() {
+        getLength: function () {
           return this.sprites.length;
         }
       };
@@ -278,7 +308,7 @@ var penta = (function() {
       return constructor;
     }()),
 
-    Camera: (function() {
+    Camera: (function () {
       function constructor(x, y, width, height) {
         this.x = x;
         this.y = y;
@@ -287,16 +317,11 @@ var penta = (function() {
       }
 
       constructor.prototype = {
-        follow: function() {
-        }
+        follow: function () { }
       };
 
       return constructor;
     }()),
-
-    preventKeys: function(keys) {
-      preventedKeys = keys;
-    },
 
     isDown: function(name) {
       if (pressedKeys[name]) {
@@ -307,13 +332,14 @@ var penta = (function() {
     },
 
     isMouseDown: function(name) {
-      if (pressedButtons[name])
+      if (pressedButtons[name]) {
         return true;
+      }
 
       return false;
     },
 
-    Sprite: (function() {
+    Sprite: (function () {
       function constructor(image, x, y) {
         this.x = x;
         this.y = y;
@@ -322,11 +348,11 @@ var penta = (function() {
         this.path = image;
         this.offset = { x: 0, y: 0 };
         this.context = penta.context;
-        
+
         if (!image) {
           this.shared = true;
           this.loaded = true;
-          console.log("Attempted to load null image.");
+          console.log('Attempted to load null image.');
           return;
         }
 
@@ -350,14 +376,14 @@ var penta = (function() {
           this.pending = [];
 
           /* Cache image modifications to an internal canvas for performance and flexibility */
-          this.internal = document.createElement("canvas");
-          this.internalctx = this.internal.getContext("2d");
+          this.internal = document.createElement('canvas');
+          this.internalctx = this.internal.getContext('2d');
 
           /* Save the canvas to the global shared canvas map */
           sharedCanvases[this.path] = [this.internal, this.internalctx, this, []];
 
           /* Asynchronous image loading and caching */
-          this.image.onload = function() {
+          this.image.onload = function () {
             this.owner.internal.width = this.width.toString();
             this.owner.internal.height = this.height.toString();
             this.owner.internalctx.drawImage(this, 0, 0);
@@ -378,7 +404,7 @@ var penta = (function() {
       }
 
       constructor.prototype = {
-        draw: function() {
+        draw: function () {
           // TODO: how about caching rotated sprites on their internal canvas?
           if (this.angle) {
             this.context.save();
@@ -426,10 +452,10 @@ var penta = (function() {
             this.releaseShared();
           }
 
-          this.internalctx.font = size + "px " + font;
+          this.internalctx.font = size + 'px ' + font;
           var metrics = this.internalctx.measureText(text);
           // TODO: figure out actual height instead of 2 * size (see stampText TODO)
-          this.makeGraphic(metrics.width, size * 2, "rgba(0, 0, 0, 0)");
+          this.makeGraphic(metrics.width, size * 2, 'rgba(0, 0, 0, 0)');
           this.stampText(0, 0, text, size, font, color);
         },
 
@@ -442,8 +468,8 @@ var penta = (function() {
               this.releaseShared();
             }
 
-            this.internalctx.font = size + "px " + font;
-            this.internalctx.textAlign = "left";
+            this.internalctx.font = size + 'px ' + font;
+            this.internalctx.textAlign = 'left';
             this.internalctx.fillStyle = color;
             this.internalctx.fillText(text, x, y + size);
           }
@@ -451,7 +477,7 @@ var penta = (function() {
 
         stampRect: function(x, y, width, height, color) {
           if (!this.loaded) {
-            this.pending.push([this.stampRect, x, y, width, height, color]);
+            this.pending.push([ this.stampRect, x, y, width, height, color ]);
           } else {
             if (this.shared) {
               this.releaseShared();
@@ -464,7 +490,7 @@ var penta = (function() {
 
         stampImage: function(x, y, path) {
           if (!this.loaded) {
-            this.pending.push([this.stampImage, x, y, path]);
+            this.pending.push([ this.stampImage, x, y, path ]);
           } else {
             if (this.shared) {
               this.releaseShared();
@@ -475,13 +501,13 @@ var penta = (function() {
             image.sprite = this;
             image.target = { x: x, y: y };
 
-            image.onload = function() {
+            image.onload = function () {
               this.sprite.internalctx.drawImage(this, this.target.x, this.target.y);
             };
           }
         },
 
-        dispatchPending: function() {
+        dispatchPending: function () {
           /* Dispatch all pending sprite modifications */
           var pending = this.pending;
           for (var i = 0; i < pending.length; i++) {
@@ -491,11 +517,11 @@ var penta = (function() {
           delete this.pending;
         },
 
-        releaseShared: function() {
+        releaseShared: function () {
           /* Stop using the shared version of the internal canvas, we probably
            * need a dinamically modified sprite */
-          var newInternal = document.createElement("canvas");
-          this.internalctx = newInternal.getContext("2d");
+          var newInternal = document.createElement('canvas');
+          this.internalctx = newInternal.getContext('2d');
 
           if (this.path) {
             newInternal.width = this.internal.width.toString();
@@ -522,8 +548,9 @@ var penta = (function() {
       }
 
       newState.setup();
+
       return currentState = newState;
     }
   };
-}()).setup();
+}());
 
