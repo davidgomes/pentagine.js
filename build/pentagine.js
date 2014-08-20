@@ -5,6 +5,11 @@ var penta = (function () {
   var lastUpdate;
   var currentState;
 
+  var pressedKeys = [];
+  var preventedKeys = [];
+
+  var degToRad = Math.PI / 180;
+
   function tick() {
     var currentTime = Date.now();
     var dt = currentTime - lastUpdate;
@@ -82,9 +87,6 @@ var penta = (function () {
   for (var i = 0; letters[i]; i++) { keyCodeToString[65 + i] = letters[i]; }
   for (var i = 0; numpadKeys[i]; i++) { keyCodeToString[96 + i] = numpadKeys[i]; }
 
-  var pressedKeys = [];
-  var preventedKeys = [];
-
   function handleKeyDown(e) {
     var event = (e) ? e : window.event;
     var name = keyCodeToString[event.keyCode];
@@ -108,7 +110,7 @@ var penta = (function () {
 
   window.addEventListener('keydown', handleKeyDown);
   window.addEventListener('keyup', handleKeyUp);
-  
+
   window.addEventListener('mousedown', handleMouseDown, false);
   window.addEventListener('mouseup', handleMouseUp, false);
   window.addEventListener('mousemove', handleMouseMove, false);
@@ -186,13 +188,11 @@ var penta = (function () {
 
   var sharedCanvases = { };
 
-  var pauseKey = 'p';
-  var canPauseOrResume = true;
-  var gamePaused = false;
-
-  var context;
-
   return {
+    pauseKey: 'p',
+    canPauseOrResume: true,
+    gamePaused: false,
+
     currentFont: '10px serif',
 
     mouse: mouse,
@@ -200,8 +200,6 @@ var penta = (function () {
     setup: function(options) {
       /* Load the canvas */
       this.canvas = document.getElementById('canvas');
-
-      this.context = null;
 
       if (options.desiredFPS) {
         desiredFPS = options.desiredFPS;
@@ -352,7 +350,7 @@ var penta = (function () {
         if (!image) {
           this.shared = true;
           this.loaded = true;
-          console.log('Attempted to load null image.');
+          console.log('Error: Attempted to load null image.');
           return;
         }
 
@@ -406,13 +404,16 @@ var penta = (function () {
       constructor.prototype = {
         draw: function () {
           // TODO: how about caching rotated sprites on their internal canvas?
+
           if (this.angle) {
             this.context.save();
-            // this.context.translate(this.x + this.offset.x - currentState.camera.x,
-            // this.y + this.offset.y - currentState.camera.y);
+            this.context.translate(this.x + this.offset.x - currentState.camera.x,
+                                   this.y + this.offset.y - currentState.camera.y);
+
             this.context.rotate(this.angle * degToRad);
-            // this.context.translate(-(this.x + this.offset.x - currentState.camera.x),
-            // -(this.y + this.offset.y - currentState.camera.y));
+
+            this.context.translate(-(this.x + this.offset.x - currentState.camera.x),
+                                   -(this.y + this.offset.y - currentState.camera.y));
           }
 
           if (this.alpha != 1) {
