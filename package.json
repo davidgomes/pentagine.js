@@ -1,0 +1,29 @@
+{
+  "name": "pentagine.js",
+  "version": "1.0.0",
+  "description": "Pentagine ========= Pentagine is a lightweight JavaScript library for HTML5 2D Game Development that renders to `<canvas>`. For now, it consists of a State Machine, a Sprite class to load and draw images and some keyboard input functions.",
+  "main": "lib/pentagine.js",
+  "dependencies": {
+    "gulp": "^3.8.11"
+  },
+  "devDependencies": {
+    "babel": "^4.7.16",
+    "browserify": "^9.0.3",
+    "grunt": "^0.4.5",
+    "grunt-babel": "^4.0.0",
+    "grunt-browserify": "^3.6.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davidgomes/pentagine.js.git"
+  },
+  "author": "David Gomes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davidgomes/pentagine.js/issues"
+  },
+  "homepage": "https://github.com/davidgomes/pentagine.js"
+}
