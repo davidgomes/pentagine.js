@@ -5,21 +5,44 @@ import {Game, Sprite, State} from "../../build/pentagine.js";
 class PlayState extends State {
     constructor(game) {
         super(game);
+
+        this.mySprite = new Sprite({
+            x: 70,
+            y: 100,
+            context: game.context,
+            source: "helicopter.png"
+        });
     }
 
     setup() {
         this.circleX = 90;
         this.circleY = 50;
+        this.circleSpeed = 5;
     }
 
     update() {
-        this.circleX += 1;
+        if (this.game.isDown('left')) {
+            this.circleX -= this.circleSpeed;
+        }
+
+        if (this.game.isDown('right')) {
+            this.circleX += this.circleSpeed;
+        }
+
+        if (this.game.isDown('up')) {
+            this.circleY -= this.circleSpeed;
+        }
+
+        if (this.game.isDown('down')) {
+            this.circleY += this.circleSpeed;
+        }
     }
 
     draw() {
         this.game.clearCanvas();
 
         this.game.drawCircle(this.circleX, this.circleY, 40, 'red');
+        this.mySprite.draw();
     }
 }
 
