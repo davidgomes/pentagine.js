@@ -8,7 +8,7 @@ class PlayState extends State {
 
         this.mySprite = new Sprite({
             x: 70,
-            y: 100,
+            y: 150,
             context: game.context,
             source: "helicopter.png"
         });
@@ -21,19 +21,19 @@ class PlayState extends State {
     }
 
     update() {
-        if (this.game.isDown('left')) {
+        if (this.game.input.isDown('left')) {
             this.circleX -= this.circleSpeed;
         }
 
-        if (this.game.isDown('right')) {
+        if (this.game.input.isDown('right')) {
             this.circleX += this.circleSpeed;
         }
 
-        if (this.game.isDown('up')) {
+        if (this.game.input.isDown('up')) {
             this.circleY -= this.circleSpeed;
         }
 
-        if (this.game.isDown('down')) {
+        if (this.game.input.isDown('down')) {
             this.circleY += this.circleSpeed;
         }
     }
@@ -46,19 +46,23 @@ class PlayState extends State {
     }
 }
 
-/* The MyGame class that inherits pentagine's Game class */
 class MyGame extends Game {
-    constructor(settings) {
-        super(settings);
+    constructor(state) {
+        super(state);
+
+        this.playState = new PlayState(this);
     }
+
+
 }
 
 /* Fire up the game */
-var myGame = new MyGame({
+var myGame = new Game({
     desiredFPS: 60,
     preventedKeys: ['down', 'right', 'left', 'up', 'space'],
     width: document.documentElement.clientWidth,
     height: document.documentElement.clientHeight
 });
 
+var playState = new PlayState(myGame);
 myGame.init(new PlayState(myGame));

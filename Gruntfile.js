@@ -1,35 +1,43 @@
 module.exports = function (grunt) {
-    "use strict";
+    'use strict';
 
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-babel');
     grunt.loadNpmTasks('grunt-browserify');
 
     grunt.initConfig({
-        "babel": {
+        'concat': {
+            dist: {
+                src: ['lib/*.js'],
+                dest: 'build/pentagine.js'
+            }
+        },
+
+        'babel': {
             options: {
                 sourceMap: false
             },
 
             dist: {
                 files: {
-                    "build/pentagine.js": "lib/pentagine.js",
-                    "demos/helicopter_game/PlayState_build.js": "demos/helicopter_game/PlayState.js"
+                    'build/pentagine.js': 'build/pentagine.js',
+                    'demos/helicopter_game/PlayState_build.js': 'demos/helicopter_game/PlayState.js'
                 }
             }
         },
 
-        "browserify": {
-            "options": {
+        'browserify': {
+            'options': {
                 sourceMap: false
             },
 
             dist: {
                 files: {
-                    "demos/helicopter_game/PlayState_build.js": "demos/helicopter_game/PlayState_build.js"
+                    'demos/helicopter_game/PlayState_build.js': 'demos/helicopter_game/PlayState_build.js'
                 }
             }
         }
     });
 
-    grunt.registerTask("default", ["babel", "browserify"]);
+    grunt.registerTask('default', ['concat', 'babel', 'browserify']);
 };
