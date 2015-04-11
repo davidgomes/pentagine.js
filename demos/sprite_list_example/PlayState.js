@@ -1,0 +1,3 @@
+class PlayState extends State {
+
+}

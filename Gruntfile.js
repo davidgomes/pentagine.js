@@ -7,8 +7,13 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         'concat': {
-            dist: {
+            dist1: {
                 src: ['lib/*.js'],
+                dest: 'build/pentagine.js'
+            },
+
+            dist2: {
+                src: ['node_modules/underscore/underscore.js', 'build/pentagine.js'],
                 dest: 'build/pentagine.js'
             }
         },
@@ -39,5 +44,5 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('default', ['concat', 'babel', 'browserify']);
+    grunt.registerTask('default', ['concat:dist1', 'babel', 'browserify', 'concat:dist2']);
 };
