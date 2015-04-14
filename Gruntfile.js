@@ -13,8 +13,8 @@ module.exports = function (grunt) {
             },
 
             dist2: {
-                src: ['node_modules/underscore/underscore.js', 'build/pentagine.js'],
-                dest: 'build/pentagine.js'
+                src: ['node_modules/underscore/underscore.js', 'demos/sprite_list_example/PlayState_build.js'],
+                dest: 'demos/sprite_list_example/PlayState_build.js'
             }
         },
 
@@ -26,18 +26,16 @@ module.exports = function (grunt) {
             dist: {
                 files: {
                     'build/pentagine.js': 'build/pentagine.js',
+                    'demos/sprite_list_example/PlayState_build.js': 'demos/sprite_list_example/PlayState.js',
                     'demos/helicopter_game/PlayState_build.js': 'demos/helicopter_game/PlayState.js'
                 }
             }
         },
 
         'browserify': {
-            'options': {
-                sourceMap: false
-            },
-
             dist: {
                 files: {
+                    'demos/sprite_list_example/PlayState_build.js': 'demos/sprite_list_example/PlayState_build.js',
                     'demos/helicopter_game/PlayState_build.js': 'demos/helicopter_game/PlayState_build.js'
                 }
             }

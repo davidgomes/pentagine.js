@@ -65,4 +65,4 @@ var myGame = new Game({
 });
 
 var playState = new PlayState(myGame);
-myGame.init(new PlayState(myGame));
+myGame.init(playState);
