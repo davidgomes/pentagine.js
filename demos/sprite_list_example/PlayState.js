@@ -17,13 +17,18 @@ class PlayState extends State {
         }
     }
 
-    setup() {
-    }
+    setup() { }
 
     update() {
         if (this.game.input.isDown('down')) {
             _.map(this.circleList.sprites, function (element) {
-               element.y++;
+                element.y += 5;
+            });
+        }
+
+        if (this.game.input.isDown('up')) {
+            _.map(this.circleList.sprites, function (element) {
+                element.y -= 5;
             });
         }
     }
