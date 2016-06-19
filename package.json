@@ -1,0 +1,33 @@
+{
+  "name": "pentagine.js",
+  "version": "0.0.1",
+  "description": "Lightweight framework for HTML5 2D Game Development",
+  "main": "lib/pentagine.js",
+  "dependencies": {
+    "babel": "^4.7.16",
+    "underscore": "^1.8.3",
+    "webpack": "^1.13.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidgomes/pentagine.js.git"
+  },
+  "keywords": [
+    "game",
+    "development",
+    "2d",
+    "lightweight",
+    "gamedev",
+    "framework"
+  ],
+  "author": "David Gomes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davidgomes/pentagine.js/issues"
+  },
+  "homepage": "https://github.com/davidgomes/pentagine.js#readme"
+}

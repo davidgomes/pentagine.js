@@ -98,7 +98,7 @@ function PlayState() {
     penta.drawString('Score: ' + this.score.toString(), 5, 65, '#000');
     penta.drawString('Delta Time: ' + Math.floor((this.dt * 1000).toString()) + 'ms', 5, 105, '#000');
     penta.drawString('FPS: ' + Math.floor((1 / this.dt).toString()) + '', 5, 145, '#000');
-    
+
     this.helicopter.sprite.draw();
   };
 }
