@@ -54,17 +54,19 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
 	var _ = __webpack_require__(1);
 
-	module.exports.penta = (function () {
+	module.exports.penta = function () {
 	  'use strict';
 
 	  var desiredFPS;
 	  var lastUpdate;
 	  var currentState;
 
-	  var pressedKeys = [ ];
-	  var preventedKeys = [ ];
+	  var pressedKeys = [];
+	  var preventedKeys = [];
 
 	  var degToRad = Math.PI / 180;
 
@@ -88,7 +90,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }
 
-	  var keyCodeToString = [ ];
+	  var keyCodeToString = [];
 	  keyCodeToString[8] = 'backspace';
 	  keyCodeToString[9] = 'tab';
 	  keyCodeToString[13] = 'return';
@@ -133,17 +135,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  keyCodeToString[221] = 'closebracket';
 	  keyCodeToString[222] = 'singlequote';
 
-	  var numpadKeys = ['numpad1', 'numpad2', 'numpad3', 'numpad4', 'numpad5',
-	                    'numpad6', 'numpad7', 'numpad8', 'numpad9'];
+	  var numpadKeys = ['numpad1', 'numpad2', 'numpad3', 'numpad4', 'numpad5', 'numpad6', 'numpad7', 'numpad8', 'numpad9'];
 
 	  var numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-	  var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
-	                 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
-	                 'u', 'v', 'w', 'x', 'y', 'z'];
+	  var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
+	  /*_.each(numbers, function (el, index) {
+	    keyCodeToString[48 + index] = el;
+	  });*/
 
 	  _.each(numbers, function (el, index) {
-	    keyCodeToString[48 + index] = el;
+	    return keyCodeToString[48 + index] = el;
 	  });
 
 	  _.each(letters, function (el, index) {
@@ -155,7 +157,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  });
 
 	  function handleKeyDown(e) {
-	    var event = (e) ? e : window.event;
+	    var event = e ? e : window.event;
 	    var name = keyCodeToString[event.keyCode];
 	    pressedKeys[name] = true;
 
@@ -165,7 +167,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  function handleKeyUp(e) {
-	    var event = (e) ? e : window.event;
+	    var event = e ? e : window.event;
 	    var name = keyCodeToString[event.keyCode];
 	    pressedKeys[name] = false;
 
@@ -185,16 +187,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  window.addEventListener('touchmove', handleTouchMove, false);
 	  window.addEventListener('touchend', handleTouchEnd, false);
 
-	  var pressedButtons = [ ];
-	  var mouse = { };
+	  var pressedButtons = [];
+	  var mouse = {};
 
-	  var convertMouseButtonToString = [ ];
+	  var convertMouseButtonToString = [];
 	  convertMouseButtonToString[0] = 'left';
 	  convertMouseButtonToString[1] = 'center';
 	  convertMouseButtonToString[2] = 'right';
 
 	  function handleTouchStart(e) {
-	    var event = (e) ? e : window.event;
+	    var event = e ? e : window.event;
 
 	    mouse.x = event.targetTouches[0].pageX;
 	    mouse.y = event.targetTouches[0].pageY;
@@ -203,20 +205,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  function handleTouchEnd(e) {
-	    var event = (e) ? e : window.event;
+	    var event = e ? e : window.event;
 
 	    pressedButtons['left'] = false;
 	  }
 
 	  function handleMouseDown(e) {
-	    var event = (e) ? e : window.event;
+	    var event = e ? e : window.event;
 	    var humanName = convertMouseButtonToString[event.button];
 
 	    pressedButtons[humanName] = true;
 	  }
 
 	  function handleMouseUp(e) {
-	    var event = (e) ? e : window.event;
+	    var event = e ? e : window.event;
 	    var humanName = convertMouseButtonToString[event.button];
 
 	    pressedButtons[humanName] = false;
@@ -238,21 +240,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  function handleTouchMove(e) {
-	    var event = (e) ? e : window.event;
+	    var event = e ? e : window.event;
 	    e.stopPropagation();
 	    e.preventDefault();
 
 	    /* Tanslate to mouse event */
 	    var clickEvent = document.createEvent('MouseEvent');
-	    clickEvent.initMouseEvent('mousemove', true, true, window, e.detail,
-	                              e.touches[0].screenX, e.touches[0].screenY,
-	                              e.touches[0].clientX, e.touches[0].clientY,
-	                              false, false, false, false, 0, null);
+	    clickEvent.initMouseEvent('mousemove', true, true, window, e.detail, e.touches[0].screenX, e.touches[0].screenY, e.touches[0].clientX, e.touches[0].clientY, false, false, false, false, 0, null);
 
 	    window.dispatchEvent(clickEvent);
 	  }
 
-	  var sharedCanvases = { };
+	  var sharedCanvases = {};
 
 	  return {
 	    pauseKey: 'p',
@@ -263,7 +262,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    mouse: mouse,
 
-	    setup: function(options) {
+	    setup: function setup(options) {
 	      /* Load the canvas */
 	      this.canvas = document.getElementById('canvas');
 
@@ -290,14 +289,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return this;
 	    },
 
-	    drawCircle: function(x, y, radius, color) {
+	    drawCircle: function drawCircle(x, y, radius, color) {
 	      this.context.fillStyle = color;
 	      this.context.beginPath();
 	      this.context.arc(x, y, radius, 0, Math.PI * 2, false);
 	      this.context.fill();
 	    },
 
-	    drawRectangle: function(x, y, width, height, color) {
+	    drawRectangle: function drawRectangle(x, y, width, height, color) {
 	      if (color) {
 	        this.context.fillStyle = color;
 	      }
@@ -305,7 +304,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.context.fillRect(x, y, width, height);
 	    },
 
-	    drawLine: function(x1, y1, x2, y2, color) {
+	    drawLine: function drawLine(x1, y1, x2, y2, color) {
 	      if (color) {
 	        this.context.strokeStyle = color;
 	      }
@@ -316,7 +315,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.context.stroke();
 	    },
 
-	    drawString: function(text, x, y, color, alignment) {
+	    drawString: function drawString(text, x, y, color, alignment) {
 	      if (!alignment) {
 	        this.context.textAlign = 'left';
 	      } else {
@@ -329,7 +328,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.context.fillText(text, x, y);
 	    },
 
-	    clearCanvas: function(backgroundColor) {
+	    clearCanvas: function clearCanvas(backgroundColor) {
 	      this.context.clearRect(0, 0, this.context.width, this.context.height);
 
 	      if (backgroundColor) {
@@ -337,25 +336,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    },
 
-	    isOutsideOfScreen: function(x, y) {
+	    isOutsideOfScreen: function isOutsideOfScreen(x, y) {
 	      return x < 0 || x > this.context.width || y < 0 || y > this.context.height;
 	    },
 
-	    getPressedKeys: function () {
+	    getPressedKeys: function getPressedKeys() {
 	      return pressedKeys;
 	    },
 
-	    getPressedButtons: function () {
+	    getPressedButtons: function getPressedButtons() {
 	      return pressedButtons;
 	    },
 
-	    SpriteList: (function () {
+	    SpriteList: function () {
 	      function constructor() {
-	        this.sprites = [ ];
+	        this.sprites = [];
 	      }
 
 	      constructor.prototype = {
-	        draw: function () {
+	        draw: function draw() {
 	          for (var i = 0; i < this.sprites.length; i++) {
 	            if (this.sprites[i]) {
 	              this.sprites[i].draw();
@@ -363,24 +362,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	        },
 
-	        push: function(newSprite) {
+	        push: function push(newSprite) {
 	          this.sprites.push(newSprite);
 	        },
 
-	        remove: function(sprite) {
+	        remove: function remove(sprite) {
 	          var index = this.sprites.indexOf(sprite);
 	          this.sprites.splice(index, 1);
 	        },
 
-	        getLength: function () {
+	        getLength: function getLength() {
 	          return this.sprites.length;
 	        }
 	      };
 
 	      return constructor;
-	    }()),
+	    }(),
 
-	    Camera: (function () {
+	    Camera: function () {
 	      function constructor(x, y, width, height) {
 	        this.x = x;
 	        this.y = y;
@@ -389,13 +388,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      constructor.prototype = {
-	        follow: function () { }
+	        follow: function follow() {}
 	      };
 
 	      return constructor;
-	    }()),
+	    }(),
 
-	    isDown: function(name) {
+	    isDown: function isDown(name) {
 	      if (pressedKeys[name]) {
 	        return true;
 	      }
@@ -403,7 +402,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return false;
 	    },
 
-	    isMouseDown: function(name) {
+	    isMouseDown: function isMouseDown(name) {
 	      if (pressedButtons[name]) {
 	        return true;
 	      }
@@ -411,7 +410,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return false;
 	    },
 
-	    Sprite: (function () {
+	    Sprite: function () {
 	      function constructor(image, x, y) {
 	        this.x = x;
 	        this.y = y;
@@ -437,7 +436,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          this.loaded = shared[2].loaded;
 
 	          if (!this.loaded) {
-	            this.pending = [ ];
+	            this.pending = [];
 	            shared[3].push(this);
 	          }
 	        } else {
@@ -445,14 +444,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	          this.image.src = image;
 	          this.image.owner = this;
 	          this.loaded = false;
-	          this.pending = [ ];
+	          this.pending = [];
 
 	          /* Cache image modifications to an internal canvas for performance and flexibility */
 	          this.internal = document.createElement('canvas');
 	          this.internalctx = this.internal.getContext('2d');
 
 	          /* Save the canvas to the global shared canvas map */
-	          sharedCanvases[this.path] = [this.internal, this.internalctx, this, [ ]];
+	          sharedCanvases[this.path] = [this.internal, this.internalctx, this, []];
 
 	          /* Asynchronous image loading and caching */
 	          this.image.onload = function () {
@@ -476,26 +475,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      constructor.prototype = {
-	        draw: function () {
+	        draw: function draw() {
 	          // TODO: how about caching rotated sprites on their internal canvas?
 
 	          if (this.angle) {
 	            this.context.save();
-	            this.context.translate(this.x + this.offset.x - currentState.camera.x,
-	                                   this.y + this.offset.y - currentState.camera.y);
+	            this.context.translate(this.x + this.offset.x - currentState.camera.x, this.y + this.offset.y - currentState.camera.y);
 
 	            this.context.rotate(this.angle * degToRad);
 
-	            this.context.translate(-(this.x + this.offset.x - currentState.camera.x),
-	                                   -(this.y + this.offset.y - currentState.camera.y));
+	            this.context.translate(-(this.x + this.offset.x - currentState.camera.x), -(this.y + this.offset.y - currentState.camera.y));
 	          }
 
 	          if (this.alpha != 1) {
 	            this.context.globalAlpha = this.alpha;
 	          }
 
-	          this.context.drawImage(this.internal, this.x - currentState.camera.x,
-	                                 this.y - currentState.camera.y);
+	          this.context.drawImage(this.internal, this.x - currentState.camera.x, this.y - currentState.camera.y);
 
 	          if (this.alpha != 1) {
 	            this.context.globalAlpha = 1;
@@ -506,7 +502,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	        },
 
-	        makeGraphic: function(width, height, color) {
+	        makeGraphic: function makeGraphic(width, height, color) {
 	          if (this.shared) {
 	            this.releaseShared();
 	          }
@@ -522,7 +518,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          this.stampRect(0, 0, width, height, color);
 	        },
 
-	        makeLabel: function(text, size, font, color) {
+	        makeLabel: function makeLabel(text, size, font, color) {
 	          if (this.shared) {
 	            this.releaseShared();
 	          }
@@ -534,7 +530,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          this.stampText(0, 0, text, size, font, color);
 	        },
 
-	        stampText: function(x, y, text, size, font, color) {
+	        stampText: function stampText(x, y, text, size, font, color) {
 	          // TODO: write small function to extract and cache ACTUAL font height
 	          if (!this.loaded) {
 	            this.pending.push([this.stampText, x, y, text, font, size, color]);
@@ -550,9 +546,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	        },
 
-	        stampRect: function(x, y, width, height, color) {
+	        stampRect: function stampRect(x, y, width, height, color) {
 	          if (!this.loaded) {
-	            this.pending.push([ this.stampRect, x, y, width, height, color ]);
+	            this.pending.push([this.stampRect, x, y, width, height, color]);
 	          } else {
 	            if (this.shared) {
 	              this.releaseShared();
@@ -563,9 +559,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	        },
 
-	        stampImage: function(x, y, path) {
+	        stampImage: function stampImage(x, y, path) {
 	          if (!this.loaded) {
-	            this.pending.push([ this.stampImage, x, y, path ]);
+	            this.pending.push([this.stampImage, x, y, path]);
 	          } else {
 	            if (this.shared) {
 	              this.releaseShared();
@@ -582,7 +578,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	        },
 
-	        dispatchPending: function () {
+	        dispatchPending: function dispatchPending() {
 	          /* Dispatch all pending sprite modifications */
 	          var pending = this.pending;
 	          for (var i = 0; i < pending.length; i++) {
@@ -592,7 +588,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          delete this.pending;
 	        },
 
-	        releaseShared: function () {
+	        releaseShared: function releaseShared() {
 	          /* Stop using the shared version of the internal canvas, we probably
 	           * need a dinamically modified sprite */
 	          var newInternal = document.createElement('canvas');
@@ -610,9 +606,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      };
 
 	      return constructor;
-	    })(),
+	    }(),
 
-	    switchState: function(newState) {
+	    switchState: function switchState(newState) {
 	      if (!currentState) {
 	        currentState = newState;
 	        init();
@@ -627,7 +623,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return currentState = newState;
 	    }
 	  };
-	}());
+	}();
 
 /***/ },
 /* 1 */
