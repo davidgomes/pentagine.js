@@ -146,9 +146,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    keyCodeToString[48 + index] = el;
 	  });
 
-	  //for (var i = 0; numbers[i]; i++) { keyCodeToString[48 + i] = numbers[i]; }
-	  for (var i = 0; letters[i]; i++) { keyCodeToString[65 + i] = letters[i]; }
-	  //for (var i = 0; numpadKeys[i]; i++) { keyCodeToString[96 + i] = numpadKeys[i]; }
+	  _.each(letters, function (el, index) {
+	    keyCodeToString[65 + index] = el;
+	  });
 
 	  _.each(numpadKeys, function (el, index) {
 	    keyCodeToString[48 + index] = el;
