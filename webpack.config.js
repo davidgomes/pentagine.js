@@ -1,6 +1,6 @@
 module.exports = {
   entry: {
-    pentagine: "./lib/entry.js",
+    pentagine: "./lib/entry.js"
   },
 
   output: {
