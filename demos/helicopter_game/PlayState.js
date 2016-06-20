@@ -104,6 +104,8 @@ function PlayState() {
 }
 
 /* Start up the game */
+var penta = new Pentagine();
+
 penta.setup({ desiredFPS: 60,
               preventedKeys: ['down', 'right', 'left', 'up', 'space'],
               firstState: new PlayState(),
