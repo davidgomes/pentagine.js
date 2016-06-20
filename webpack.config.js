@@ -6,7 +6,8 @@ module.exports = {
   output: {
     path: __dirname,
     filename: "./build/[name].js",
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
+    library: 'Pentagine'
   },
 
   module: {

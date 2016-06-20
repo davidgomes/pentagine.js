@@ -3,10 +3,10 @@
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
-	else {
-		var a = factory();
-		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
-	}
+	else if(typeof exports === 'object')
+		exports["Pentagine"] = factory();
+	else
+		root["Pentagine"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -77,48 +77,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Pentagine = function () {
 	  _createClass(Pentagine, [{
 	    key: 'tick',
-	    value: function (_tick) {
-	      function tick() {
-	        return _tick.apply(this, arguments);
-	      }
-
-	      tick.toString = function () {
-	        return _tick.toString();
-	      };
-
-	      return tick;
-	    }(function () {
-	      window.requestAnimationFrame(tick);
+	    value: function tick() {
+	      window.requestAnimationFrame(this.tick.bind(this));
 
 	      var currentTime = Date.now();
-	      var elapsed = currentTime - lastUpdate;
+	      var elapsed = currentTime - this.lastUpdate;
 
-	      if (desiredFPS) {
-	        if (elapsed > desiredInterval) {
-	          lastUpdate = currentTime - elapsed % desiredInterval;
+	      if (this.desiredFPS) {
+	        if (elapsed > this.desiredInterval) {
+	          this.lastUpdate = currentTime - elapsed % this.desiredInterval;
 
-	          currentState.dt = elapsed * 0.001;
-	          currentState.update();
-	          currentState.draw();
+	          this.currentState.dt = elapsed * 0.001;
+	          this.currentState.update();
+	          this.currentState.draw();
 	        }
 	      } else {
-	        lastUpdate = currentTime;
+	        this.lastUpdate = currentTime;
 
-	        currentState.dt = elapsed * 0.001;
-	        currentState.update();
-	        currentState.draw();
+	        this.currentState.dt = elapsed * 0.001;
+	        this.currentState.update();
+	        this.currentState.draw();
 	      }
-	    })
+	    }
 	  }, {
 	    key: 'init',
 	    value: function init() {
-	      lastUpdate = Date.now();
+	      this.lastUpdate = Date.now();
 
-	      if (desiredFPS) {
-	        desiredInterval = 1000 / desiredFPS;
+	      if (this.desiredFPS) {
+	        this.desiredInterval = 1000 / this.desiredFPS;
 	      }
 
-	      var myInterval = window.requestAnimationFrame(tick);
+	      var myInterval = window.requestAnimationFrame(this.tick.bind(this));
 	    }
 	  }, {
 	    key: 'handleKeyDown',
@@ -186,9 +176,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        mouse.y = e.layerY;
 	      }
 
-	      if (currentState !== null) {
-	        mouse.x += currentState.camera.x;
-	        mouse.y += currentState.camera.y;
+	      if (this.currentState !== null) {
+	        mouse.x += this.currentState.camera.x;
+	        mouse.y += this.currentState.camera.y;
 	      }
 	    }
 	  }, {
@@ -216,8 +206,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.lastUpdate = null;
 	    this.currentState = null;
 
-	    this.pressedKeys = [];
-	    this.preventedKeys = [];
+	    var pressedKeys = [];
+	    var preventedKeys = [];
 
 	    this.degToRad = Math.PI / 180;
 	    this.keyCodeToString = [];
@@ -280,26 +270,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _this.keyCodeToString[48 + index] = el;
 	    });
 
-	    window.addEventListener('keydown', handleKeyDown);
-	    window.addEventListener('keyup', handleKeyUp);
+	    window.addEventListener('keydown', this.handleKeyDown);
+	    window.addEventListener('keyup', this.handleKeyUp);
 
-	    window.addEventListener('mousedown', handleMouseDown, false);
-	    window.addEventListener('mouseup', handleMouseUp, false);
-	    window.addEventListener('mousemove', handleMouseMove, false);
+	    window.addEventListener('mousedown', this.handleMouseDown, false);
+	    window.addEventListener('mouseup', this.handleMouseUp, false);
+	    window.addEventListener('mousemove', this.handleMouseMove, false);
 
-	    window.addEventListener('touchstart', handleTouchStart, false);
-	    window.addEventListener('touchmove', handleTouchMove, false);
-	    window.addEventListener('touchend', handleTouchEnd, false);
+	    window.addEventListener('touchstart', this.handleTouchStart, false);
+	    window.addEventListener('touchmove', this.handleTouchMove, false);
+	    window.addEventListener('touchend', this.handleTouchEnd, false);
 
-	    this.pressedButtons = [];
-	    this.mouse = {};
+	    var pressedButtons = [];
+	    var mouse = {};
 
-	    this.convertMouseButtonToString = [];
+	    var convertMouseButtonToString = [];
 	    convertMouseButtonToString[0] = 'left';
 	    convertMouseButtonToString[1] = 'center';
 	    convertMouseButtonToString[2] = 'right';
 
-	    this.sharedCanvases = {};
+	    var sharedCanvases = {};
+
+	    var penta = this;
 
 	    return {
 	      pauseKey: 'p',
@@ -315,7 +307,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.canvas = document.getElementById('canvas');
 
 	        if (options.desiredFPS) {
-	          desiredFPS = options.desiredFPS;
+	          penta.desiredFPS = options.desiredFPS;
 	        }
 
 	        if (options.preventedKeys) {
@@ -657,9 +649,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }(),
 
 	      switchState: function switchState(newState) {
-	        if (!currentState) {
-	          currentState = newState;
-	          init();
+	        if (!penta.currentState) {
+	          penta.currentState = newState;
+	          penta.init();
 	        }
 
 	        if (!newState.camera) {
@@ -668,9 +660,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        newState.setup();
 
-	        currentState = newState;
+	        penta.currentState = newState;
 
-	        return currentState;
+	        return penta.currentState;
 	      }
 	    };
 	  }
