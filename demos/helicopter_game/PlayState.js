@@ -1,7 +1,6 @@
 function Player() {
-  console.log(penta);
-  this.sprite = new Sprite(penta, 'helicopter.png',
-                           100, penta.context.height / 2 - 100);
+  this.sprite = new Pentagine.Sprite(penta, 'helicopter.png',
+                                     100, penta.context.height / 2 - 100);
 
   this.sprite.vx = 600;
   this.sprite.vy = 600;
@@ -35,7 +34,6 @@ function Player() {
 
 function PlayState() {
   this.setup = function() {
-    console.log(penta);
     this.helicopter = new Player();
 
     this.walls = [];
@@ -106,9 +104,7 @@ function PlayState() {
 }
 
 /* Start up the game */
-var penta = new Pentagine();
-
-console.log('inbetween');
+var penta = new Pentagine.Game();
 
 penta.setup({ desiredFPS: 60,
               preventedKeys: ['down', 'right', 'left', 'up', 'space'],

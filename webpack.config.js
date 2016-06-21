@@ -1,13 +1,16 @@
+var path = require('path');
+
 module.exports = {
   entry: {
-    pentagine: "./lib/entry.js"
+    Sprite: "./lib/Sprite.js",
+    Game: "./lib/Game.js"
   },
 
   output: {
     path: __dirname,
     filename: "./build/[name].js",
-    libraryTarget: 'umd',
-    library: 'Pentagine'
+    library: ["Pentagine", "[name]"],
+    libraryTarget: "umd"
   },
 
   module: {
@@ -20,6 +23,12 @@ module.exports = {
           presets: ['es2015']
         }
       }
+    ]
+  },
+
+  resolve: {
+    root: [
+      path.resolve('./lib/')
     ]
   }
 };
