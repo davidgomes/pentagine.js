@@ -1,6 +1,6 @@
 function Player() {
-  this.sprite = new penta.Sprite('helicopter.png',
-                                 100, penta.context.height / 2 - 100);
+  this.sprite = new Pentagine.Sprite(penta, 'helicopter.png',
+                                     100, penta.context.height / 2 - 100);
 
   this.sprite.vx = 600;
   this.sprite.vy = 600;
@@ -104,7 +104,7 @@ function PlayState() {
 }
 
 /* Start up the game */
-var penta = new Pentagine();
+var penta = new Pentagine.Game();
 
 penta.setup({ desiredFPS: 60,
               preventedKeys: ['down', 'right', 'left', 'up', 'space'],
