@@ -15,6 +15,7 @@ function GameState() {
   };
 }
 
+var penta = new Pentagine.Game();
 penta.setup({ desiredFPS: 60,
               width: 800,
               height: 640,
