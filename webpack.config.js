@@ -30,5 +30,9 @@ module.exports = {
     root: [
       path.resolve('./lib/')
     ]
+  },
+
+  externals: {
+    "underscore": "underscore"
   }
 };
