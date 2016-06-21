@@ -1,6 +1,6 @@
 function PlayState() {
   this.setup = function() {
-    this.ball = new penta.Sprite('ball.png', 100, 50);
+    this.ball = new Pentagine.Sprite(penta, 'ball.png', 100, 50);
     this.ball.speed = 400;
   };
 
@@ -35,6 +35,8 @@ function PlayState() {
    delta time between two ticks and use it to make movement
    smooth. However, if desiredFPS is declared, this.dt also works.
 */
+var penta = new Pentagine.Game();
+
 penta.setup({ desiredFPS: 60,
               preventedKeys: ['down', 'right', 'left', 'up', 'space'],
               firstState: new PlayState(),
