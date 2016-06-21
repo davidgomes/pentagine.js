@@ -10,8 +10,6 @@ function TitleScreenState() {
 
   this.draw = function() {
     penta.clearCanvas();
-    // penta.clearCanvas('#00FF00');
-
     penta.currentFont = '40px Arial';
     penta.drawString('Press [SPACE] to start playing.', 20, 20);
   };
@@ -54,6 +52,8 @@ function GameState() {
     penta.drawRectangle(this.playerX, this.playerY, 40, 40);
   };
 }
+
+var penta = new Pentagine.Game();
 
 penta.setup({ desiredFPS: 60,
               preventedKeys: ['down', 'right', 'left', 'up', 'space'],
