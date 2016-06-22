@@ -2,10 +2,10 @@
 
 function PlayState() {
   this.setup = function() {
-    this.balls = new penta.SpriteList();
+    this.balls = new Pentagine.SpriteList();
 
     for (var i = 0; i < 10; i++) {
-      var newBall = new penta.Sprite('ball.png', 5, i * 40 + 100);
+      var newBall = new Pentagine.Sprite(penta, 'ball.png', 5, i * 40 + 100);
       newBall.speed = 5;
       this.balls.push(newBall);
     }
@@ -33,6 +33,8 @@ function PlayState() {
     this.balls.draw();
   };
 }
+
+var penta = new Pentagine.Game();
 
 penta.setup({ desiredFPS: 60,
               preventedKeys: ['down', 'right', 'left', 'up', 'space'],
