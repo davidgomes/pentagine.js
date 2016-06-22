@@ -1,11 +1,13 @@
-function Player() {
-  this.sprite = new Pentagine.Sprite(penta, 'helicopter.png',
-                                     100, penta.context.height / 2 - 100);
+class Player {
+  constructor() {
+    this.sprite = new Pentagine.Sprite(penta, 'helicopter.png',
+                                       100, penta.context.height / 2 - 100);
 
-  this.sprite.vx = 600;
-  this.sprite.vy = 600;
+    this.sprite.vx = 600;
+    this.sprite.vy = 600;
+  }
 
-  this.update = function(dt) {
+  update(dt) {
     if (penta.isMouseDown('left')) {
       if (penta.mouse.y < penta.context.height / 2) {
         this.sprite.y -= this.sprite.vy * dt;
@@ -29,11 +31,11 @@ function Player() {
     if (penta.isDown('right') || penta.isDown('d')) {
       this.sprite.x += this.sprite.vx * dt;
     }
-  };
+  }
 }
 
-function PlayState() {
-  this.setup = function() {
+class PlayState {
+  setup() {
     this.helicopter = new Player();
 
     this.walls = [];
@@ -51,9 +53,9 @@ function PlayState() {
                             width: 40,
                             height: 175 });
     }).bind(this), 1000);
-  };
+  }
 
-  this.update = function() {
+  update() {
     this.helicopter.update(this.dt); // Player tick
     this.score++; // Update score
 
@@ -77,9 +79,9 @@ function PlayState() {
     for (var obstacle = 0; obstacle < this.obstacles.length; obstacle++) {
       this.obstacles[obstacle].x -= this.speed / 2;
     }
-  };
+  }
 
-  this.draw = function() {
+  draw() {
     penta.clearCanvas('#49637e');
 
     for (var i = 0; i < this.walls.length; i++) {
@@ -100,7 +102,7 @@ function PlayState() {
     penta.drawString('FPS: ' + Math.floor((1 / this.dt).toString()) + '', 5, 145, '#000');
 
     this.helicopter.sprite.draw();
-  };
+  }
 }
 
 /* Start up the game */

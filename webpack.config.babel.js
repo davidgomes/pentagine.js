@@ -3,7 +3,9 @@ import path from 'path';
 export default {
   entry: {
     Sprite: "./lib/Sprite.js",
-    Game: "./lib/Game.js"
+    Game: "./lib/Game.js",
+
+    HelicopterDemo: "./demos/helicopter_game/PlayState.js"
   },
 
   output: {
