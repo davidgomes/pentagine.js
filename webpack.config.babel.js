@@ -5,7 +5,8 @@ export default {
     Sprite: "./lib/Sprite.js",
     Game: "./lib/Game.js",
 
-    HelicopterDemo: "./demos/helicopter_game/PlayState.js"
+    HelicopterDemo: "./demos/helicopter_game/PlayState.js",
+    CircleExample: "./demos/circle_example/PlayState.js"
   },
 
   output: {
