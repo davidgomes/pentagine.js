@@ -2,9 +2,7 @@ import path from 'path';
 
 export default {
   entry: {
-    Sprite: "./lib/Sprite.js",
-    SpriteList: "./lib/SpriteList.js",
-    Game: "./lib/Game.js",
+    Pentagine: "./lib/pentagine.js",
 
     HelicopterDemo: "./demos/helicopter_game/PlayState.js",
     CircleExample: "./demos/circle_example/PlayState.js"
@@ -13,7 +11,7 @@ export default {
   output: {
     path: __dirname,
     filename: "./build/[name].js",
-    library: ["Pentagine", "[name]"],
+    library: "[name]",
     libraryTarget: "umd"
   },
 

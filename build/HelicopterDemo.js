@@ -6,7 +6,7 @@
 	else if(typeof exports === 'object')
 		exports["HelicopterDemo"] = factory();
 	else
-		root["Pentagine"] = root["Pentagine"] || {}, root["Pentagine"]["HelicopterDemo"] = factory();
+		root["HelicopterDemo"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache

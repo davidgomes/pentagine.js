@@ -6,7 +6,7 @@
 	else if(typeof exports === 'object')
 		exports["CircleExample"] = factory();
 	else
-		root["Pentagine"] = root["Pentagine"] || {}, root["Pentagine"]["CircleExample"] = factory();
+		root["CircleExample"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
