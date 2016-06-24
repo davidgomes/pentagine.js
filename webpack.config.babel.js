@@ -1,6 +1,6 @@
 import path from 'path';
 import UnminifiedWebpackPlugin from 'unminified-webpack-plugin';
-var webpack = require('webpack');
+import webpack from 'webpack';
 
 export default {
   entry: {
