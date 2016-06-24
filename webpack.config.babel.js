@@ -1,4 +1,6 @@
 import path from 'path';
+import UnminifiedWebpackPlugin from 'unminified-webpack-plugin';
+var webpack = require('webpack');
 
 export default {
   entry: {
@@ -27,6 +29,16 @@ export default {
       }
     ]
   },
+
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    }),
+
+    new UnminifiedWebpackPlugin()
+  ],
 
   resolve: {
     root: [
