@@ -1,13 +1,11 @@
 import path from 'path';
-import UnminifiedWebpackPlugin from 'unminified-webpack-plugin';
-import webpack from 'webpack';
 
 export default {
   entry: {
-    Pentagine: "./lib/pentagine.js",
+    pentagine: "./lib/pentagine.js",
 
-    HelicopterDemo: "./demos/helicopter_game/PlayState.js",
-    CircleExample: "./demos/circle_example/PlayState.js"
+    helicopter_demo: "./demos/helicopter_game/PlayState.js",
+    circle_demo: "./demos/circle_example/PlayState.js"
   },
 
   output: {
@@ -29,16 +27,6 @@ export default {
       }
     ]
   },
-
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    }),
-
-    new UnminifiedWebpackPlugin()
-  ],
 
   resolve: {
     root: [
