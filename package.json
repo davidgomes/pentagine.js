@@ -4,7 +4,7 @@
   "description": "Lightweight framework for HTML5 2D Game Development",
   "main": "lib/pentagine.js",
   "dependencies": {
-    "underscore": "^1.8.3"
+    "lodash": "^4.13.1"
   },
   "devDependencies": {
     "babel-core": "^6.9.1",

@@ -35,6 +35,6 @@ export default {
   },
 
   externals: {
-    "underscore": "underscore"
+    "lodash": "lodash"
   }
 };
