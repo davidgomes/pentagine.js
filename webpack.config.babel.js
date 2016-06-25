@@ -2,7 +2,7 @@ import path from 'path';
 
 export default {
   entry: {
-    pentagine: "./lib/pentagine.js",
+    Pentagine: "./lib/pentagine.js",
 
     helicopter_demo: "./demos/helicopter_game/PlayState.js",
     circle_demo: "./demos/circle_example/PlayState.js"

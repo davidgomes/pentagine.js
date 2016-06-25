@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["pentagine"] = factory();
+		exports["Pentagine"] = factory();
 	else
-		root["pentagine"] = factory();
+		root["Pentagine"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -124,7 +124,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.desiredInterval = 1000 / this.desiredFPS;
 	      }
 
-	      var myInterval = window.requestAnimationFrame(this.tick.bind(this));
+	      window.requestAnimationFrame(this.tick.bind(this));
 	    }
 	  }, {
 	    key: 'handleKeyDown',
