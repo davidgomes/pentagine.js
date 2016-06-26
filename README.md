@@ -4,7 +4,7 @@ Pentagine is a lightweight JavaScript library for HTML5 2D Game Development that
 
 Building
 --------
-As mentioned before, Pentagine is written using ECMAScript 6 and as so, its source must go through [Babel](https://babeljs.io/) before it can be used in a browser. All you have to do is compile it using `webpack`:
+As mentioned before, Pentagine is written using ECMAScript 7 and as so, its source must go through [Babel](https://babeljs.io/) before it can be used in a browser. All you have to do is compile it using `webpack`:
 
 ```
 git clone git@github.com:davidgomes/pentagine.git
