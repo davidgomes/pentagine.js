@@ -22,7 +22,7 @@ export default {
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
-          presets: ['es2015']
+          presets: ['es2016', 'stage-0']
         }
       }
     ]
