@@ -1,6 +1,6 @@
 Pentagine
 =========
-Pentagine is a lightweight JavaScript library for HTML5 2D Game Development that renders to `<canvas>`. For now, it consists of a State Machine, a Sprite class to load and draw images, some keyboard and mouse input functions, a SpriteList and a Camera class. It is written using ECMAScript 6 and is designed to be used with ECMAScript 6 code as well (but works as well with regular ECMAScript 5).
+Pentagine is a lightweight JavaScript library for HTML5 2D Game Development that renders to `<canvas>`. For now, it consists of a State Machine, a Sprite class to load and draw images, some keyboard and mouse input functions, a SpriteList and a Camera class. It is written using ECMAScript 7 and is designed to be used with ECMAScript 6 code as well (but works as well with regular ECMAScript 5).
 
 Building
 --------
@@ -19,7 +19,7 @@ Example
 -------
 Clone pentagine with `git clone git@github.com:davidgomes/pentagine.git` and then open `examples/index.html` for a list of examples. Because some of the examples are written using ECMAScript 6, you need to compile the demos first (using `webpack`).
 
-Here's a small example of all the JavaScript code (ECMAScript 6) necessary to draw a ball and make it movable with the keyboard:
+Here's a small example of all the JavaScript code (ECMAScript 7) necessary to draw a ball and make it movable with the keyboard:
 
 ```javascript
 class PlayState {
