@@ -91,6 +91,94 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Game = function () {
+	  function Game() {
+	    var _this = this;
+
+	    _classCallCheck(this, Game);
+
+	    this.pressedKeys = [];
+	    this.preventedKeys = [];
+	    this.degToRad = Math.PI / 180;
+	    this.keyCodeToString = [];
+	    this.pressedButtons = [];
+	    this.mouse = {};
+	    this.convertMouseButtonToString = ['left', 'center', 'right'];
+	    this.pauseKey = 'p';
+	    this.canPauseOrResume = true;
+	    this.gamePaused = false;
+	    this.currentFont = '10px serif';
+
+	    this.keyCodeToString[8] = 'backspace';
+	    this.keyCodeToString[9] = 'tab';
+	    this.keyCodeToString[13] = 'return';
+	    this.keyCodeToString[16] = 'shift';
+	    this.keyCodeToString[17] = 'ctrl';
+	    this.keyCodeToString[18] = 'alt';
+	    this.keyCodeToString[19] = 'pause';
+	    this.keyCodeToString[20] = 'capslock';
+	    this.keyCodeToString[27] = 'escape';
+	    this.keyCodeToString[32] = 'space';
+	    this.keyCodeToString[33] = 'pageup';
+	    this.keyCodeToString[34] = 'pagedown';
+	    this.keyCodeToString[35] = 'end';
+	    this.keyCodeToString[36] = 'home';
+	    this.keyCodeToString[37] = 'left';
+	    this.keyCodeToString[38] = 'up';
+	    this.keyCodeToString[39] = 'right';
+	    this.keyCodeToString[40] = 'down';
+	    this.keyCodeToString[45] = 'insert';
+	    this.keyCodeToString[46] = 'delete';
+
+	    this.keyCodeToString[91] = 'leftwindowkey';
+	    this.keyCodeToString[92] = 'rightwindowkey';
+	    this.keyCodeToString[93] = 'selectkey';
+	    this.keyCodeToString[106] = 'multiply';
+	    this.keyCodeToString[107] = 'add';
+	    this.keyCodeToString[109] = 'subtract';
+	    this.keyCodeToString[110] = 'decimalpoint';
+	    this.keyCodeToString[111] = 'divide';
+
+	    this.keyCodeToString[144] = 'numlock';
+	    this.keyCodeToString[145] = 'scrollock';
+	    this.keyCodeToString[186] = 'semicolon';
+	    this.keyCodeToString[187] = 'equalsign';
+	    this.keyCodeToString[188] = 'comma';
+	    this.keyCodeToString[189] = 'dash';
+	    this.keyCodeToString[190] = 'period';
+	    this.keyCodeToString[191] = 'forwardslash';
+	    this.keyCodeToString[192] = 'graveaccent';
+	    this.keyCodeToString[219] = 'openbracket';
+	    this.keyCodeToString[220] = 'backslash';
+	    this.keyCodeToString[221] = 'closebracket';
+	    this.keyCodeToString[222] = 'singlequote';
+
+	    var numpadKeys = ['numpad1', 'numpad2', 'numpad3', 'numpad4', 'numpad5', 'numpad6', 'numpad7', 'numpad8', 'numpad9'];
+
+	    var numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+	    var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
+	    _.each(numbers, function (el, index) {
+	      return _this.keyCodeToString[48 + index] = el;
+	    });
+	    _.each(letters, function (el, index) {
+	      return _this.keyCodeToString[65 + index] = el;
+	    });
+	    _.each(numpadKeys, function (el, index) {
+	      return _this.keyCodeToString[48 + index] = el;
+	    });
+
+	    window.addEventListener('keydown', this.handleKeyDown.bind(this));
+	    window.addEventListener('keyup', this.handleKeyUp.bind(this));
+
+	    window.addEventListener('mousedown', this.handleMouseDown.bind(this), false);
+	    window.addEventListener('mouseup', this.handleMouseUp.bind(this), false);
+	    window.addEventListener('mousemove', this.handleMouseMove.bind(this), false);
+
+	    window.addEventListener('touchstart', this.handleTouchStart.bind(this), false);
+	    window.addEventListener('touchmove', this.handleTouchMove.bind(this), false);
+	    window.addEventListener('touchend', this.handleTouchEnd.bind(this), false);
+	  }
+
 	  _createClass(Game, [{
 	    key: 'tick',
 	    value: function tick() {
@@ -210,109 +298,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      window.dispatchEvent(clickEvent);
 	    }
-	  }]);
-
-	  function Game() {
-	    var _this = this;
-
-	    _classCallCheck(this, Game);
-
-	    this.desiredFPS = null;
-	    this.desiredInterval = null;
-	    this.lastUpdate = null;
-	    this.currentState = null;
-
-	    this.pressedKeys = [];
-	    this.preventedKeys = [];
-
-	    this.degToRad = Math.PI / 180;
-	    this.keyCodeToString = [];
-	    this.keyCodeToString[8] = 'backspace';
-	    this.keyCodeToString[9] = 'tab';
-	    this.keyCodeToString[13] = 'return';
-	    this.keyCodeToString[16] = 'shift';
-	    this.keyCodeToString[17] = 'ctrl';
-	    this.keyCodeToString[18] = 'alt';
-	    this.keyCodeToString[19] = 'pause';
-	    this.keyCodeToString[20] = 'capslock';
-	    this.keyCodeToString[27] = 'escape';
-	    this.keyCodeToString[32] = 'space';
-	    this.keyCodeToString[33] = 'pageup';
-	    this.keyCodeToString[34] = 'pagedown';
-	    this.keyCodeToString[35] = 'end';
-	    this.keyCodeToString[36] = 'home';
-	    this.keyCodeToString[37] = 'left';
-	    this.keyCodeToString[38] = 'up';
-	    this.keyCodeToString[39] = 'right';
-	    this.keyCodeToString[40] = 'down';
-	    this.keyCodeToString[45] = 'insert';
-	    this.keyCodeToString[46] = 'delete';
-
-	    this.keyCodeToString[91] = 'leftwindowkey';
-	    this.keyCodeToString[92] = 'rightwindowkey';
-	    this.keyCodeToString[93] = 'selectkey';
-	    this.keyCodeToString[106] = 'multiply';
-	    this.keyCodeToString[107] = 'add';
-	    this.keyCodeToString[109] = 'subtract';
-	    this.keyCodeToString[110] = 'decimalpoint';
-	    this.keyCodeToString[111] = 'divide';
-
-	    this.keyCodeToString[144] = 'numlock';
-	    this.keyCodeToString[145] = 'scrollock';
-	    this.keyCodeToString[186] = 'semicolon';
-	    this.keyCodeToString[187] = 'equalsign';
-	    this.keyCodeToString[188] = 'comma';
-	    this.keyCodeToString[189] = 'dash';
-	    this.keyCodeToString[190] = 'period';
-	    this.keyCodeToString[191] = 'forwardslash';
-	    this.keyCodeToString[192] = 'graveaccent';
-	    this.keyCodeToString[219] = 'openbracket';
-	    this.keyCodeToString[220] = 'backslash';
-	    this.keyCodeToString[221] = 'closebracket';
-	    this.keyCodeToString[222] = 'singlequote';
-
-	    var numpadKeys = ['numpad1', 'numpad2', 'numpad3', 'numpad4', 'numpad5', 'numpad6', 'numpad7', 'numpad8', 'numpad9'];
-
-	    var numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-	    var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-
-	    _.each(numbers, function (el, index) {
-	      return _this.keyCodeToString[48 + index] = el;
-	    });
-	    _.each(letters, function (el, index) {
-	      return _this.keyCodeToString[65 + index] = el;
-	    });
-	    _.each(numpadKeys, function (el, index) {
-	      return _this.keyCodeToString[48 + index] = el;
-	    });
-
-	    window.addEventListener('keydown', this.handleKeyDown.bind(this));
-	    window.addEventListener('keyup', this.handleKeyUp.bind(this));
-
-	    window.addEventListener('mousedown', this.handleMouseDown.bind(this), false);
-	    window.addEventListener('mouseup', this.handleMouseUp.bind(this), false);
-	    window.addEventListener('mousemove', this.handleMouseMove.bind(this), false);
-
-	    window.addEventListener('touchstart', this.handleTouchStart.bind(this), false);
-	    window.addEventListener('touchmove', this.handleTouchMove.bind(this), false);
-	    window.addEventListener('touchend', this.handleTouchEnd.bind(this), false);
-
-	    this.pressedButtons = [];
-	    this.mouse = {};
-
-	    this.convertMouseButtonToString = [];
-	    this.convertMouseButtonToString[0] = 'left';
-	    this.convertMouseButtonToString[1] = 'center';
-	    this.convertMouseButtonToString[2] = 'right';
-
-	    this.pauseKey = 'p';
-	    this.canPauseOrResume = true;
-	    this.gamePaused = false;
-
-	    this.currentFont = '10px serif';
-	  }
-
-	  _createClass(Game, [{
+	  }, {
 	    key: 'setup',
 	    value: function setup(options) {
 	      /* Load the canvas */
@@ -711,7 +697,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 4 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -725,27 +711,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  _createClass(SpriteList, [{
-	    key: "draw",
+	    key: 'draw',
 	    value: function draw() {
-	      for (var i = 0; i < this.sprites.length; i++) {
-	        if (this.sprites[i]) {
-	          this.sprites[i].draw();
-	        }
-	      }
+	      _.invokeMap(_.compact(this.sprites), 'draw');
 	    }
 	  }, {
-	    key: "push",
+	    key: 'push',
 	    value: function push(newSprite) {
 	      this.sprites.push(newSprite);
 	    }
 	  }, {
-	    key: "remove",
+	    key: 'remove',
 	    value: function remove(sprite) {
 	      var index = this.sprites.indexOf(sprite);
 	      this.sprites.splice(index, 1);
 	    }
 	  }, {
-	    key: "getLength",
+	    key: 'getLength',
 	    value: function getLength() {
 	      return this.sprites.length;
 	    }
