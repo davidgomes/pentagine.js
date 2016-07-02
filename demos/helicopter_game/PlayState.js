@@ -1,7 +1,14 @@
 class Player {
   constructor() {
-    this.sprite = new Pentagine.Sprite(penta, 'helicopter.png',
-                                       100, penta.context.height / 2 - 100);
+    // this.sprite = new Pentagine.Sprite(penta, 'helicopter.png',
+                                       // 100, penta.context.height / 2 - 100);
+
+    this.sprite = new Pentagine.Animation({
+      game: penta,
+      frames: ['helicopter.png'],
+      x: 100,
+      y: penta.context.height / 2 - 100
+    });
 
     this.sprite.vx = 600;
     this.sprite.vy = 600;
