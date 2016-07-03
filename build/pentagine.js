@@ -72,12 +72,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Audio2 = _interopRequireDefault(_Audio);
 
+	var _Animation = __webpack_require__(6);
+
+	var _Animation2 = _interopRequireDefault(_Animation);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	module.exports.Game = _Game2.default;
 	module.exports.Sprite = _Sprite2.default;
 	module.exports.SpriteList = _SpriteList2.default;
 	module.exports.Audio = _Audio2.default;
+	module.exports.Animation = _Animation2.default;
 
 /***/ },
 /* 1 */
@@ -772,6 +777,72 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 	module.exports = Audio;
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Animation = function () {
+	  function Animation(options) {
+	    _classCallCheck(this, Animation);
+
+	    this.options = options;
+
+	    this.sprite = new Pentagine.Sprite(options.game, options.frames[0], options.x, options.y);
+
+	    this.currentTick = new Date().getTime();
+	    this.lastTick = this.currentTick;
+	    this.diffTick = 0;
+	    this.curFrame = 0;
+	  } // .frames, .frameDuration, .x, .y, .game
+
+
+	  _createClass(Animation, [{
+	    key: "update",
+	    value: function update() {
+	      this.currentTick = new Date().getTime();
+	      this.diffTick += this.currentTick - this.lastTick;
+
+	      if (this.diffTick > this.options.frameDuration) {
+	        this.curFrame = this.curFrame == options.frames.length - 1 ? 0 : this.curFrame + 1;
+
+	        this.sprite = new Pentagine.Sprite(this.options.game, this.options.frames[this.curFrame], this.x, this.y);
+
+	        this.diffTick = 0;
+	      }
+
+	      this.lastTick = this.currentTick;
+
+	      console.log(this.sprite.y);
+	    }
+	  }, {
+	    key: "draw",
+	    value: function draw() {
+	      this.sprite.draw();
+	    }
+	  }, {
+	    key: "x",
+	    set: function set(value) {
+	      this.sprite.x = value;
+	    }
+	  }, {
+	    key: "y",
+	    set: function set(value) {
+	      console.log(value);
+	      this.sprite.y = value;
+	    }
+	  }]);
+
+	  return Animation;
+	}();
+
+	module.exports = Animation;
 
 /***/ }
 /******/ ])
