@@ -13,7 +13,7 @@ npm install
 webpack
 ```
 
-The only dependency of Pentagine is [underscore](http://underscorejs.org/), but it has some development dependencies such as [Babel](https://babeljs.io/).
+The only dependency of Pentagine is [lodash](https://lodash.com/), but it has some development dependencies such as [Babel](https://babeljs.io/).
 
 Example
 -------
