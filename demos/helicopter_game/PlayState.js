@@ -5,12 +5,11 @@ class Player {
 
     this.sprite = new Pentagine.Animation({
       game: penta,
+      frameDuration: 100,
       frames: ['helicopter.png', 'helicopter2.png'],
       x: 100,
       y: penta.context.height / 2 - 100
     });
-
-    console.log(this.sprite);
 
     this.sprite.vx = 600;
     this.sprite.vy = 600;
@@ -21,21 +20,9 @@ class Player {
 
     if (penta.isMouseDown('left')) {
       if (penta.mouse.y < penta.context.height / 2) {
-
-        // console.log(this.sprite.vy * dt);
-
-        // this.sprite.y -= this.sprite.vy * dt;
-
-        console.log(this.sprite.y);
-        console.log(this.sprite.vy);
-        console.log(dt);
-        console.log(this.sprite.y - this.sprite.vy * dt);
-
         this.sprite.y = this.sprite.y - this.sprite.vy * dt;
       } else {
         this.sprite.y = this.sprite.y + this.sprite.vy * dt;
-
-        // this.sprite.y += this.sprite.vy * dt;
       }
     }
 
