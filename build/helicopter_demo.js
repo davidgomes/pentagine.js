@@ -64,7 +64,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  function Player() {
 	    _classCallCheck(this, Player);
 
-	    this.sprite = new Pentagine.Sprite(penta, 'helicopter.png', 100, penta.context.height / 2 - 100);
+	    // this.sprite = new Pentagine.Sprite(penta, 'helicopter.png',
+	    // 100, penta.context.height / 2 - 100);
+
+	    this.sprite = new Pentagine.Animation({
+	      game: penta,
+	      frameDuration: 100,
+	      frames: ['helicopter.png', 'helicopter2.png'],
+	      x: 100,
+	      y: penta.context.height / 2 - 100
+	    });
 
 	    this.sprite.vx = 600;
 	    this.sprite.vy = 600;
@@ -73,11 +82,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(Player, [{
 	    key: 'update',
 	    value: function update(dt) {
+	      this.sprite.update();
+
 	      if (penta.isMouseDown('left')) {
 	        if (penta.mouse.y < penta.context.height / 2) {
-	          this.sprite.y -= this.sprite.vy * dt;
+	          this.sprite.y = this.sprite.y - this.sprite.vy * dt;
 	        } else {
-	          this.sprite.y += this.sprite.vy * dt;
+	          this.sprite.y = this.sprite.y + this.sprite.vy * dt;
 	        }
 	      }
 

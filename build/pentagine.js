@@ -780,62 +780,93 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 6 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _Sprite = __webpack_require__(3);
+
+	var _Sprite2 = _interopRequireDefault(_Sprite);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Animation = function () {
+	  // .frames, .frameDuration, .x, .y, .game
+
 	  function Animation(options) {
+	    var _this = this;
+
 	    _classCallCheck(this, Animation);
 
 	    this.options = options;
 
-	    this.sprite = new Pentagine.Sprite(options.game, options.frames[0], options.x, options.y);
+	    this.curSprite = new _Sprite2.default(options.game, options.frames[0], options.x, options.y);
 
+	    this.sprites = [];
+
+	    _.each(this.options.frames, function (el, index) {
+	      _this.sprites.push(new _Sprite2.default(_this.options.game, el, _this.options.x, _this.options.y));
+	    }.bind(this));
+
+	    this.x = options.x;
+	    this.y = options.y;
+
+	    this.frameDuration = options.frameDuration;
 	    this.currentTick = new Date().getTime();
 	    this.lastTick = this.currentTick;
 	    this.diffTick = 0;
 	    this.curFrame = 0;
-	  } // .frames, .frameDuration, .x, .y, .game
-
+	  }
 
 	  _createClass(Animation, [{
-	    key: "update",
+	    key: 'update',
 	    value: function update() {
 	      this.currentTick = new Date().getTime();
 	      this.diffTick += this.currentTick - this.lastTick;
 
 	      if (this.diffTick > this.options.frameDuration) {
-	        this.curFrame = this.curFrame == options.frames.length - 1 ? 0 : this.curFrame + 1;
+	        if (this.curFrame === this.options.frames.length - 1) {
+	          this.curFrame = 0;
+	        } else {
+	          this.curFrame++;
+	        }
 
-	        this.sprite = new Pentagine.Sprite(this.options.game, this.options.frames[this.curFrame], this.x, this.y);
+	        var x = this.curSprite.x;
+	        var y = this.curSprite.y;
+
+	        this.curSprite = this.sprites[this.curFrame];
+	        this.curSprite.x = x;
+	        this.curSprite.y = y;
 
 	        this.diffTick = 0;
 	      }
 
 	      this.lastTick = this.currentTick;
-
-	      console.log(this.sprite.y);
 	    }
 	  }, {
-	    key: "draw",
+	    key: 'draw',
 	    value: function draw() {
-	      this.sprite.draw();
+	      this.curSprite.draw();
 	    }
 	  }, {
-	    key: "x",
+	    key: 'x',
 	    set: function set(value) {
-	      this.sprite.x = value;
+	      this.curSprite.x = value;
+	    },
+	    get: function get() {
+	      return this.curSprite.x;
 	    }
 	  }, {
-	    key: "y",
+	    key: 'y',
 	    set: function set(value) {
-	      console.log(value);
-	      this.sprite.y = value;
+	      this.curSprite.y = value;
+	    },
+	    get: function get() {
+	      return this.curSprite.y;
 	    }
 	  }]);
 
