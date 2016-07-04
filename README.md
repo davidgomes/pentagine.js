@@ -17,9 +17,9 @@ The only dependency of Pentagine is [underscore](http://underscorejs.org/), but 
 
 Example
 -------
-Clone pentagine with `git clone git@github.com:davidgomes/pentagine.git` and then open `examples/index.html` for a list of examples. Because some of the examples are written using ECMAScript 6, you need to compile the demos first (using `webpack`).
+Clone pentagine with `git clone git@github.com:davidgomes/pentagine.git` and then open `examples/index.html` for a list of examples. Because some of the examples are written using ECMAScript 7, you need to compile the demos first (using `webpack`).
 
-Here's a small example of all the JavaScript code (ECMAScript 7) necessary to draw a ball and make it movable with the keyboard:
+Here's a small example of all the JavaScript code (ECMAScript 6) necessary to draw a ball and make it movable with the keyboard:
 
 ```javascript
 class PlayState {
