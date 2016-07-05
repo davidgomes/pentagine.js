@@ -8,7 +8,8 @@ class Player {
       frameDuration: 100,
       frames: ['helicopter.png', 'helicopter2.png'],
       x: 100,
-      y: penta.context.height / 2 - 100
+      y: penta.context.height / 2 - 100,
+      bouncing: true
     });
 
     this.sprite.vx = 600;
