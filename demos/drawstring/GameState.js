@@ -11,6 +11,7 @@ function GameState() {
 
     // penta.currentFont = '30px Arial';
     penta.changeFontSize(30);
+    penta.removeFontStyle('italic');
     penta.drawString('drawString(text, x, y, color, alignment)',
                      20, 120, '#000000');
   };
