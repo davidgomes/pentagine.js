@@ -9,7 +9,8 @@ function GameState() {
     penta.currentFont = 'italic 50px Arial';
     penta.drawString('pentagine.js drawString demo', 20, 20, '#ff0000');
 
-    penta.currentFont = '30px Arial';
+    // penta.currentFont = '30px Arial';
+    penta.changeFontSize(30);
     penta.drawString('drawString(text, x, y, color, alignment)',
                      20, 120, '#000000');
   };
