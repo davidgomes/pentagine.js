@@ -1,7 +1,7 @@
 {
   "name": "pentagine.js",
   "version": "0.0.1",
-  "description": "Lightweight framework for HTML5 2D Game Development",
+  "description": "Lightweight framework for HTML5 2D Game Development written in ECMAScript 7",
   "main": "lib/pentagine.js",
   "dependencies": {
     "lodash": "^4.13.1"
