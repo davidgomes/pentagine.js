@@ -187,30 +187,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	    window.addEventListener('touchstart', this.handleTouchStart.bind(this), false);
 	    window.addEventListener('touchmove', this.handleTouchMove.bind(this), false);
 	    window.addEventListener('touchend', this.handleTouchEnd.bind(this), false);
+
+	    this.windowFocused = true;
+	    window.addEventListener('focus', this.handleFocus.bind(this), false);
+	    window.addEventListener('blur', this.handleBlur.bind(this), false);
 	  }
 
 	  _createClass(Game, [{
 	    key: 'tick',
 	    value: function tick() {
-	      window.requestAnimationFrame(this.tick.bind(this));
+	      if (this.windowFocused) {
+	        window.requestAnimationFrame(this.tick.bind(this));
 
-	      var currentTime = Date.now();
-	      var elapsed = currentTime - this.lastUpdate;
+	        var currentTime = Date.now();
+	        var elapsed = currentTime - this.lastUpdate;
 
-	      if (this.desiredFPS) {
-	        if (elapsed > this.desiredInterval) {
-	          this.lastUpdate = currentTime - elapsed % this.desiredInterval;
+	        if (this.desiredFPS) {
+	          if (elapsed > this.desiredInterval) {
+	            this.lastUpdate = currentTime - elapsed % this.desiredInterval;
+
+	            this.currentState.dt = elapsed * 0.001;
+	            this.currentState.update();
+	            this.currentState.draw();
+	          }
+	        } else {
+	          this.lastUpdate = currentTime;
 
 	          this.currentState.dt = elapsed * 0.001;
 	          this.currentState.update();
 	          this.currentState.draw();
 	        }
-	      } else {
-	        this.lastUpdate = currentTime;
-
-	        this.currentState.dt = elapsed * 0.001;
-	        this.currentState.update();
-	        this.currentState.draw();
 	      }
 	    }
 	  }, {
@@ -223,6 +229,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      window.requestAnimationFrame(this.tick.bind(this));
+	    }
+	  }, {
+	    key: 'handleFocus',
+	    value: function handleFocus(e) {
+	      this.windowFocused = true;
+	      window.requestAnimationFrame(this.tick.bind(this));
+	    }
+	  }, {
+	    key: 'handleBlur',
+	    value: function handleBlur(e) {
+	      this.windowFocused = false;
 	    }
 	  }, {
 	    key: 'handleKeyDown',
@@ -420,6 +437,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      return false;
+	    }
+	  }, {
+	    key: 'removeFontStyle',
+	    value: function removeFontStyle(whichStyle) {
+	      var splittedFont = this.currentFont.split(' ');
+	      var newFont = '';
+
+	      _.each(splittedFont, function (el, index) {
+	        if (el !== whichStyle) {
+	          newFont = newFont.concat(' ').concat(el);
+	        }
+	      }.bind(this));
+
+	      this.currentFont = newFont;
+	    }
+	  }, {
+	    key: 'changeFontSize',
+	    value: function changeFontSize(newSize) {
+	      var splittedFont = this.currentFont.split(' ');
+	      var newFont = '';
+
+	      _.each(splittedFont, function (el, index) {
+	        if (el.slice(el.length - 2, el.length) === 'px') {
+	          newFont = newFont.concat(' ').concat(newSize.toString()).concat('px');
+	        } else {
+	          newFont = newFont.concat(' ').concat(el);
+	        }
+	      }.bind(this));
+
+	      this.currentFont = newFont;
 	    }
 	  }, {
 	    key: 'switchState',
@@ -795,8 +842,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Animation = function () {
-	  // .frames, .frameDuration, .x, .y, .game
-
 	  function Animation(options) {
 	    var _this = this;
 
@@ -812,6 +857,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      _this.sprites.push(new _Sprite2.default(_this.options.game, el, _this.options.x, _this.options.y));
 	    }.bind(this));
 
+	    if (options.bouncing) {
+	      this.bouncingDirection = 'up';
+	    }
+
 	    this.x = options.x;
 	    this.y = options.y;
 
@@ -820,7 +869,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.lastTick = this.currentTick;
 	    this.diffTick = 0;
 	    this.curFrame = 0;
-	  }
+	  } // .frames, .frameDuration, .x, .y, .game
+
 
 	  _createClass(Animation, [{
 	    key: 'update',
@@ -829,10 +879,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.diffTick += this.currentTick - this.lastTick;
 
 	      if (this.diffTick > this.options.frameDuration) {
-	        if (this.curFrame === this.options.frames.length - 1) {
-	          this.curFrame = 0;
+	        if (this.options.bouncing) {
+	          if (this.curFrame === this.options.frames.length - 1 && this.bouncingDirection === 'up') {
+	            this.bouncingDirection = 'down';
+	            this.curFrame--;
+	          } else if (this.curFrame === 0 && this.bouncingDirection === 'down') {
+	            this.bouncingDirection = 'up';
+	            this.curFrame++;
+	          } else {
+	            if (this.bouncingDirection === 'up') {
+	              this.curFrame++;
+	            } else {
+	              this.curFrame--;
+	            }
+	          }
 	        } else {
-	          this.curFrame++;
+	          if (this.curFrame === this.options.frames.length - 1) {
+	            this.curFrame = 0;
+	          } else {
+	            this.curFrame++;
+	          }
 	        }
 
 	        var x = this.curSprite.x;
